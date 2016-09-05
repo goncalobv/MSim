@@ -1,0 +1,860 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Lab1</title><meta name="generator" content="MATLAB 8.0"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-04-04"><meta name="DC.source" content="Lab1.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Ex. 1 - Simula&ccedil;&atilde;o do movimento livre de uma viatura</a></li><li><a href="#3">Ex. 2 - Simula&ccedil;&atilde;o de um modelo predador-presa</a></li><li><a href="#4">Ex2.2</a></li><li><a href="#10">Ex2.3 - a)</a></li><li><a href="#13">Ex2.3 - b)</a></li><li><a href="#15">Ex2.3 - c)</a></li><li><a href="#17">Ex2.3 - d)</a></li><li><a href="#23">Ex. 3.2 - Sistema ca&oacute;tico</a></li><li><a href="#24">Ex. 3.4 - Sistema ca&oacute;tico</a></li></ul></div><pre class="codeinput"><span class="comment">% Cadeira de Modela&ccedil;&atilde;o e Simula&ccedil;&atilde;o</span>
+<span class="comment">%</span>
+<span class="comment">% 1&ordm; Trabalho de laborat&oacute;rio</span>
+<span class="comment">% Simula&ccedil;&atilde;o b&aacute;sica em Matlab/Simulink</span>
+<span class="comment">%</span>
+<span class="comment">% Turno: 4&ordf; feira, das 9h &agrave;s 11h</span>
+<span class="comment">%</span>
+<span class="comment">% Elementos do grupo:</span>
+<span class="comment">%     Gon&ccedil;alo V&iacute;tor  N&ordm;73229</span>
+<span class="comment">%     Catarina Cruz  N&ordm;73319</span>
+<span class="comment">%     Diogo Br&aacute;s     N&ordm;68212</span>
+</pre><h2>Ex. 1 - Simula&ccedil;&atilde;o do movimento livre de uma viatura<a name="2"></a></h2><pre class="codeinput">close <span class="string">all</span>
+clear <span class="string">all</span>
+v0 = [-1 +1];
+y0 = 1;
+stop_time = 10.0;
+m = 50;
+beta = [10 25 50];
+
+
+vlegend = cell(1, size(beta, 2)*size(v0,2));
+plegend = cell(1, size(beta, 2)*size(v0,2));
+vdata = cell(1, size(beta, 2)*2);
+pdata = cell(1, size(beta, 2)*2);
+<span class="keyword">for</span> i = 1:size(beta, 2),
+    sim(<span class="string">'carro'</span>);
+
+    vdata{2*i-1} = t;
+    vdata{2*i} = v;
+    pdata{2*i-1} = t;
+    pdata{2*i} = y;
+    <span class="keyword">for</span> z=1:size(v0, 2),
+        vlegend{size(v0,2)*(i-1)+z} = sprintf(<span class="string">'\\beta = %d Nms ^{-1}, v_{0} = %d ms ^{-1}'</span>, beta(i), v0(z));
+        plegend{size(v0,2)*(i-1)+z} = sprintf(<span class="string">'\\beta = %d Nms ^{-1}, v_{0} = %d ms ^{-1}, y_{0} = %d m'</span>, beta(i), v0(z), y0);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+figure(1);
+plot(vdata{1:size(vdata,2)})
+title(sprintf(<span class="string">'Evolu&ccedil;&atilde;o da velocidade do carro ao longo do tempo, m = %d kg'</span>, m))
+xlabel(<span class="string">'tempo t/s'</span>)
+ylabel(<span class="string">'velocidade v/ms ^{-1}'</span>)
+ylim([-1 +4])
+legend(vlegend, <span class="string">'location'</span>, <span class="string">'NorthEast'</span>);
+
+
+figure(2);
+plot(pdata{1:size(pdata,2)})
+title(sprintf(<span class="string">'Evolu&ccedil;&atilde;o da posi&ccedil;&atilde;o do carro ao longo do tempo, m = %d kg'</span>, m))
+xlabel(<span class="string">'tempo t/s'</span>)
+ylabel(<span class="string">'posi&ccedil;&atilde;o y/m'</span>)
+ylim([-6 +20])
+legend(plegend, <span class="string">'location'</span>, <span class="string">'NorthEast'</span>);
+
+<span class="comment">% Os resultados obtidos tanto para a posi&ccedil;&atilde;o, como para a velocidade</span>
+<span class="comment">% obtidos por simula&ccedil;&atilde;o est&atilde;o de acordo com os previstos teoricamente.</span>
+</pre><img vspace="5" hspace="5" src="Lab1_01.png" alt=""> <img vspace="5" hspace="5" src="Lab1_02.png" alt=""> <h2>Ex. 2 - Simula&ccedil;&atilde;o de um modelo predador-presa<a name="3"></a></h2><h2>Ex2.2<a name="4"></a></h2><pre class="codeinput">y=zeros(6,1);
+M1=[1   1   1   1;
+    1   1   1   1;
+    -1 -1  -1  -1;
+    1   1   1   1;
+    1   1   1   1;
+    1  1.1 0.5 0.1];
+
+M2=[1    1    1   1;
+    1    1    1   1;
+   -2   -2   -3  -3;
+    2    4    6   6;
+    1    3    4   9;
+    1    3    4   9];
+
+<span class="comment">% As colunas de M1/M2 correspondem aos valores dos par&acirc;metros a fornecer</span>
+<span class="comment">% &agrave; simula&ccedil;&atilde;o. Iterar pelas colunas da matriz fornece ent&atilde;o os v&aacute;ros</span>
+<span class="comment">% exemplos necess&aacute;rios</span>
+<span class="comment">%</span>
+<span class="comment">% As primeiras duas linhas correspondem a alfa1 e alfa2, que neste</span>
+<span class="comment">% exerc&iacute;cio devem ser mantidos a 1</span>
+
+<span class="keyword">for</span> y=M1
+
+    alpha1=y(1);alpha2=y(2);delta1=y(3);delta2=y(4);N1_0=y(5);N2_0=y(6);
+    options = simset(<span class="string">'SrcWorkspace'</span>,<span class="string">'current'</span>);
+    sim(<span class="string">'function_teste'</span>,[],options);
+
+    figure;
+    hold <span class="string">on</span>;
+
+    plot(tout,n1,<span class="string">'b'</span>);
+    plot(tout,n2,<span class="string">'g'</span>);
+
+    title([<span class="string">'Modelo predador presa (2.2) - varia&ccedil;&atilde;o das condi&ccedil;&otilde;es iniciais\newline\alpha_1='</span>,num2str(alpha1),<span class="string">'   \alpha_2='</span>,num2str(alpha2),<span class="string">'  \delta_1='</span>,num2str(delta1),<span class="string">'   \delta_2='</span>,num2str(delta2),<span class="string">'   N_1(0)='</span>,num2str(N1_0),<span class="string">'   N_2(0)='</span>,num2str(N2_0),<span class="string">'   Ponto de Equil&iacute;brio: N_1='</span>,num2str(-delta1/alpha1),<span class="string">' ;  N_2='</span>,num2str(delta2/alpha2)]);
+    legend(<span class="string">'N_1'</span>,<span class="string">'N_2'</span>);
+
+    m=max(max(n1),max(n2))+1;
+    axis([0 10 0 m]);
+
+    xlabel(<span class="string">'Time (t)'</span>);
+    ylabel(<span class="string">'N_1 / N_2'</span>);
+
+    hold <span class="string">off</span>;
+
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="Lab1_03.png" alt=""> <img vspace="5" hspace="5" src="Lab1_04.png" alt=""> <img vspace="5" hspace="5" src="Lab1_05.png" alt=""> <img vspace="5" hspace="5" src="Lab1_06.png" alt=""> <p>A partir dos primeiros gr&aacute;ficos, pode concluir-se o seguinte</p><div><ul><li>Quando ambas as condi&ccedil;&otilde;es iniciais correspondem ao equil&iacute;brio, as popula&ccedil;&otilde;es nunca oscilam e mant&ecirc;m sempre o equil&iacute;brio (assumimos que n&atilde;o h&aacute; perturba&ccedil;&otilde;es), tal como esperado</li><li>Ao "desequilibrar" uma das condi&ccedil;&otilde;es iniciais, as popula&ccedil;&otilde;es passam a seguir um modelo oscilat&oacute;rio, sendo que o aumento da amplitude das popula&ccedil;&otilde;es torna mais vis&iacute;vel a varia&ccedil;&atilde;o lenta perto dos m&iacute;nimos e r&aacute;pida perto dos m&aacute;ximos, tal como esperado da an&aacute;lise te&oacute;rica</li><li>Ao manter um dos valores iniciais no equil&iacute;brio, o outro valor inicial passa a definir o m&aacute;ximo ou o m&iacute;nimo, conforme acima ou abaixo do valor de equil&iacute;brio, respectivamente</li></ul></div><pre class="codeinput"><span class="keyword">for</span> y=M2
+
+    alpha1=y(1);alpha2=y(2);delta1=y(3);delta2=y(4);N1_0=y(5);N2_0=y(6);
+    options = simset(<span class="string">'SrcWorkspace'</span>,<span class="string">'current'</span>);
+    sim(<span class="string">'function_teste'</span>,[],options);
+
+    figure;
+    hold <span class="string">on</span>;
+
+    plot(tout,n1,<span class="string">'b'</span>);
+    plot(tout,n2,<span class="string">'g'</span>);
+
+    title([<span class="string">'Modelo predador presa (2.2) - varia&ccedil;&atilde;o dos pontos de equil&iacute;brio/m&aacute;ximos/m&iacute;nimos\newline\alpha_1='</span>,num2str(alpha1),<span class="string">'   \alpha_2='</span>,num2str(alpha2),<span class="string">'  \delta_1='</span>,num2str(delta1),<span class="string">'   \delta_2='</span>,num2str(delta2),<span class="string">'   N_1(0)='</span>,num2str(N1_0),<span class="string">'   N_2(0)='</span>,num2str(N2_0),<span class="string">'   Ponto de Equil&iacute;brio: N_1='</span>,num2str(-delta1/alpha1),<span class="string">' ;  N_2='</span>,num2str(delta2/alpha2)]);
+    legend(<span class="string">'N_1'</span>,<span class="string">'N_2'</span>);
+
+    m=max(max(n1),max(n2))+1;
+    axis([0 10 0 m]);
+
+    xlabel(<span class="string">'Time (t)'</span>);
+    ylabel(<span class="string">'N_1 / N_2'</span>);
+
+    hold <span class="string">off</span>;
+
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="Lab1_07.png" alt=""> <img vspace="5" hspace="5" src="Lab1_08.png" alt=""> <img vspace="5" hspace="5" src="Lab1_09.png" alt=""> <img vspace="5" hspace="5" src="Lab1_10.png" alt=""> <p>Nestes exemplos podem ver-se essencialmente os efeitos da varia&ccedil;&atilde;o dos par&acirc;metros alfa e delta em particular, mantendo as condi&ccedil;&otilde;es iniciais iguais.</p><div><ul><li>&Eacute; de notar o afastamento das solu&ccedil;&otilde;es com o afastamento dos valores de delta, o que demontra a depend&ecirc;ncia directa entre este par&acirc;metro e o valor de equil&iacute;brio (mantendo alfa constante)</li><li>Entre os dois &uacute;ltimos gr&aacute;ficos pode notar-se a diferen&ccedil;a das amplitues face &agrave; varia&ccedil;&atilde;o simult&acirc;nea das condi&ccedil;&otilde;es iniciais</li><li>O primeiro caso representa uma situa&ccedil;&atilde;o em que o valor inicial &eacute; superior ao valor de equil&iacute;brio da popula&ccedil;&atilde;o de presas e inferior ao da popula&ccedil;&atilde;o de predadores</li><li>No segundo caso o valor inicial &eacute; superior a ambos os pontos de equil&iacute;brio)</li></ul></div><p>Em rela&ccedil;&atilde;o ao gr&aacute;fico obtido em 2.1, podemos verificar a semelhan&ccedil;a na forma da varia&ccedil;&atilde;o das popula&ccedil;&otilde;es, fazendo-se uma compara&ccedil;&atilde;o directa com o primeiro do segundo grupo de figuras, pois os valores utilizados para os par&acirc;metros s&atilde;o os mesmos.</p><h2>Ex2.3 - a)<a name="10"></a></h2><pre class="codeinput"><span class="comment">%Tentativa 1</span>
+y1=[1.2;1.2;-1.2;2.3;10;10];
+
+<span class="comment">%Tentativa 2</span>
+y2=[1.2;1.2;-1.2;2.3;1.9167;10];
+
+<span class="comment">%Tentativa 3</span>
+y3=[0.6;1.2;-1.2;2.3;1.9167;10];
+
+<span class="comment">%Tentativa 4</span>
+y4=[0.55;1.2;-1.2;2.3;1.9167;10];
+
+y=zeros(6,1);
+M=[y1 y2 y3 y4];
+
+<span class="keyword">for</span> y=M
+
+    alpha1=y(1);alpha2=y(2);delta1=y(3);delta2=y(4);N1_0=y(5);N2_0=y(6);
+
+    load(<span class="string">'presas.mat'</span>);
+    options = simset(<span class="string">'SrcWorkspace'</span>,<span class="string">'current'</span>);
+    sim(<span class="string">'function_teste'</span>, tr,options);
+
+    figure;
+    hold <span class="string">on</span>;
+
+    plot(tout,n1,<span class="string">'b'</span>);
+    plot(tout,n2,<span class="string">'g'</span>);
+    plot(tr,yr,<span class="string">'r'</span>);
+
+    title([<span class="string">'Modelo predador presa (2.3) - C&aacute;lculo de modelo por tentativa\newline\alpha_1='</span>,num2str(alpha1),<span class="string">'   \alpha_2='</span>,num2str(alpha2),<span class="string">'  \delta_1='</span>,num2str(delta1),<span class="string">'   \delta_2='</span>,num2str(delta2),<span class="string">'   N_1(0)='</span>,num2str(N1_0),<span class="string">'   N_2(0)='</span>,num2str(N2_0),<span class="string">'\newlinePonto de Equil&iacute;brio: N_1='</span>,num2str(-delta1/alpha1),<span class="string">' ;  N_2='</span>,num2str(delta2/alpha2)]);
+    legend(<span class="string">'N_1'</span>,<span class="string">'N_2'</span>,<span class="string">'N_2(file)'</span>);
+
+    m=max(max(n1),max(n2))+1;
+    axis([0 20 0 m]);
+
+    xlabel(<span class="string">'Time (t)'</span>);
+    ylabel(<span class="string">'N_1 / N_2'</span>);
+
+    hold <span class="string">off</span>;
+
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="Lab1_11.png" alt=""> <img vspace="5" hspace="5" src="Lab1_12.png" alt=""> <img vspace="5" hspace="5" src="Lab1_13.png" alt=""> <img vspace="5" hspace="5" src="Lab1_14.png" alt=""> <p>Figura 9: Ap&oacute;s observa&ccedil;&atilde;o dos valores fornecidos come&ccedil;ou por escolher-se os par&acirc;metros alfa1 e a condi&ccedil;&atilde;o inicial dos predadores iguais aos valores conhecidos das presas</p><p>Figura 10: De seguida, sendo o m&aacute;ximo dos valores observados 10, tal como o valor inicial da popula&ccedil;&atilde;o de presas, baixou-se o valor inicial da popula&ccedil;&atilde;o de predadores para igualar o ponto de equil&iacute;brio da popula&ccedil;&atilde;o das presas(em 2.1 e 2.2-a vimos que para que a condi&ccedil;&atilde;o inicial de uma popula&ccedil;&atilde;o seja um extremo, a condi&ccedil;&atilde;o inicial da popula&ccedil;&atilde;o concorrente deve ser o ponto de equil&iacute;brio da anterior)</p><p>Figura 11: Variando alfa1 (passando por outros valores n&atilde;o exemplificados) concluiu-se que colocando o mesmo a metade de delta1, as popula&ccedil;&otilde;es dada e calculada come&ccedil;am a sobrep&ocirc;r-se</p><p>Figura 12: De forma a optimizar a sobreposi&ccedil;&atilde;o nas primeiras arcadas, variou-se ligeiramente alfa1 no sentido anterior; no entanto, ambas &uacute;ltimas figuras representam uma sobreposi&ccedil;&atilde;o adequada dos valores fornecidos e do modelo calculado</p><p>O m&iacute;nimo encontrado por tentativa e erro ocorre em alfa1 = 0.55  and N1(0) = 1.9167</p><h2>Ex2.3 - b)<a name="13"></a></h2><pre class="codeinput">n2=zeros(1,101);
+yr=zeros(1,101);
+
+[X,Y] = meshgrid(2:((2.9-2)/20):2.9, 0.56:((0.58-0.56)/20):0.58);
+s=size(X);
+l=s(1);
+c=s(2);
+E=zeros(l,c);
+
+<span class="keyword">for</span> i=1:1:l
+    <span class="keyword">for</span> j=1:1:c
+
+        y=[X(i,j) Y(i,j)];
+        E(i,j)=func_error(y);
+
+    <span class="keyword">end</span>
+
+    <span class="comment">%tempo_restante = waitbar(i/l);</span>
+
+<span class="keyword">end</span>
+figure;
+h=surf(X,Y,E);
+[x_b,y_b]=find(E==min(min(E)));
+
+title(<span class="string">'Error surface'</span>);
+xlabel(<span class="string">'N_1(0)'</span>);
+ylabel(<span class="string">'\alpha_1'</span>);
+zlabel(<span class="string">'Error'</span>);
+<span class="comment">%shading interp;</span>
+</pre><img vspace="5" hspace="5" src="Lab1_15.png" alt=""> <h2>Ex2.3 - c)<a name="15"></a></h2><pre class="codeinput">x0=[1.9167 0.55];
+options = optimset(<span class="string">'TolX'</span>,1e-12);
+[x_c,fval_c] = fminsearch(@func_error,x0,options);
+</pre><h2>Ex2.3 - d)<a name="17"></a></h2><pre class="codeinput">    alpha1=Y(x_b,y_b);
+    alpha2=1.2;
+    delta1=-1.2;
+    delta2=2.3;
+    N1_0=X(x_b,y_b);
+    N2_0=10;
+
+  load(<span class="string">'presas.mat'</span>);
+  options = simset(<span class="string">'SrcWorkspace'</span>,<span class="string">'current'</span>);
+  sim(<span class="string">'function_teste'</span>, tr,options);
+
+  figure;
+  hold <span class="string">on</span>;
+
+  plot(tout,n2,<span class="string">'g'</span>);
+  plot(tr,yr,<span class="string">'ro'</span>);
+
+   title([<span class="string">'Modelo predador presa (2.3)- (b/d) Solu&ccedil;&atilde;o de modelo por m&iacute;nimo de superf&iacute;cie\newline\alpha_1='</span>,num2str(alpha1),<span class="string">' \alpha_2='</span>,num2str(alpha2),<span class="string">' \delta_1='</span>,num2str(delta1),<span class="string">' \delta_2='</span>,num2str(delta2),<span class="string">' N_1(0)='</span>,num2str(N1_0),<span class="string">' N_2(0)='</span>,num2str(N2_0),<span class="string">'\newlinePonto de Equil&iacute;brio: N_1='</span>,num2str(-delta1/alpha1),<span class="string">' ; N_2='</span>,num2str(delta2/alpha2)]);
+   legend(<span class="string">'N_2'</span>,<span class="string">'N_2(file)'</span>);
+
+  m=max(max(n1),max(n2))+1;
+  axis([0 20 0 m]);
+
+  xlabel(<span class="string">'Time (t)'</span>);
+  ylabel(<span class="string">'N_1 / N_2'</span>);
+
+  E(x_b,y_b);
+  hold <span class="string">off</span>;
+</pre><img vspace="5" hspace="5" src="Lab1_16.png" alt=""> <p>O m&iacute;nimo com ciclos for &eacute; 12.1014 alfa1 = 0.5710 e N1(0) = 2.5850</p><pre class="codeinput">    alpha1=x_c(2);
+    alpha2=1.2;
+    delta1=-1.2;
+    delta2=2.3;
+    N1_0=x_c(1);
+    N2_0=10;
+
+  load(<span class="string">'presas.mat'</span>);
+  options = simset(<span class="string">'SrcWorkspace'</span>,<span class="string">'current'</span>);
+  sim(<span class="string">'function_teste'</span>, tr,options);
+
+  figure;
+  hold <span class="string">on</span>;
+
+  plot(tout,n2,<span class="string">'g'</span>);
+  plot(tr,yr,<span class="string">'ro'</span>);
+
+  title([<span class="string">'Modelo predador presa (2.3) - (c/d) Solu&ccedil;&atilde;o de modelo por optimiza&ccedil;&atilde;o de procura\newline\alpha_1='</span>,num2str(alpha1),<span class="string">' \alpha_2='</span>,num2str(alpha2),<span class="string">' \delta_1='</span>,num2str(delta1),<span class="string">' \delta_2='</span>,num2str(delta2),<span class="string">' N_1(0)='</span>,num2str(N1_0),<span class="string">' N_2(0)='</span>,num2str(N2_0),<span class="string">'\newlinePonto de Equil&iacute;brio: N_1='</span>,num2str(-delta1/alpha1),<span class="string">' ; N_2='</span>,num2str(delta2/alpha2)]);
+  legend(<span class="string">'N_2'</span>,<span class="string">'N_2(file)'</span>);
+
+  m=max(max(n1),max(n2))+1;
+  axis([0 20 0 m]);
+
+  xlabel(<span class="string">'Time (t)'</span>);
+  ylabel(<span class="string">'N_1 / N_2'</span>);
+
+  hold <span class="string">off</span>;
+</pre><img vspace="5" hspace="5" src="Lab1_17.png" alt=""> <p>O m&iacute;nimo do erro atrav&eacute;s de optimiza&ccedil;&atilde;o &eacute;  12.0533 para alfa1 = 0.5715 e N1(0) = 2.5740</p><p>Os valores obtidos foram muito semelhantes para ambas as al&iacute;neas. No entanto, o segundo m&eacute;todo &eacute; mais eficiente, visto que o primero envolve a escolha de uma grelha e diminui&ccedil;&atilde;o da mesma por observa&ccedil;&atilde;o, e a procura do m&iacute;nimo na matriz de erro resultante. Esta simula&ccedil;&atilde;o com o uso dos ciclos 'for' &eacute; um processo demorado e com tempo de c&aacute;lculo para cada matriz a evoluir quadraticamente com as dimens&otilde;es da mesma.</p><h2>Ex. 3.2 - Sistema ca&oacute;tico<a name="23"></a></h2><p>NOTA: a simula&ccedil;&atilde;o &eacute; corrida a partir das equa&ccedil;&otilde;es diferenciais das vari&aacute;veis de estado</p><pre class="codeinput">clear <span class="string">all</span>
+close <span class="string">all</span>
+m = 50;
+m1 = m;
+m2 = m;
+l = 1;
+l1 = l;
+l2 = l;
+g = 10;
+p10 = 0;
+p20 = 0;
+teta10 = 25*pi/180;
+teta20 = 25*pi/180;
+load_system(<span class="string">'sis_caotico.mdl'</span>);
+<span class="comment">% a simula&ccedil;&atilde;o deve ser posta a correr com t_disc(3) para abranger</span>
+<span class="comment">% todos os tempos</span>
+set_param(gcs, <span class="string">'StopTime'</span>, <span class="string">'10'</span>);
+sim(<span class="string">'sis_caotico'</span>);
+subplot(2,1,1)
+plot(teta1*180/pi, teta2*180/pi)
+xlabel(<span class="string">'\theta_{1}'</span>)
+ylabel(<span class="string">'\theta_{2}'</span>)
+title(<span class="string">'Descri&ccedil;&atilde;o de (\theta_{1}, \theta_{2}) ao longo do movimento'</span>)
+subplot(2,1,2)
+plot(x1,y1,x2,y2)
+xlabel(<span class="string">'coordenada x'</span>)
+ylabel(<span class="string">'coordenada y'</span>)
+title(<span class="string">'(x,y) posi&ccedil;&atilde;o de m_{1} e m_{2}'</span>)
+legend(<span class="string">'m_{1}'</span>,<span class="string">'m_{2}'</span>)
+</pre><img vspace="5" hspace="5" src="Lab1_18.png" alt=""> <h2>Ex. 3.4 - Sistema ca&oacute;tico<a name="24"></a></h2><p>NOTA: a simula&ccedil;&atilde;o &eacute; corrida a partir das equa&ccedil;&otilde;es diferenciais das vari&aacute;veis de estado</p><p>Legenda da barra de cores 0 - n&atilde;o ocorre looping i - looping occore at&eacute; ao instante definido por t_disc(i)</p><pre class="codeinput">clear <span class="string">all</span>
+close <span class="string">all</span>
+m = 50;
+m1 = m;
+m2 = m;
+l = 1;
+l1 = l;
+l2 = l;
+g = 10;
+p10 = 0;
+p20 = 0;
+<span class="comment">% tempo discretizado</span>
+t_disc =[10*sqrt(l/g), 10^2*sqrt(l/g), 10^3*sqrt(l/g)];
+i = 0;
+j = 0;
+angleMin = -3.5;
+angleMax = 3.5;
+angleStep = .5;
+
+<span class="keyword">for</span> teta10 = angleMin:angleStep:angleMax,
+    i= i+1;
+    <span class="keyword">for</span> teta20 = angleMin:angleStep:angleMax,
+        j = j+1;
+        load_system(<span class="string">'sis_caotico_simples.mdl'</span>);
+        <span class="comment">% a simula&ccedil;&atilde;o deve ser posta a correr com t_disc(3) para abranger</span>
+        <span class="comment">% todos os tempos</span>
+        set_param(gcs, <span class="string">'StopTime'</span>, num2str(round(t_disc(3))));
+        sim(<span class="string">'sis_caotico_simples'</span>);
+        first_loop_time = getFirstLoopTime(t, teta1, teta2);
+        <span class="keyword">if</span>(isnan(first_loop_time))
+            first_loop_time = Inf;
+        <span class="keyword">end</span>
+        index = find(t_disc&gt;first_loop_time, 1);
+        <span class="keyword">if</span>(isempty(index))
+            index = 0;
+        <span class="keyword">end</span>
+        X(i,j) = teta10;
+        Y(i,j) = teta20;
+        C(i,j) = index;
+    <span class="keyword">end</span>
+    j=0;
+<span class="keyword">end</span>
+pcolor(X,Y,C);
+colormap(gray(4));
+colorbar
+title(<span class="string">'Tempo discretizado ao fim do qual ocorre o primeiro looping, dados \theta_{10} e \theta_{20}'</span>);
+xlabel(<span class="string">'\theta_{10}'</span>);
+ylabel(<span class="string">'\theta_{20}'</span>);
+<span class="comment">% e interessante notar que a matriz C obtida &eacute; sim&eacute;trica por rota&ccedil;&atilde;o de 180</span>
+<span class="comment">% graus; dada a geometria do problema (que apresenta um eixo de simetria</span>
+<span class="comment">% segundo x=0), tal seria expect&aacute;vel, ou seja, o tempo do primeiro loop</span>
+<span class="comment">% para (teta10, teta20) &eacute; igual ao tempo para (-teta10, -teta20).</span>
+<span class="comment">% isequal(rot90(C,2),C) % da como resultado o valor 1</span>
+</pre><img vspace="5" hspace="5" src="Lab1_19.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2012b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+% Cadeira de Modelação e Simulação
+%
+% 1º Trabalho de laboratório
+% Simulação básica em Matlab/Simulink
+%
+% Turno: 4ª feira, das 9h às 11h
+%
+% Elementos do grupo:
+%     Gonçalo Vítor  Nº73229
+%     Catarina Cruz  Nº73319
+%     Diogo Brás     Nº68212
+
+%% Ex. 1 - Simulação do movimento livre de uma viatura
+%
+close all
+clear all
+v0 = [-1 +1];
+y0 = 1;
+stop_time = 10.0;
+m = 50;
+beta = [10 25 50];
+
+
+vlegend = cell(1, size(beta, 2)*size(v0,2));
+plegend = cell(1, size(beta, 2)*size(v0,2));
+vdata = cell(1, size(beta, 2)*2);
+pdata = cell(1, size(beta, 2)*2);
+for i = 1:size(beta, 2),
+    sim('carro');
+
+    vdata{2*i-1} = t;
+    vdata{2*i} = v;
+    pdata{2*i-1} = t;
+    pdata{2*i} = y;
+    for z=1:size(v0, 2),
+        vlegend{size(v0,2)*(i-1)+z} = sprintf('\\beta = %d Nms ^{-1}, v_{0} = %d ms ^{-1}', beta(i), v0(z));
+        plegend{size(v0,2)*(i-1)+z} = sprintf('\\beta = %d Nms ^{-1}, v_{0} = %d ms ^{-1}, y_{0} = %d m', beta(i), v0(z), y0);
+    end
+end
+
+figure(1);
+plot(vdata{1:size(vdata,2)})
+title(sprintf('Evolução da velocidade do carro ao longo do tempo, m = %d kg', m))
+xlabel('tempo t/s')
+ylabel('velocidade v/ms ^{-1}')
+ylim([-1 +4])
+legend(vlegend, 'location', 'NorthEast');
+
+
+figure(2);
+plot(pdata{1:size(pdata,2)})
+title(sprintf('Evolução da posição do carro ao longo do tempo, m = %d kg', m))
+xlabel('tempo t/s')
+ylabel('posição y/m')
+ylim([-6 +20])
+legend(plegend, 'location', 'NorthEast');
+
+% Os resultados obtidos tanto para a posição, como para a velocidade
+% obtidos por simulação estão de acordo com os previstos teoricamente.
+
+%% Ex. 2 - Simulação de um modelo predador-presa
+%
+%% Ex2.2
+
+%%
+y=zeros(6,1);
+M1=[1   1   1   1;
+    1   1   1   1;
+    -1 -1  -1  -1;
+    1   1   1   1; 
+    1   1   1   1; 
+    1  1.1 0.5 0.1];
+
+M2=[1    1    1   1;
+    1    1    1   1;
+   -2   -2   -3  -3;
+    2    4    6   6; 
+    1    3    4   9; 
+    1    3    4   9];
+
+% As colunas de M1/M2 correspondem aos valores dos parâmetros a fornecer
+% à simulação. Iterar pelas colunas da matriz fornece então os város
+% exemplos necessários
+%
+% As primeiras duas linhas correspondem a alfa1 e alfa2, que neste
+% exercício devem ser mantidos a 1
+
+for y=M1
+    
+    alpha1=y(1);alpha2=y(2);delta1=y(3);delta2=y(4);N1_0=y(5);N2_0=y(6);
+    options = simset('SrcWorkspace','current');
+    sim('function_teste',[],options);
+
+    figure;
+    hold on;
+
+    plot(tout,n1,'b');
+    plot(tout,n2,'g');
+
+    title(['Modelo predador presa (2.2) - variação das condições iniciais\newline\alpha_1=',num2str(alpha1),'   \alpha_2=',num2str(alpha2),'  \delta_1=',num2str(delta1),'   \delta_2=',num2str(delta2),'   N_1(0)=',num2str(N1_0),'   N_2(0)=',num2str(N2_0),'   Ponto de Equilíbrio: N_1=',num2str(-delta1/alpha1),' ;  N_2=',num2str(delta2/alpha2)]);
+    legend('N_1','N_2');
+
+    m=max(max(n1),max(n2))+1;
+    axis([0 10 0 m]);
+
+    xlabel('Time (t)');
+    ylabel('N_1 / N_2');
+
+    hold off;
+
+end
+%%
+%
+% A partir dos primeiros gráficos, pode concluir-se o seguinte
+% 
+% * Quando ambas as condições iniciais correspondem ao equilíbrio, as populações nunca oscilam e mantêm sempre o equilíbrio (assumimos que não há perturbações), tal como esperado
+% * Ao "desequilibrar" uma das condições iniciais, as populações passam a seguir um modelo oscilatório, sendo que o aumento da amplitude das populações torna mais visível a variação lenta perto dos mínimos e rápida perto dos máximos, tal como esperado da análise teórica
+% * Ao manter um dos valores iniciais no equilíbrio, o outro valor inicial passa a definir o máximo ou o mínimo, conforme acima ou abaixo do valor de equilíbrio, respectivamente
+
+%%
+for y=M2
+    
+    alpha1=y(1);alpha2=y(2);delta1=y(3);delta2=y(4);N1_0=y(5);N2_0=y(6);
+    options = simset('SrcWorkspace','current');
+    sim('function_teste',[],options);
+
+    figure;
+    hold on;
+
+    plot(tout,n1,'b');
+    plot(tout,n2,'g');
+
+    title(['Modelo predador presa (2.2) - variação dos pontos de equilíbrio/máximos/mínimos\newline\alpha_1=',num2str(alpha1),'   \alpha_2=',num2str(alpha2),'  \delta_1=',num2str(delta1),'   \delta_2=',num2str(delta2),'   N_1(0)=',num2str(N1_0),'   N_2(0)=',num2str(N2_0),'   Ponto de Equilíbrio: N_1=',num2str(-delta1/alpha1),' ;  N_2=',num2str(delta2/alpha2)]);
+    legend('N_1','N_2'); 
+
+    m=max(max(n1),max(n2))+1;
+    axis([0 10 0 m]);
+
+    xlabel('Time (t)');
+    ylabel('N_1 / N_2');
+
+    hold off;
+
+end
+
+%%
+% 
+% Nestes exemplos podem ver-se essencialmente os efeitos da variação dos parâmetros alfa e delta em particular, mantendo as condições iniciais iguais.
+% 
+% * É de notar o afastamento das soluções com o afastamento dos valores de delta, o que demontra a dependência directa entre este parâmetro e o valor de equilíbrio (mantendo alfa constante)
+% * Entre os dois últimos gráficos pode notar-se a diferença das amplitues face à variação simultânea das condições iniciais
+% * O primeiro caso representa uma situação em que o valor inicial é superior ao valor de equilíbrio da população de presas e inferior ao da população de predadores
+% * No segundo caso o valor inicial é superior a ambos os pontos de equilíbrio)
+
+%%
+% 
+% Em relação ao gráfico obtido em 2.1, podemos verificar a semelhança na
+% forma da variação das populações, fazendo-se uma comparação directa
+% com o primeiro do segundo grupo de figuras, pois os valores utilizados
+% para os parâmetros são os mesmos. 
+% 
+
+%% Ex2.3 - a)
+
+%%
+
+%Tentativa 1
+y1=[1.2;1.2;-1.2;2.3;10;10]; 
+
+%Tentativa 2
+y2=[1.2;1.2;-1.2;2.3;1.9167;10]; 
+
+%Tentativa 3
+y3=[0.6;1.2;-1.2;2.3;1.9167;10]; 
+
+%Tentativa 4
+y4=[0.55;1.2;-1.2;2.3;1.9167;10]; 
+
+y=zeros(6,1);
+M=[y1 y2 y3 y4];
+
+for y=M
+
+    alpha1=y(1);alpha2=y(2);delta1=y(3);delta2=y(4);N1_0=y(5);N2_0=y(6);
+       
+    load('presas.mat');
+    options = simset('SrcWorkspace','current');
+    sim('function_teste', tr,options);
+
+    figure;
+    hold on;
+
+    plot(tout,n1,'b');
+    plot(tout,n2,'g');
+    plot(tr,yr,'r');
+
+    title(['Modelo predador presa (2.3) - Cálculo de modelo por tentativa\newline\alpha_1=',num2str(alpha1),'   \alpha_2=',num2str(alpha2),'  \delta_1=',num2str(delta1),'   \delta_2=',num2str(delta2),'   N_1(0)=',num2str(N1_0),'   N_2(0)=',num2str(N2_0),'\newlinePonto de Equilíbrio: N_1=',num2str(-delta1/alpha1),' ;  N_2=',num2str(delta2/alpha2)]);
+    legend('N_1','N_2','N_2(file)');
+
+    m=max(max(n1),max(n2))+1;
+    axis([0 20 0 m]);
+
+    xlabel('Time (t)');
+    ylabel('N_1 / N_2');
+
+    hold off;
+    
+end
+
+%%
+%
+% Figura 9: 
+% Após observação dos valores fornecidos começou por escolher-se os parâmetros alfa1 e a condição inicial dos predadores iguais aos valores conhecidos das presas
+% 
+% Figura 10: 
+% De seguida, sendo o máximo dos valores observados 10, tal como o valor inicial da população de presas, baixou-se o valor inicial da população de predadores para igualar o ponto de equilíbrio da população das presas(em 2.1 e 2.2-a vimos que para que a condição inicial de uma população seja um extremo, a condição inicial da população concorrente deve ser o ponto de equilíbrio da anterior)
+% 
+% Figura 11: 
+% Variando alfa1 (passando por outros valores não exemplificados) concluiu-se que colocando o mesmo a metade de delta1, as populações dada e calculada começam a sobrepôr-se
+% 
+% Figura 12: 
+% De forma a optimizar a sobreposição nas primeiras arcadas, variou-se ligeiramente alfa1 no sentido anterior; no entanto, ambas últimas figuras representam uma sobreposição adequada dos valores fornecidos e do modelo calculado
+% 
+% 
+% O mínimo encontrado por tentativa e erro ocorre em alfa1 = 0.55  and N1(0) = 1.9167
+       
+
+%% Ex2.3 - b)
+%%
+
+n2=zeros(1,101);
+yr=zeros(1,101);
+
+[X,Y] = meshgrid(2:((2.9-2)/20):2.9, 0.56:((0.58-0.56)/20):0.58); 
+s=size(X);
+l=s(1);
+c=s(2);
+E=zeros(l,c);
+
+for i=1:1:l
+    for j=1:1:c
+        
+        y=[X(i,j) Y(i,j)];
+        E(i,j)=func_error(y);
+
+    end
+   
+    %tempo_restante = waitbar(i/l);
+    
+end
+figure;
+h=surf(X,Y,E);
+[x_b,y_b]=find(E==min(min(E)));
+
+title('Error surface');
+xlabel('N_1(0)');
+ylabel('\alpha_1');
+zlabel('Error');
+%shading interp;
+
+
+%% Ex2.3 - c)
+
+%%
+x0=[1.9167 0.55];
+options = optimset('TolX',1e-12);
+[x_c,fval_c] = fminsearch(@func_error,x0,options);
+  
+%% Ex2.3 - d)
+
+%%
+
+  
+    alpha1=Y(x_b,y_b);
+    alpha2=1.2;
+    delta1=-1.2;
+    delta2=2.3;
+    N1_0=X(x_b,y_b);
+    N2_0=10;
+
+  load('presas.mat');
+  options = simset('SrcWorkspace','current');
+  sim('function_teste', tr,options);
+
+  figure;
+  hold on;
+
+  plot(tout,n2,'g');
+  plot(tr,yr,'ro');
+
+   title(['Modelo predador presa (2.3)- (b/d) Solução de modelo por mínimo de superfície\newline\alpha_1=',num2str(alpha1),' \alpha_2=',num2str(alpha2),' \delta_1=',num2str(delta1),' \delta_2=',num2str(delta2),' N_1(0)=',num2str(N1_0),' N_2(0)=',num2str(N2_0),'\newlinePonto de Equilíbrio: N_1=',num2str(-delta1/alpha1),' ; N_2=',num2str(delta2/alpha2)]);
+   legend('N_2','N_2(file)');
+
+  m=max(max(n1),max(n2))+1;
+  axis([0 20 0 m]);
+
+  xlabel('Time (t)');
+  ylabel('N_1 / N_2');
+
+  E(x_b,y_b);
+  hold off;
+  
+    
+ %%
+ %
+ % O mínimo com ciclos for é 12.1014 alfa1 = 0.5710 e N1(0) = 2.5850
+ %
+ %%
+
+    alpha1=x_c(2);
+    alpha2=1.2;
+    delta1=-1.2;
+    delta2=2.3;
+    N1_0=x_c(1);
+    N2_0=10;
+
+  load('presas.mat');
+  options = simset('SrcWorkspace','current');
+  sim('function_teste', tr,options);
+
+  figure;
+  hold on;
+
+  plot(tout,n2,'g');
+  plot(tr,yr,'ro');
+
+  title(['Modelo predador presa (2.3) - (c/d) Solução de modelo por optimização de procura\newline\alpha_1=',num2str(alpha1),' \alpha_2=',num2str(alpha2),' \delta_1=',num2str(delta1),' \delta_2=',num2str(delta2),' N_1(0)=',num2str(N1_0),' N_2(0)=',num2str(N2_0),'\newlinePonto de Equilíbrio: N_1=',num2str(-delta1/alpha1),' ; N_2=',num2str(delta2/alpha2)]);
+  legend('N_2','N_2(file)');
+
+  m=max(max(n1),max(n2))+1;
+  axis([0 20 0 m]);
+
+  xlabel('Time (t)');
+  ylabel('N_1 / N_2');
+
+  hold off;
+  
+ %%
+ %
+ % O mínimo do erro através de optimização é  12.0533 para alfa1 = 0.5715 e
+ % N1(0) = 2.5740
+ %
+%%
+%
+% Os valores obtidos foram muito semelhantes para ambas as alíneas. No
+% entanto, o segundo método é mais eficiente, visto que o primero envolve a
+% escolha de uma grelha e diminuição da mesma por observação, e a procura
+% do mínimo na matriz de erro resultante. Esta simulação com o uso dos ciclos 'for'
+% é um processo demorado e com tempo de cálculo para cada matriz a evoluir 
+% quadraticamente com as dimensões da mesma.
+%
+
+
+       
+%% Ex. 3.2 - Sistema caótico
+% 
+% NOTA: a simulação é corrida a partir das equações diferenciais das
+% variáveis de estado
+clear all
+close all
+m = 50;
+m1 = m;
+m2 = m;
+l = 1;
+l1 = l;
+l2 = l;
+g = 10;
+p10 = 0;
+p20 = 0;
+teta10 = 25*pi/180;
+teta20 = 25*pi/180;
+load_system('sis_caotico.mdl');
+% a simulação deve ser posta a correr com t_disc(3) para abranger
+% todos os tempos
+set_param(gcs, 'StopTime', '10');
+sim('sis_caotico');
+subplot(2,1,1)
+plot(teta1*180/pi, teta2*180/pi)
+xlabel('\theta_{1}')
+ylabel('\theta_{2}')
+title('Descrição de (\theta_{1}, \theta_{2}) ao longo do movimento')
+subplot(2,1,2)
+plot(x1,y1,x2,y2)
+xlabel('coordenada x')
+ylabel('coordenada y')
+title('(x,y) posição de m_{1} e m_{2}')
+legend('m_{1}','m_{2}')
+
+
+%% Ex. 3.4 - Sistema caótico
+% 
+% NOTA: a simulação é corrida a partir das equações diferenciais das
+% variáveis de estado
+%
+% Legenda da barra de cores
+% 0 - não ocorre looping
+% i - looping occore até ao instante definido por t_disc(i)
+
+clear all
+close all
+m = 50;
+m1 = m;
+m2 = m;
+l = 1;
+l1 = l;
+l2 = l;
+g = 10;
+p10 = 0;
+p20 = 0;
+% tempo discretizado
+t_disc =[10*sqrt(l/g), 10^2*sqrt(l/g), 10^3*sqrt(l/g)];
+i = 0;
+j = 0;
+angleMin = -3.5;
+angleMax = 3.5;
+angleStep = .5;
+
+for teta10 = angleMin:angleStep:angleMax,
+    i= i+1;
+    for teta20 = angleMin:angleStep:angleMax,
+        j = j+1;
+        load_system('sis_caotico_simples.mdl');
+        % a simulação deve ser posta a correr com t_disc(3) para abranger
+        % todos os tempos
+        set_param(gcs, 'StopTime', num2str(round(t_disc(3))));
+        sim('sis_caotico_simples');
+        first_loop_time = getFirstLoopTime(t, teta1, teta2);
+        if(isnan(first_loop_time))
+            first_loop_time = Inf;
+        end
+        index = find(t_disc>first_loop_time, 1);
+        if(isempty(index))
+            index = 0;
+        end
+        X(i,j) = teta10;
+        Y(i,j) = teta20;
+        C(i,j) = index;
+    end
+    j=0;
+end
+pcolor(X,Y,C);
+colormap(gray(4));
+colorbar
+title('Tempo discretizado ao fim do qual ocorre o primeiro looping, dados \theta_{10} e \theta_{20}');
+xlabel('\theta_{10}');
+ylabel('\theta_{20}');
+% e interessante notar que a matriz C obtida é simétrica por rotação de 180
+% graus; dada a geometria do problema (que apresenta um eixo de simetria
+% segundo x=0), tal seria expectável, ou seja, o tempo do primeiro loop
+% para (teta10, teta20) é igual ao tempo para (-teta10, -teta20).
+% isequal(rot90(C,2),C) % da como resultado o valor 1
+
+##### SOURCE END #####
+--></body></html>

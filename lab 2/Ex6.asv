@@ -1,0 +1,56 @@
+%% Ex6 - teste à função f
+clear all
+close all
+yl = 0.4;
+k1 = 1/yl;
+k2 = sqrt(2*k1);
+% f(10)
+index = 1;
+Y=[];
+Z=[];
+X=[-2:.01:2];
+for i=1:size(X,2)
+    Y(i) = f(X(i));
+    Z(i) = f(sin(X(i)));
+end
+plot(X, Y, X, X)
+title('Sinal linear à entrada');
+legend('subsys','y=x');
+figure
+plot(X, Z, X, sin(X))
+title('Sinal sinusoidal à entrada');
+legend('subsys', 'y=sin(x)');
+%% Ex6
+% é suposto utilizar k2 para o ganho ou um valor elevado?
+clear all
+close all
+pos0 = 10; % posição inicial da cabeça do disco
+yl = 0.4;
+k1 = 1/yl;
+k2 = sqrt(2*k1);
+xmin = -10;
+xmax = 10;
+ymin = -10;
+ymax = 10;
+% ambos os XY Graph viewers foram definidos entre xmin xmax e ymin ymax; A
+% posição inicial foi definida como pos0 = 10, o que nos
+% permite observar a diferença entre a utilização do subsistema
+% simplesmente linear e o subsistema com o troço não linear
+
+% para comparar a degradação da resposta no tempo, definiu-se o tempo de
+% simulação para 20 s. Compara-se o tempo que demora a atingir uma
+% velocidade final inferior a uma dada tolerância, neste caso 1E-3
+
+vel_tolerance = 1E-3;
+
+sim('no_chattering');
+response = responsetime(tout', vel', vel_tolerance)
+t_non_lin = response(2) % tempo de resposta com subsistema melhorado (não linear)
+
+sim('no_chattering_linearsubsys');
+response = responsetime(tout', vel',vel_tolerance)
+t_lin = response(2) % tempo de resposta com subsistema linear
+% Um tempo de resposta maior corresponde a uma solução pior, dado que se
+% pretende minimizar o tempo de deslocamento da cabeaça do disco
+
+

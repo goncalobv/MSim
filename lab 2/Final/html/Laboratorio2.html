@@ -1,0 +1,850 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Laboratorio2</title><meta name="generator" content="MATLAB 8.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-04-28"><meta name="DC.source" content="Laboratorio2.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Ex. 2</a></li><li><a href="#5">Conclus&atilde;o: A estrat&eacute;gia de actua&ccedil;&atilde;o &oacute;ptima &eacute; tal que se adopte alpha = 1 e beta = 0</a></li><li><a href="#6">Ex 3 - Simula&ccedil;&atilde;o de uma vers&atilde;o perturbada do sistema com a = 0.99 e b = 0.1</a></li><li><a href="#8">Ex. 5</a></li><li><a href="#10">An&aacute;lise da fun&ccedil;&atilde;o f para entrada linear e sinusoidal</a></li><li><a href="#11">Ex7</a></li><li><a href="#12">Ex8</a></li></ul></div><pre class="codeinput"><span class="comment">% Cadeira de Modela&ccedil;&atilde;o e Simula&ccedil;&atilde;o</span>
+<span class="comment">%</span>
+<span class="comment">% 2&ordm; Trabalho de laborat&oacute;rio</span>
+<span class="comment">% Simula&ccedil;&atilde;o b&aacute;sica em Matlab/Simulink</span>
+<span class="comment">%</span>
+<span class="comment">% Turno: 4&ordf; feira, das 9h &agrave;s 11h</span>
+<span class="comment">%</span>
+<span class="comment">% Elementos do grupo:</span>
+<span class="comment">%     Gon&ccedil;alo V&iacute;tor  N&ordm;73229</span>
+<span class="comment">%     Catarina Cruz  N&ordm;73319</span>
+<span class="comment">%     Diogo Br&aacute;s     N&ordm;68212</span>
+
+
+
+warning <span class="string">off</span>;
+</pre><h2>Ex. 2<a name="2"></a></h2><p>Simula&ccedil;&atilde;o do sistema de entradas compostas para diferentes valores de alpha e beta e posterior confirma&ccedil;&atilde;o, por tentativa e erro, dos resultados anal&iacute;ticos por observa&ccedil;&atilde;o dos gr&aacute;ficos.</p><pre>vbeta = [0:0.2:1]; % 0 &lt;= beta &lt;=1 beta poder&aacute; ser qualquer entre 0 e 1
+pelo que ach&aacute;mos por bem simular para 5 valores de beta distintos</pre><pre class="codeinput">vbeta = [0:0.25:1];
+
+alpha = 1;
+<span class="keyword">for</span> beta = vbeta
+
+    T1 = 1+beta;
+    T2= alpha * T1;
+    U1 = -2/(T1 * (1 + alpha)); <span class="comment">% Rela&ccedil;&atilde;o descoberta analiticamente entre U1 e T1</span>
+    U2 = -U1;
+
+    [u1,t1] = rcos(T1,beta);
+    u1 = U1 * u1;
+
+    [u2,t2] = rcos(T2,beta);
+    u2 = U2 * u2;
+
+    t1=t1+T1/2;
+    t2=t2*alpha;
+    t2=t2+T2/2+T1;
+    t2=t2+0.001;
+
+    tempo = [t1; t2];
+    simin = [tempo,[u1; u2]];
+    sim(<span class="string">'sis'</span>, tempo);
+
+    figure;
+    hold <span class="string">on</span>;
+    plot(tempo,simout,<span class="string">'b'</span>);
+    plot(tempo,simout1,<span class="string">'r'</span>);
+    plot(tempo,zeros(length(tempo)),<span class="string">'g'</span>);
+    legend(<span class="string">'y(t)'</span>,<span class="string">'y''(t)'</span>);
+    title([<span class="string">'Alpha=1 ;'</span>,<span class="string">' Beta='</span>,num2str(beta)]);
+    hold <span class="string">off</span>;
+
+    figure;
+    hold <span class="string">on</span>;
+    plot(simout,simout1,<span class="string">'b'</span>);
+    plot(simout(1),simout1(1),<span class="string">'go'</span>);
+    plot(simout(end),simout1(end),<span class="string">'ro'</span>);
+    plot(0,0,<span class="string">'rx'</span>);
+    title([<span class="string">'Alpha=1 ;'</span>,<span class="string">' Beta='</span>,num2str(beta)]);
+    legend(<span class="string">'(y,y'')'</span>,<span class="string">'Estado inicial'</span>,<span class="string">'Estado final'</span>,<span class="string">'Estado final pretendido'</span>);
+    hold <span class="string">off</span>;
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="Laboratorio2_01.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_02.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_03.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_04.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_05.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_06.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_07.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_08.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_09.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_10.png" alt=""> <p>valpha = [0.5:0.5:3]; % alpha &gt; 0; escolhemos um valor inicial em 0.5 visto que alpha n&atilde;o pode tomar o valor de 0.Resultando assim, de acordo com o nosso valor inicial, passo e valor final, 5 valores distintos de alpha. O valor final de alpha foi escolhido para avaliar como alpha evolui ap&oacute;s passar do valor favorito que era 1, para esta vari&aacute;vel</p><pre class="codeinput">valpha = [0.5:0.5:2.5];
+
+beta = 0;
+i=0;
+<span class="keyword">for</span> alpha = valpha
+
+    <span class="comment">% atribui&ccedil;&otilde;es</span>
+    T1 = 1+beta;
+    T2= alpha * T1;
+    U1 = -2/(T1 * (1 + alpha)); <span class="comment">% Rela&ccedil;&atilde;o descoberta analiticamente entre U1 e T1</span>
+    U2 = -U1;
+
+    [u1,t1] = rcos(T1,beta); <span class="comment">% Fun&ccedil;&atilde;o que simula o impulso descrito no enunciado Pb(t)</span>
+    u1 = U1 * u1;
+
+    [u2,t2] = rcos(T2,beta); <span class="comment">% Fun&ccedil;&atilde;o que simula o impulso descrito no enunciado Pb(t)</span>
+    u2 = U2 * u2;
+
+    t1=t1+T1/2;
+    t2=t2*alpha;
+    t2=t2+T2/2+T1;
+    t2=t2+0.001;
+
+    tempo = [t1;t2];
+    simin = [tempo,[u1; u2]];
+    sim(<span class="string">'sis'</span>, tempo)
+
+    figure;
+    hold <span class="string">on</span>;
+    plot(tempo,simout,<span class="string">'b'</span>);
+    plot(tempo,simout1,<span class="string">'r'</span>);
+    plot(tempo,zeros(length(tempo)),<span class="string">'g'</span>);
+    legend(<span class="string">'y(t)'</span>,<span class="string">'y''(t)'</span>);
+    title([<span class="string">'Alpha='</span>,num2str(alpha),<span class="string">'   Beta=0'</span>]);
+    hold <span class="string">off</span>;
+
+    figure;
+    hold <span class="string">on</span>;
+    plot(simout,simout1,<span class="string">'b'</span>);
+    plot(simout(1),simout1(1),<span class="string">'go'</span>);
+    plot(simout(end),simout1(end),<span class="string">'ro'</span>);
+    plot(0,0,<span class="string">'rx'</span>);
+    legend(<span class="string">'(y,y'')'</span>,<span class="string">'Estado inicial'</span>,<span class="string">'Estado final'</span>,<span class="string">'Estado final pretendido'</span>);
+    title([<span class="string">'Alpha='</span>,num2str(alpha),<span class="string">'   Beta=0'</span>]);
+    hold <span class="string">off</span>;
+
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="Laboratorio2_11.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_12.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_13.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_14.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_15.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_16.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_17.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_18.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_19.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_20.png" alt=""> <h2>Conclus&atilde;o: A estrat&eacute;gia de actua&ccedil;&atilde;o &oacute;ptima &eacute; tal que se adopte alpha = 1 e beta = 0<a name="5"></a></h2><h2>Ex 3 - Simula&ccedil;&atilde;o de uma vers&atilde;o perturbada do sistema com a = 0.99 e b = 0.1<a name="6"></a></h2><pre class="codeinput"><span class="comment">%Estudo por simula&ccedil;&atilde;o, da depend&ecirc;ncia do erro de posi&ccedil;&atilde;o/velocidade final</span>
+<span class="comment">% em fun&ccedil;&atilde;o de alpha e de beta para sinais de controlo projectados para o</span>
+<span class="comment">% sistema nominal.</span>
+<span class="comment">%Crit&eacute;rio de Custo: (em fun&ccedil;&atilde;o da dura&ccedil;&atilde;o do sinal de controlo e do</span>
+<span class="comment">%respectivo erro.</span>
+</pre><pre class="codeinput">vbeta = [0:0.5:1];
+valpha = [0.5:0.5:1.5];
+
+simouts = []; <span class="comment">% vector onde s&atilde;o inseridas todos os vectores de velocidade</span>
+<span class="comment">% (simout) velocidades de todas as simula&ccedil;&otilde;es efectuadas de que ir&aacute; ser</span>
+<span class="comment">% mais tarde usado na pergunta 3 por forma a avaliar</span>
+
+
+alpha = 1;
+<span class="keyword">for</span> beta = vbeta
+
+    T1 = 1+beta;
+    T2= alpha * T1;
+    U1 = -2/(T1 * (1 + alpha)); <span class="comment">% Rela&ccedil;&atilde;o descoberta analiticamente entre U1 e T1</span>
+    U2 = -U1;
+
+    [u1,t1] = rcos(T1,beta); <span class="comment">% Fun&ccedil;&atilde;o que simula o impulso descrito no enunciado Pb(t)</span>
+    u1 = U1 * u1;
+
+    [u2,t2] = rcos(T2,beta);
+    u2 = U2 * u2;
+
+    t1=t1+T1/2;
+    t2=t2*alpha;
+    t2=t2+T2/2+T1;
+    t2=t2+0.001;
+
+    tempo = [t1; t2];
+    simin = [tempo,[u1; u2]];
+    sim(<span class="string">'sis2'</span>, tempo);
+
+    figure;
+    hold <span class="string">on</span>;
+    plot(tempo,simout,<span class="string">'b'</span>);
+    plot(tempo,simout1,<span class="string">'r'</span>);
+    plot(tempo,zeros(length(tempo)),<span class="string">'g'</span>);
+    legend(<span class="string">'y(t)'</span>,<span class="string">'y''(t)'</span>);
+    title([<span class="string">'Alpha=1 ;'</span>,<span class="string">' Beta='</span>,num2str(beta)]);
+    hold <span class="string">off</span>;
+
+    figure;
+    hold <span class="string">on</span>;
+    plot(simout,simout1,<span class="string">'b'</span>);
+    plot(simout(1),simout1(1),<span class="string">'go'</span>);
+    plot(simout(end),simout1(end),<span class="string">'ro'</span>);
+    plot(0,0,<span class="string">'rx'</span>);
+    title([<span class="string">'Alpha=1 ;'</span>,<span class="string">' Beta='</span>,num2str(beta)]);
+    legend(<span class="string">'(y,y'')'</span>,<span class="string">'Estado inicial'</span>,<span class="string">'Estado final'</span>,<span class="string">'Estado final pretendido'</span>);
+    hold <span class="string">off</span>;
+<span class="keyword">end</span>
+
+
+beta = 0;
+i=0;
+<span class="keyword">for</span> alpha = valpha
+
+    T1 = 1+beta;
+    T2= alpha * T1;
+    U1 = -2/(T1 * (1 + alpha)); <span class="comment">% Rela&ccedil;&atilde;o descoberta analiticamente entre U1 e T1</span>
+    U2 = -U1;
+
+    [u1,t1] = rcos(T1,beta); <span class="comment">% Fun&ccedil;&atilde;o que simula o impulso descrito no enunciado Pb(t)</span>
+    u1 = U1 * u1;
+
+    [u2,t2] = rcos(T2,beta);
+    u2 = U2 * u2;
+
+    t1=t1+T1/2;
+    t2=t2*alpha;
+    t2=t2+T2/2+T1;
+    t2=t2+0.001;
+
+    tempo = [t1;t2];
+    simin = [tempo,[u1; u2]];
+    sim(<span class="string">'sis2'</span>, tempo)
+
+    figure;
+    hold <span class="string">on</span>;
+    plot(tempo,simout,<span class="string">'b'</span>);
+    plot(tempo,simout1,<span class="string">'r'</span>);
+    plot(tempo,zeros(length(tempo)),<span class="string">'g'</span>);
+    legend(<span class="string">'y(t)'</span>,<span class="string">'y''(t)'</span>);
+    title([<span class="string">'Sistema com perturba&ccedil;&otilde;es para Alpha='</span>,num2str(alpha),<span class="string">'   Beta=0'</span>]);
+    hold <span class="string">off</span>;
+
+    figure;
+    hold <span class="string">on</span>;
+    plot(simout,simout1,<span class="string">'b'</span>);
+    plot(simout(1),simout1(1),<span class="string">'go'</span>);
+    plot(simout(end),simout1(end),<span class="string">'ro'</span>);
+    plot(0,0,<span class="string">'rx'</span>);
+    legend(<span class="string">'(y,y'')'</span>,<span class="string">'Estado inicial'</span>,<span class="string">'Estado final'</span>,<span class="string">'Estado final pretendido'</span>);
+    title([<span class="string">'Sistema com perturba&ccedil;&otilde;es para Alpha='</span>,num2str(alpha),<span class="string">'   Beta=0'</span>]);
+    hold <span class="string">off</span>;
+
+<span class="keyword">end</span>
+
+<span class="comment">%Conclus&atilde;o: Estrat&eacute;gia de actua&ccedil;&atilde;o &oacute;ptima para o sistema perturbado</span>
+<span class="comment">% Estrat&eacute;gia de actua&ccedil;&atilde;o:</span>
+<span class="comment">% se custo for esfor&ccedil;o gasto pelo bra&ccedil;o que l&ecirc; o disco ent&atilde;o ele ir&aacute; estar relacionado com a acelera&ccedil;&atilde;o</span>
+<span class="comment">% porque For&ccedil;a = acelera&ccedil;&atilde;o (&agrave; parte da massa que &eacute; apenas uma constante, um factor multiplicativo)</span>
+<span class="comment">% pelo que o que o facto de ser uma acelera&ccedil;&atilde;o grande (neste caso negativa)</span>
+<span class="comment">% para parar o bra&ccedil;o, que demora menos tempo e por conseguinte um maior sinal de controlo</span>
+<span class="comment">% ou uma acelera&ccedil;&atilde;o pequena para parar que demora mais tempo o que exige um menor sinal de controlo</span>
+</pre><img vspace="5" hspace="5" src="Laboratorio2_21.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_22.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_23.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_24.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_25.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_26.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_27.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_28.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_29.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_30.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_31.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_32.png" alt=""> <h2>Ex. 5<a name="8"></a></h2><pre class="codeinput">xmin = -10;
+xmax = 10;
+ymin = -10;
+ymax = 10;
+
+
+alpha=1;
+beta=0;
+k_values=[-5 -1 0.0001 1 .1 10]
+
+<span class="keyword">for</span> k=k_values
+
+    k_ref=k/2; <span class="comment">%valor a ser usado para identifica&ccedil;&atilde;o do ponto de comuta&ccedil;&atilde;o</span>
+
+    sim(<span class="string">'sis5'</span>);
+
+    figure;
+    hold <span class="string">on</span>;
+    plot(tout,y,<span class="string">'b'</span>);
+    plot(tout,dy,<span class="string">'r'</span>);
+    plot(tout,u,<span class="string">'g'</span>);
+    legend(<span class="string">'y(t)'</span>,<span class="string">'y''(t)'</span>,<span class="string">'Sinal de controlo'</span>);
+    title([<span class="string">'y(0)='</span>,num2str(k)]);
+    hold <span class="string">off</span>;
+
+    figure;
+    hold <span class="string">on</span>;
+    plot(y,dy,<span class="string">'b'</span>);
+    plot(y(1),dy(1),<span class="string">'go'</span>);
+    plot(y(end),dy(end),<span class="string">'ro'</span>);
+    plot(0,0,<span class="string">'rx'</span>);
+
+    legend(<span class="string">'(y,y'')'</span>,<span class="string">'Estado inicial'</span>,<span class="string">'Estado final'</span>,<span class="string">'Estado final pretendido'</span>);
+    title([<span class="string">'y(0)='</span>,num2str(k)]);
+    hold <span class="string">off</span>;
+
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">
+k_values =
+
+   -5.0000   -1.0000    0.0001    1.0000    0.1000   10.0000
+
+</pre><img vspace="5" hspace="5" src="Laboratorio2_33.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_34.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_35.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_36.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_37.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_38.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_39.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_40.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_41.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_42.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_43.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_44.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_45.png" alt=""> <pre class="codeinput"><span class="comment">%A observa&ccedil;&atilde;o de chattering n&atilde;o &eacute; evidente, no entanto pudemos observar que</span>
+<span class="comment">%o sistema de malha fechada levou sempre o estado final para o pretendido.</span>
+<span class="comment">%Este sistema seria mais eficaz que o anterior de malha aberta face a</span>
+<span class="comment">%perturba&ccedil;&otilde;es em a e b</span>
+<span class="comment">%</span>
+</pre><h2>An&aacute;lise da fun&ccedil;&atilde;o f para entrada linear e sinusoidal<a name="10"></a></h2><pre class="codeinput">clear <span class="string">all</span>
+close <span class="string">all</span>
+yl = 0.4;
+k1 = 1/yl;
+k2 = sqrt(2*k1);
+<span class="comment">% f(10)</span>
+index = 1;
+Y=[];
+Z=[];
+X=[-2:.01:2];
+<span class="keyword">for</span> i=1:size(X,2)
+    Y(i) = f(X(i));
+    Z(i) = f(sin(X(i)));
+<span class="keyword">end</span>
+plot(X, Y, X, X)
+title(<span class="string">'Sinal linear &agrave; entrada'</span>);
+legend(<span class="string">'subsys'</span>,<span class="string">'y=x'</span>);
+figure
+plot(X, Z, X, sin(X))
+title(<span class="string">'Sinal sinusoidal &agrave; entrada'</span>);
+legend(<span class="string">'subsys'</span>, <span class="string">'y=sin(x)'</span>);
+</pre><img vspace="5" hspace="5" src="Laboratorio2_46.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_47.png" alt=""> <h2>Ex7<a name="11"></a></h2><p>&eacute; suposto utilizar k2 para o ganho ou um valor elevado? Falta comparar com o sistema b&aacute;sico em malha fechada, tanto a evolu&ccedil;ao do estado como do sinal de controlo (saida do subsistema) Quantificar tbm o tempo de resposta com sis basico e comparar</p><pre class="codeinput">clear <span class="string">all</span>
+close <span class="string">all</span>
+pos0 = 10; <span class="comment">% posi&ccedil;&atilde;o inicial da cabe&ccedil;a do disco</span>
+ref = [0 0]; <span class="comment">% valor da refer&ecirc;ncia para a posi&ccedil;&atilde;o final da cabe&ccedil;a do disco</span>
+yl = 0.4;
+k1 = 1/yl;
+k2 = sqrt(2*k1);
+xmin = -10;
+xmax = 10;
+ymin = -10;
+ymax = 10;
+<span class="comment">% ambos os XY Graph viewers foram definidos entre xmin xmax e ymin ymax; A</span>
+<span class="comment">% posi&ccedil;&atilde;o inicial foi definida como pos0 = 10, o que nos</span>
+<span class="comment">% permite observar a diferen&ccedil;a entre a utiliza&ccedil;&atilde;o do subsistema</span>
+<span class="comment">% simplesmente linear e o subsistema com o tro&ccedil;o n&atilde;o linear.</span>
+<span class="comment">% Embora seja um valor muito grande pos0 = 10, permite uma melhor</span>
+<span class="comment">% compara&ccedil;&atilde;o das respostas.</span>
+
+<span class="comment">% para comparar a degrada&ccedil;&atilde;o da resposta no tempo, definiu-se o tempo de</span>
+<span class="comment">% simula&ccedil;&atilde;o para 20 s. Compara-se o tempo que demora a atingir uma</span>
+<span class="comment">% velocidade final inferior a uma dada toler&acirc;ncia, neste caso 1E-3</span>
+
+vel_tolerance = 1E-3;
+
+k = [10];
+k_ref = k/2;
+sim(<span class="string">'sis5'</span>);
+response = responsetime(tout', dy', vel_tolerance)
+t_sis_chattering = response(2) <span class="comment">% tempo de resposta com sistema com chattering</span>
+
+sim(<span class="string">'no_chattering'</span>);
+response = responsetime(tout', vel', vel_tolerance)
+t_non_lin = response(2) <span class="comment">% tempo de resposta com subsistema melhorado (n&atilde;o linear)</span>
+
+
+sim(<span class="string">'no_chattering_linearsubsys'</span>);
+response = responsetime(tout', vel',vel_tolerance)
+t_lin = response(2) <span class="comment">% tempo de resposta com subsistema linear</span>
+<span class="comment">% Um tempo de resposta maior corresponde a uma solu&ccedil;&atilde;o pior, dado que se</span>
+<span class="comment">% pretende minimizar o tempo de deslocamento da cabea&ccedil;a do disco</span>
+
+<span class="comment">% Analisando os sinais de controlo no tempo de ambos os subsistemas (melhorado e linear),</span>
+<span class="comment">% nota-se que a amplitude deste sinal no subsistema melhorado &eacute; muito</span>
+<span class="comment">% inferior &agrave; amplitude no subsistema linear.</span>
+
+<span class="comment">% Por outro lado, comparando com o sistema da alinea 5, notamos que o tempo</span>
+<span class="comment">% da resposta &eacute; inferior ao dos outros dois sistemas.</span>
+</pre><pre class="codeoutput">
+response =
+
+   33.0000    6.3318    0.0005
+
+
+t_sis_chattering =
+
+    6.3318
+
+
+response =
+
+   37.0000    9.8401   -0.0008
+
+
+t_non_lin =
+
+    9.8401
+
+
+response =
+
+   42.0000   11.5834   -0.1502
+
+
+t_lin =
+
+   11.5834
+
+</pre><img vspace="5" hspace="5" src="Laboratorio2_48.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_49.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_50.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_51.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_52.png" alt=""> <h2>Ex8<a name="12"></a></h2><pre class="codeinput">clear <span class="string">all</span>
+close <span class="string">all</span>
+pos0 = 10; <span class="comment">% posi&ccedil;&atilde;o inicial da cabe&ccedil;a do disco</span>
+yl = 0.4;
+k1 = 1/yl;
+k2 = sqrt(2*k1);
+xmin = -10;
+xmax = 10;
+ymin = -10;
+ymax = 10;
+vel_tolerance = 1E-3;
+
+<span class="comment">% ref = [0 0;10 0;10 5]; % sinal constante por tro&ccedil;os</span>
+ref = [0 0; 10 5; 20 0]; <span class="comment">% sinal linear por tro&ccedil;os</span>
+sim(<span class="string">'no_chattering'</span>);
+sim(<span class="string">'no_chattering_linearsubsys'</span>);
+<span class="comment">% Observando o espa&ccedil;o de fase para os dois sinais de entrada nota-se que a</span>
+<span class="comment">% resposta do sistema linear tende a afastar-se mais das refer&ecirc;ncias</span>
+<span class="comment">% antes de haver a troca do sinal da velocidade (correspondente a uma fase</span>
+<span class="comment">% de corre&ccedil;ao da posi&ccedil;&atilde;o). Assim, o sistema n&atilde;o linear apresenta um</span>
+<span class="comment">% comportamento din&acirc;mico melhor, para al&eacute;m de apresentar um tempo de</span>
+<span class="comment">% resposta inferior (como observado na al&iacute;near anterior).</span>
+</pre><img vspace="5" hspace="5" src="Laboratorio2_53.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_54.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_55.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_56.png" alt=""> <img vspace="5" hspace="5" src="Laboratorio2_57.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2013a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+% Cadeira de Modelação e Simulação
+%
+% 2º Trabalho de laboratório
+% Simulação básica em Matlab/Simulink
+%
+% Turno: 4ª feira, das 9h às 11h
+%
+% Elementos do grupo:
+%     Gonçalo Vítor  Nº73229
+%     Catarina Cruz  Nº73319
+%     Diogo Brás     Nº68212
+
+
+
+warning off;
+%% Ex. 2 
+% Simulação do sistema de entradas compostas para diferentes valores de
+% alpha e beta e posterior confirmação, por tentativa e erro, dos
+% resultados analíticos por observação dos gráficos.
+
+
+%%
+% 
+%  vbeta = [0:0.2:1]; % 0 <= beta <=1 beta poderá ser qualquer entre 0 e 1
+% pelo que achámos por bem simular para 5 valores de beta distintos
+%
+
+vbeta = [0:0.25:1];
+
+alpha = 1;
+for beta = vbeta
+
+    T1 = 1+beta; 
+    T2= alpha * T1; 
+    U1 = -2/(T1 * (1 + alpha)); % Relação descoberta analiticamente entre U1 e T1
+    U2 = -U1; 
+
+    [u1,t1] = rcos(T1,beta);
+    u1 = U1 * u1;
+
+    [u2,t2] = rcos(T2,beta);
+    u2 = U2 * u2;
+
+    t1=t1+T1/2;
+    t2=t2*alpha;
+    t2=t2+T2/2+T1;
+    t2=t2+0.001;
+
+    tempo = [t1; t2];
+    simin = [tempo,[u1; u2]];
+    sim('sis', tempo);
+
+    figure;
+    hold on;
+    plot(tempo,simout,'b');
+    plot(tempo,simout1,'r');
+    plot(tempo,zeros(length(tempo)),'g');
+    legend('y(t)','y''(t)');
+    title(['Alpha=1 ;',' Beta=',num2str(beta)]);
+    hold off;
+
+    figure;
+    hold on;
+    plot(simout,simout1,'b');
+    plot(simout(1),simout1(1),'go');
+    plot(simout(end),simout1(end),'ro');
+    plot(0,0,'rx');
+    title(['Alpha=1 ;',' Beta=',num2str(beta)]);
+    legend('(y,y'')','Estado inicial','Estado final','Estado final pretendido');
+    hold off;
+end
+
+%%
+%
+% valpha = [0.5:0.5:3]; % alpha > 0; escolhemos um valor inicial em 0.5 
+% visto que alpha não pode tomar o valor de 0.Resultando assim, de acordo
+% com o nosso valor inicial, passo e valor final, 5 valores distintos de
+% alpha.
+% O valor final de alpha foi escolhido para avaliar como alpha evolui após
+% passar do valor favorito que era 1, para esta variável
+% 
+
+valpha = [0.5:0.5:2.5];
+
+beta = 0;
+i=0;
+for alpha = valpha
+
+    % atribuições
+    T1 = 1+beta;
+    T2= alpha * T1;
+    U1 = -2/(T1 * (1 + alpha)); % Relação descoberta analiticamente entre U1 e T1
+    U2 = -U1;
+
+    [u1,t1] = rcos(T1,beta); % Função que simula o impulso descrito no enunciado Pb(t)
+    u1 = U1 * u1;
+
+    [u2,t2] = rcos(T2,beta); % Função que simula o impulso descrito no enunciado Pb(t)
+    u2 = U2 * u2;
+
+    t1=t1+T1/2;
+    t2=t2*alpha;
+    t2=t2+T2/2+T1;
+    t2=t2+0.001;
+
+    tempo = [t1;t2];
+    simin = [tempo,[u1; u2]];
+    sim('sis', tempo)
+
+    figure;
+    hold on;
+    plot(tempo,simout,'b');
+    plot(tempo,simout1,'r');
+    plot(tempo,zeros(length(tempo)),'g');
+    legend('y(t)','y''(t)');
+    title(['Alpha=',num2str(alpha),'   Beta=0']);
+    hold off;
+
+    figure;
+    hold on;
+    plot(simout,simout1,'b');
+    plot(simout(1),simout1(1),'go');
+    plot(simout(end),simout1(end),'ro');
+    plot(0,0,'rx');
+    legend('(y,y'')','Estado inicial','Estado final','Estado final pretendido');
+    title(['Alpha=',num2str(alpha),'   Beta=0']);
+    hold off;
+
+end
+
+%% Conclusão: A estratégia de actuação óptima é tal que se adopte alpha = 1 e beta = 0
+
+
+
+%% Ex 3 - Simulação de uma versão perturbada do sistema com a = 0.99 e b = 0.1
+%Estudo por simulação, da dependência do erro de posição/velocidade final
+% em função de alpha e de beta para sinais de controlo projectados para o
+% sistema nominal.
+%Critério de Custo: (em função da duração do sinal de controlo e do
+%respectivo erro.
+
+%%
+
+vbeta = [0:0.5:1];
+valpha = [0.5:0.5:1.5];
+
+simouts = []; % vector onde são inseridas todos os vectores de velocidade 
+% (simout) velocidades de todas as simulações efectuadas de que irá ser
+% mais tarde usado na pergunta 3 por forma a avaliar
+
+
+alpha = 1;
+for beta = vbeta
+
+    T1 = 1+beta;
+    T2= alpha * T1;
+    U1 = -2/(T1 * (1 + alpha)); % Relação descoberta analiticamente entre U1 e T1
+    U2 = -U1;
+
+    [u1,t1] = rcos(T1,beta); % Função que simula o impulso descrito no enunciado Pb(t)
+    u1 = U1 * u1;
+
+    [u2,t2] = rcos(T2,beta);
+    u2 = U2 * u2;
+
+    t1=t1+T1/2;
+    t2=t2*alpha;
+    t2=t2+T2/2+T1;
+    t2=t2+0.001;
+
+    tempo = [t1; t2];
+    simin = [tempo,[u1; u2]];
+    sim('sis2', tempo);
+
+    figure;
+    hold on;
+    plot(tempo,simout,'b');
+    plot(tempo,simout1,'r');
+    plot(tempo,zeros(length(tempo)),'g');
+    legend('y(t)','y''(t)');
+    title(['Alpha=1 ;',' Beta=',num2str(beta)]);
+    hold off;
+
+    figure;
+    hold on;
+    plot(simout,simout1,'b');
+    plot(simout(1),simout1(1),'go');
+    plot(simout(end),simout1(end),'ro');
+    plot(0,0,'rx');
+    title(['Alpha=1 ;',' Beta=',num2str(beta)]);
+    legend('(y,y'')','Estado inicial','Estado final','Estado final pretendido');
+    hold off;
+end
+
+
+beta = 0;
+i=0;
+for alpha = valpha
+
+    T1 = 1+beta;
+    T2= alpha * T1;
+    U1 = -2/(T1 * (1 + alpha)); % Relação descoberta analiticamente entre U1 e T1
+    U2 = -U1; 
+
+    [u1,t1] = rcos(T1,beta); % Função que simula o impulso descrito no enunciado Pb(t)
+    u1 = U1 * u1;
+
+    [u2,t2] = rcos(T2,beta);
+    u2 = U2 * u2;
+
+    t1=t1+T1/2;
+    t2=t2*alpha;
+    t2=t2+T2/2+T1;
+    t2=t2+0.001;
+
+    tempo = [t1;t2];
+    simin = [tempo,[u1; u2]];
+    sim('sis2', tempo)
+
+    figure;
+    hold on;
+    plot(tempo,simout,'b');
+    plot(tempo,simout1,'r');
+    plot(tempo,zeros(length(tempo)),'g');
+    legend('y(t)','y''(t)');
+    title(['Sistema com perturbações para Alpha=',num2str(alpha),'   Beta=0']);
+    hold off;
+
+    figure;
+    hold on;
+    plot(simout,simout1,'b');
+    plot(simout(1),simout1(1),'go');
+    plot(simout(end),simout1(end),'ro');
+    plot(0,0,'rx');
+    legend('(y,y'')','Estado inicial','Estado final','Estado final pretendido');
+    title(['Sistema com perturbações para Alpha=',num2str(alpha),'   Beta=0']);
+    hold off;
+
+end
+
+%Conclusão: Estratégia de actuação óptima para o sistema perturbado 
+% Estratégia de actuação:
+% se custo for esforço gasto pelo braço que lê o disco então ele irá estar relacionado com a aceleração
+% porque Força = aceleração (à parte da massa que é apenas uma constante, um factor multiplicativo)
+% pelo que o que o facto de ser uma aceleração grande (neste caso negativa) 
+% para parar o braço, que demora menos tempo e por conseguinte um maior sinal de controlo 
+% ou uma aceleração pequena para parar que demora mais tempo o que exige um menor sinal de controlo
+
+%% Ex. 5
+% 
+
+xmin = -10;
+xmax = 10;
+ymin = -10;
+ymax = 10;
+
+
+alpha=1;
+beta=0;
+k_values=[-5 -1 0.0001 1 .1 10]
+
+for k=k_values
+
+    k_ref=k/2; %valor a ser usado para identificação do ponto de comutação
+
+    sim('sis5');
+    
+    figure;
+    hold on;
+    plot(tout,y,'b');
+    plot(tout,dy,'r');
+    plot(tout,u,'g');
+    legend('y(t)','y''(t)','Sinal de controlo');
+    title(['y(0)=',num2str(k)]);
+    hold off;
+
+    figure;
+    hold on;
+    plot(y,dy,'b');
+    plot(y(1),dy(1),'go');
+    plot(y(end),dy(end),'ro');
+    plot(0,0,'rx');
+    
+    legend('(y,y'')','Estado inicial','Estado final','Estado final pretendido');
+    title(['y(0)=',num2str(k)]);
+    hold off;
+
+end
+
+%%
+%A observação de chattering não é evidente, no entanto pudemos observar que
+%o sistema de malha fechada levou sempre o estado final para o pretendido.
+%Este sistema seria mais eficaz que o anterior de malha aberta face a
+%perturbações em a e b 
+%
+
+
+%% Análise da função f para entrada linear e sinusoidal
+clear all
+close all
+yl = 0.4;
+k1 = 1/yl;
+k2 = sqrt(2*k1);
+% f(10)
+index = 1;
+Y=[];
+Z=[];
+X=[-2:.01:2];
+for i=1:size(X,2)
+    Y(i) = f(X(i));
+    Z(i) = f(sin(X(i)));
+end
+plot(X, Y, X, X)
+title('Sinal linear à entrada');
+legend('subsys','y=x');
+figure
+plot(X, Z, X, sin(X))
+title('Sinal sinusoidal à entrada');
+legend('subsys', 'y=sin(x)');
+%% Ex7
+% é suposto utilizar k2 para o ganho ou um valor elevado?
+% Falta comparar com o sistema básico em malha fechada, tanto a evoluçao do
+% estado como do sinal de controlo (saida do subsistema)
+% Quantificar tbm o tempo de resposta com sis basico e comparar
+%
+clear all
+close all
+pos0 = 10; % posição inicial da cabeça do disco
+ref = [0 0]; % valor da referência para a posição final da cabeça do disco
+yl = 0.4;
+k1 = 1/yl;
+k2 = sqrt(2*k1);
+xmin = -10;
+xmax = 10;
+ymin = -10;
+ymax = 10;
+% ambos os XY Graph viewers foram definidos entre xmin xmax e ymin ymax; A
+% posição inicial foi definida como pos0 = 10, o que nos
+% permite observar a diferença entre a utilização do subsistema
+% simplesmente linear e o subsistema com o troço não linear.
+% Embora seja um valor muito grande pos0 = 10, permite uma melhor
+% comparação das respostas.
+
+% para comparar a degradação da resposta no tempo, definiu-se o tempo de
+% simulação para 20 s. Compara-se o tempo que demora a atingir uma
+% velocidade final inferior a uma dada tolerância, neste caso 1E-3
+
+vel_tolerance = 1E-3;
+
+k = [10];
+k_ref = k/2;
+sim('sis5');
+response = responsetime(tout', dy', vel_tolerance)
+t_sis_chattering = response(2) % tempo de resposta com sistema com chattering
+
+sim('no_chattering');
+response = responsetime(tout', vel', vel_tolerance)
+t_non_lin = response(2) % tempo de resposta com subsistema melhorado (não linear)
+
+
+sim('no_chattering_linearsubsys');
+response = responsetime(tout', vel',vel_tolerance)
+t_lin = response(2) % tempo de resposta com subsistema linear
+% Um tempo de resposta maior corresponde a uma solução pior, dado que se
+% pretende minimizar o tempo de deslocamento da cabeaça do disco
+
+% Analisando os sinais de controlo no tempo de ambos os subsistemas (melhorado e linear),
+% nota-se que a amplitude deste sinal no subsistema melhorado é muito
+% inferior à amplitude no subsistema linear.
+
+% Por outro lado, comparando com o sistema da alinea 5, notamos que o tempo
+% da resposta é inferior ao dos outros dois sistemas.
+
+%% Ex8
+clear all
+close all
+pos0 = 10; % posição inicial da cabeça do disco
+yl = 0.4;
+k1 = 1/yl;
+k2 = sqrt(2*k1);
+xmin = -10;
+xmax = 10;
+ymin = -10;
+ymax = 10;
+vel_tolerance = 1E-3;
+
+% ref = [0 0;10 0;10 5]; % sinal constante por troços
+ref = [0 0; 10 5; 20 0]; % sinal linear por troços
+sim('no_chattering');
+sim('no_chattering_linearsubsys');
+% Observando o espaço de fase para os dois sinais de entrada nota-se que a
+% resposta do sistema linear tende a afastar-se mais das referências
+% antes de haver a troca do sinal da velocidade (correspondente a uma fase
+% de correçao da posição). Assim, o sistema não linear apresenta um
+% comportamento dinâmico melhor, para além de apresentar um tempo de
+% resposta inferior (como observado na alínear anterior).
+##### SOURCE END #####
+--></body></html>

@@ -1,0 +1,1235 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Final</title><meta name="generator" content="MATLAB 8.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-05-11"><meta name="DC.source" content="Final.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Ex4</a></li><li><a href="#3">Ex5</a></li><li><a href="#4">Ex6</a></li><li><a href="#7">Ex7</a></li><li><a href="#10">Ex8</a></li><li><a href="#12">Ex9</a></li><li><a href="#15">Ex10</a></li></ul></div><pre class="codeinput"><span class="comment">% Cadeira de Modela&ccedil;&atilde;o e Simula&ccedil;&atilde;o</span>
+<span class="comment">%</span>
+<span class="comment">% 3&ordm; Trabalho de laborat&oacute;rio</span>
+<span class="comment">% Din&acirc;mica de um metr&oacute;nomo b&aacute;sico</span>
+<span class="comment">%</span>
+<span class="comment">% Turno: 4&ordf; feira, das 9h &agrave;s 11h</span>
+<span class="comment">%</span>
+<span class="comment">% Elementos do grupo:</span>
+<span class="comment">%     Gon&ccedil;alo V&iacute;tor  N&ordm;73229</span>
+<span class="comment">%     Catarina Cruz  N&ordm;73319</span>
+<span class="comment">%     Diogo Br&aacute;s     N&ordm;68212</span>
+
+warning <span class="string">off</span>
+</pre><h2>Ex4<a name="2"></a></h2><pre class="codeinput">close <span class="string">all</span>
+clear <span class="string">all</span>
+
+L = .4;
+M = .1;
+l = .3;
+m = .4;
+k = 5;
+beta = .1;
+g = 10;
+J = 1/3*M*L^2 + m*l^2;
+
+U = [0 0];
+x0 = [pi/16 0];
+
+sim(<span class="string">'metronomo'</span>)
+plot(tout, theta)
+grid <span class="string">on</span>;
+title(<span class="string">'Evolu&ccedil;&atilde;o de \theta ao longo do tempo'</span>)
+ylabel(<span class="string">'\theta/rad'</span>)
+xlabel(<span class="string">'t/s'</span>)
+figure
+plot(tout, omega)
+grid <span class="string">on</span>;
+title(<span class="string">'Evolu&ccedil;&atilde;o de \omega ao longo do tempo'</span>)
+ylabel(<span class="string">'\omega/rad s^{-1}'</span>)
+xlabel(<span class="string">'t/s'</span>)
+figure
+plot(theta, omega)
+title(<span class="string">'Espa&ccedil;o de estados'</span>)
+ylabel(<span class="string">'\omega/rad s^{-1}'</span>)
+xlabel(<span class="string">'\theta/rad'</span>)
+</pre><img vspace="5" hspace="5" src="Final_01.png" alt=""> <img vspace="5" hspace="5" src="Final_02.png" alt=""> <img vspace="5" hspace="5" src="Final_03.png" alt=""> <h2>Ex5<a name="3"></a></h2><pre class="codeinput">close <span class="string">all</span>
+clear <span class="string">all</span>
+
+L = .4;
+M = .1;
+l = .3;
+m = .4;
+k = 5;
+beta = .1;
+g = 10;
+J = 1/3*M*L^2 + m*l^2;
+
+U = [0 0];
+x0 = [pi/16 0];
+
+A = [0 1;(M*g*L/2+m*g*l-k)/J -beta/J];
+B = [0; 1/J];
+C = [1 0; 0 1];
+D = [0; 0];
+sim(<span class="string">'metronomo_modelo_estado'</span>)
+plot(tout, Y.signals.values(:,1))
+grid <span class="string">on</span>
+title(<span class="string">'Evolu&ccedil;&atilde;o de \theta ao longo do tempo'</span>)
+ylabel(<span class="string">'\theta/rad'</span>)
+xlabel(<span class="string">'t/s'</span>)
+
+figure
+plot(tout, Y.signals.values(:,2))
+title(<span class="string">'Evolu&ccedil;&atilde;o de \omega ao longo do tempo'</span>)
+ylabel(<span class="string">'\omega/rad s^{-1}'</span>)
+xlabel(<span class="string">'t/s'</span>)
+grid <span class="string">on</span>
+<span class="comment">% Para efeitos de simula&ccedil;&atilde;o a matriz C deve ser escolhida como a matriz</span>
+<span class="comment">% identidade, pois permite uma visualiza&ccedil;&atilde;o mais directa das vari&aacute;veis de</span>
+<span class="comment">% estado atrav&eacute;s das sa&iacute;das do sistema.</span>
+</pre><img vspace="5" hspace="5" src="Final_04.png" alt=""> <img vspace="5" hspace="5" src="Final_05.png" alt=""> <h2>Ex6<a name="4"></a></h2><pre class="codeinput">close <span class="string">all</span>;clear <span class="string">all</span>;
+
+<span class="comment">%Dados do problema</span>
+L = .4; M = .1; l = .3; m = .4; k = 5; beta = .1; g = 10;
+J = 1/3*M*L^2 + m*l^2;  U = [0 0];
+x0 = [pi/16 0];
+
+b = [0 1];
+
+<span class="keyword">for</span> i = 1:1:length(b)
+    beta = b(i);
+    A = [0 1;(M*g*L/2+m*g*l-k)/J -beta/J];
+    B = [0; 1/J];
+    C = [1 0; 0 1];
+    D = [0; 0];
+    sim(<span class="string">'metronomo_modelo_estado'</span>)
+    figure;
+
+    plot(tout, Y.signals.values(:,1));
+    grid <span class="string">on</span>;
+    title(<span class="string">'Evolu&ccedil;&atilde;o de \theta ao longo do tempo'</span>);
+    ylabel(<span class="string">'\theta/rad'</span>);
+    xlabel(<span class="string">'t/s'</span>);
+    legend([<span class="string">'\beta = '</span>, num2str(beta)]);
+    figure;
+    plot(tout, Y.signals.values(:,2));
+    grid <span class="string">on</span>;
+    title(<span class="string">'Evolu&ccedil;&atilde;o de \omega ao longo do tempo'</span>)
+    ylabel(<span class="string">'\omega/rad s^{-1}'</span>)
+    xlabel(<span class="string">'t/s'</span>)
+    legend([<span class="string">'\beta = '</span>, num2str(beta)]);
+    figure
+    plot(Y.signals.values(:,1), Y.signals.values(:,2))
+    title(<span class="string">'Espa&ccedil;o de estados'</span>)
+    ylabel(<span class="string">'\omega/rad s^{-1}'</span>)
+    xlabel(<span class="string">'\theta/rad'</span>)
+    legend([<span class="string">'\beta = '</span>, num2str(beta)]);
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="Final_06.png" alt=""> <img vspace="5" hspace="5" src="Final_07.png" alt=""> <img vspace="5" hspace="5" src="Final_08.png" alt=""> <img vspace="5" hspace="5" src="Final_09.png" alt=""> <img vspace="5" hspace="5" src="Final_10.png" alt=""> <img vspace="5" hspace="5" src="Final_11.png" alt=""> <pre class="codeinput">close <span class="string">all</span> ;
+clear <span class="string">all</span>;
+
+<span class="comment">% Dados do problema</span>
+L = .4; M = .1; l = .3; m = .4; k = 5; g = 10;
+J = 1/3*M*L^2 + m*l^2; U = [0 0];
+
+b = [0 .1 1];
+x01i = [pi/2 pi 3*pi/2];
+x02i = [0 1 10];
+
+<span class="keyword">for</span> i = 1:1:length(b)
+    figure
+    hold <span class="string">on</span>
+    beta = b(i);
+<span class="keyword">for</span> c1 = 1:1:length(x01i)
+        <span class="keyword">for</span> c2 = 1 : 1 : length(x02i)
+            x0 = [x01i(c1) x02i(c2)];
+            A = [0 1;(M*g*L/2+m*g*l-k)/J -beta/J];
+            B = [0; 1/J];
+            C = [1 0; 0 1];
+            D = [0; 0];
+            sim(<span class="string">'metronomo_modelo_estado'</span>)
+            plot(Y.signals.values(:,1), Y.signals.values(:,2))
+        <span class="keyword">end</span>
+<span class="keyword">end</span>
+    ylabel(<span class="string">'\omega/rad s^{-1}'</span>)
+
+    title([<span class="string">'Espa&ccedil;o de estados para \beta = '</span>,num2str(beta)]);
+
+    minimo_1 = min(Y.signals.values(:,1)); <span class="comment">% theta</span>
+    maximo_1 = max(Y.signals.values(:,1));
+    minimo_2 = min(Y.signals.values(:,2)); <span class="comment">% omega</span>
+    maximo_2 = max(Y.signals.values(:,2));
+
+<span class="comment">%Obten&ccedil;&atilde;o do campo de vectores:</span>
+    x = linspace(minimo_1,maximo_1,21);
+    y = linspace(minimo_2,maximo_2,21);
+    [x, y] = meshgrid(x,y);
+
+Px = [];
+Py = [];
+    <span class="keyword">for</span> i1=1:size(x,1)
+        <span class="keyword">for</span> j=1:size(x,2)
+        p = A * [x(i1,j); y(i1,j)];
+        Px(i1,j) = p(1);
+        Py(i1,j) = p(2);
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+
+    valores_proprios = eig(A);
+
+    lambda1 = valores_proprios(1);
+    lambda2 = valores_proprios(2);
+
+    xlabel([<span class="string">'\theta/rad   \lambda_1='</span>, num2str(lambda1),<span class="string">'  \lambda_2='</span>,num2str(lambda2)])
+    quiver(x, y, Px, Py);
+
+    hold <span class="string">off</span>
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="Final_12.png" alt=""> <img vspace="5" hspace="5" src="Final_13.png" alt=""> <img vspace="5" hspace="5" src="Final_14.png" alt=""> <p>Valores pr&oacute;prios reais implicam vectores pr&oacute;prios de componentes reais, represent&aacute;veis no plano como "rectas"</p><p>Como o modo temporal de theta &eacute; dado por exponenciais de expoente real bem como a sua derivada, teremos dois modos representados por cada um dos valores pr&oacute;prios e vectores pr&oacute;prios associados, que ir&atilde;o "atra&iacute;r" o movimento no plano de estados.</p><p>Por este motivo, independentemente das condi&ccedil;&otilde;es iniciais, nos gr&aacute;ficos correspondentes a beta = 1, vemos as curvas tender para o mesmo segmento de recta</p><p>Com os valores pr&oacute;prios puramente imagin&aacute;rios as exponenciais que representam a varia&ccedil;&atilde;o temporal, ser&atilde;o invariantes em m&oacute;dulo, raz&atilde;o pela qual, para beta = 0, obtemos diferentes circunfer&ecirc;ncias com m&oacute;dulo dependente da condi&ccedil;&atilde;o inicial</p><p>Para beta = 0.1, temos uma conjuga&ccedil;&atilde;o de ambos os movimentos, observando-se a varia&ccedil;&atilde;o correspondente &agrave; parte imagin&aacute;ria, bem como um decaimento de m&oacute;dulo associado &agrave; parte real</p><h2>Ex7<a name="7"></a></h2><p>C&aacute;lculo exterior dos vectores pr&oacute;prios de A: [V1,D1] = eig(A); Usamos ent&atilde;o estes valores como condi&ccedil;&otilde;es iniciais (primeiro) e (segundo) em que s&oacute; ir&aacute; ser vis&iacute;vel um modo e ainda um valor interm&eacute;dio (terceiro) para notar a diferen&ccedil;a [V1,D1] = eig(A)     V1  =     0.2216   -0.0505              -0.9751    0.9987</p><pre class="codeinput">close <span class="string">all</span>;clear <span class="string">all</span>;
+
+<span class="comment">%Dados do problema</span>
+L = .4; M = .1; l = .3; m = .4; k = 5; g = 10;
+J = 1/3*M*L^2 + m*l^2; U = [0 0];
+b = [1];
+
+beta = b(1);
+
+primeiro = [0.2216 -0.9751];
+segundo = [-0.0505 0.9987];
+terceiro = (primeiro + segundo);
+
+x = linspace(-5,0,21);
+y = linspace(-19.7932,15,21);
+[x, y] = meshgrid(x,y);
+
+x01i = [primeiro(1) segundo(1) terceiro(1)];
+x02i = [primeiro(2) segundo(2) terceiro(2)];
+
+    figure
+    hold <span class="string">on</span>
+
+    Px = [];
+    Py = [];
+vec = [<span class="string">'b'</span> <span class="string">'g'</span> <span class="string">'r'</span> <span class="string">'b'</span>]; <span class="comment">%vector com as cores que ir&atilde;o ser usadas para representar</span>
+                         <span class="comment">% cada curva</span>
+
+
+    eig_x=[-0.15:0.01:0.3];<span class="comment">%vector de -0.15 com passos de 0.01 em 0.01 at&eacute; 0.3</span>
+    eig_y=eig_x*(-0.9751/0.2216);<span class="comment">%vector pr&oacute;prio</span>
+    eig_y2=eig_x*(-0.9987/0.0505);<span class="comment">%vector pr&oacute;prio</span>
+    plot(eig_x,eig_y,<span class="string">'k--'</span>); <span class="comment">%linhas a tracejado representam a direc&ccedil;&atilde;o do vector pr&oacute;prio</span>
+    plot(eig_x,eig_y2,<span class="string">'k--'</span>); <span class="comment">%linhas a tracejado representam a direc&ccedil;&atilde;o do vector pr&oacute;prio</span>
+
+    <span class="keyword">for</span> c2 = 1 : 1 : length(x02i)
+        x0 = [x01i(c2) x02i(c2)];
+        A = [0 1;(M*g*L/2+m*g*l-k)/J -beta/J];  B = [0; 1/J];
+        C = [1 0; 0 1];     D = [0; 0];
+        sim(<span class="string">'metronomo_modelo_estado'</span>)
+        plot(Y.signals.values(1,1), Y.signals.values(1,2),vec(c2),<span class="string">'Marker'</span>,<span class="string">'o'</span>); <span class="comment">%marca&ccedil;&atilde;o do ponto inicial de cada curva</span>
+        plot(Y.signals.values(:,1), Y.signals.values(:,2),vec(c2),<span class="string">'LineWidth'</span>,2); <span class="comment">%</span>
+        xlabel(<span class="string">'\theta/rad'</span>);
+    <span class="keyword">end</span>
+    <span class="keyword">for</span> i1=1:size(x,1)
+        <span class="keyword">for</span> j=1:size(x,2)
+            p = A * [x(i1,j); y(i1,j)];
+            Px(i1,j) = p(1);
+            Py(i1,j) = p(2);
+
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+
+    ylabel(<span class="string">'\omega/rad s^{-1}'</span>);
+    title(<span class="string">'Espa&ccedil;o de estados'</span>);
+    axis([-0.15 0.3 -2 2]);
+    hold <span class="string">off</span>
+</pre><img vspace="5" hspace="5" src="Final_15.png" alt=""> <p>Neste gr&aacute;fico, a curva a verde e a curva azul (ambos segmentos de recta) representam as condi&ccedil;&otilde;es iniciais igualadas ao primeiro e ao segundo vector pr&oacute;prio da matriz A, respectivamente, e a curva a vermelho (n&atilde;o linear) representa uma combina&ccedil;&atilde;o dos dois modos. Assim, quaisquer condi&ccedil;&otilde;es iniciais que estejam sobre as rectas definidas pelos vectores pr&oacute;prios (valores m&uacute;ltiplos de cada um dos vectores pr&oacute;prios)conduzem a respostas que apenas apresentam um dos modos (resposta no espa&ccedil;o de fase limitada a essas mesmas rectas). Por outro lado, condi&ccedil;&otilde;es iniciais que n&atilde;o estejam sobre as rectas definidas pelos vectores pr&oacute;prios, conduzem a respostas que s&atilde;o combina&ccedil;&otilde;es lineares dos dois modos existentes (respostas n&atilde;o lineares no espa&ccedil;o de fase).</p><h2>Ex8<a name="10"></a></h2><pre class="codeinput">close <span class="string">all</span>; clear <span class="string">all</span>;
+
+<span class="comment">%Dados do problema</span>
+L = .2; M = .1; beta = .001; g = 10; k=1; m=0.5;
+l1=0.080217; l2=0.176298;
+
+<span class="comment">%Itera&ccedil;&atilde;o por v&aacute;rios &acirc;ngulos de deflex&atilde;o iniciais</span>
+<span class="keyword">for</span> x01=[pi/16 pi/6 pi/3]
+x0 = [x01 0];
+
+<span class="comment">%Para 200 BPM</span>
+l=l1;
+J = 1/3*M*L^2 + m*l^2; U = [0 0];
+A = [0 1;(M*g*L/2+m*g*l-k)/J -beta/J];
+B = [0; 1/J]; C = [1 0; 0 1]; D = [0; 0];
+
+
+<span class="comment">%Simula&ccedil;&atilde;o do modelo linear:</span>
+sim(<span class="string">'metronomo_modelo_estado'</span>);
+figure; hold <span class="string">on</span>;
+plot(tout, Y.signals.values(:,1),<span class="string">'b'</span>);
+axis([0 2 min(Y.signals.values(:,1)) max(Y.signals.values(:,1))]);
+ylabel(<span class="string">'\theta/rad'</span>); xlabel(<span class="string">'t/s'</span>); grid <span class="string">on</span>;
+
+<span class="comment">%Retiram-se dois valores para obter o per&iacute;odo das oscila&ccedil;&otilde;es</span>
+[x_z1,y_z1]=ginput(2); somas1 = x_z1(end)-x_z1(1);med1=somas1/2; <span class="comment">%2 periodos</span>
+freq1=2*pi/med1; bpm1=(freq1/(2*pi))*60*2;
+
+<span class="comment">%Simula&ccedil;&atilde;o do modelo n&atilde;o linear:</span>
+sim(<span class="string">'metronomo'</span>);
+plot(tout, theta(:,1),<span class="string">'r'</span>);
+axis([0 2 min(theta(:,1)) max(theta(:,1))]);
+ylabel(<span class="string">'\theta/rad'</span>);xlabel(<span class="string">'t/s'</span>);grid <span class="string">on</span>;
+
+<span class="comment">%Retiram-se dois valores para obter o per&iacute;odo das oscila&ccedil;&otilde;es</span>
+[x_z2,y_z2]=ginput(2); somas2 = x_z2(end)-x_z2(1);med2=somas2/2;
+freq2=2*pi/med2;bpm2=(freq2/(2*pi))*60*2;
+
+title([<span class="string">'Evolu&ccedil;&atilde;o de \theta ao longo do tempo para '</span>,num2str(l),<span class="string">'  \theta_{0}='</span>,num2str(x01)])
+legend([<span class="string">'Linear: '</span>,num2str(freq1),<span class="string">'rad/s ('</span>, num2str(bpm1) ,<span class="string">' BPM)'</span>],[<span class="string">'N&atilde;o linear: '</span>, num2str(freq2) ,<span class="string">'rad/s ('</span>, num2str(bpm2) ,<span class="string">' BPM)'</span> ]);
+hold <span class="string">off</span>;
+
+
+<span class="comment">%Para 20 BPM</span>
+l=l2;
+J = 1/3*M*L^2 + m*l^2; U = [0 0];
+A = [0 1;(M*g*L/2+m*g*l-k)/J -beta/J];
+B = [0; 1/J]; C = [1 0; 0 1]; D = [0; 0];
+
+
+<span class="comment">%Simula&ccedil;&atilde;o do modelo linear:</span>
+sim(<span class="string">'metronomo_modelo_estado'</span>);
+figure; hold <span class="string">on</span>;
+plot(tout, Y.signals.values(:,1),<span class="string">'b'</span>);
+axis([0 10 min(Y.signals.values(:,1)) max(Y.signals.values(:,1))]);
+ylabel(<span class="string">'\theta/rad'</span>);xlabel(<span class="string">'t/s'</span>);grid <span class="string">on</span>;
+
+<span class="comment">%Retiram-se dois valores para obter o per&iacute;odo das oscila&ccedil;&otilde;es</span>
+[x_z1,y_z1]=ginput(2);somas1 = x_z1(end) - x_z1(1); med1=somas1/1;
+freq1=2*pi/med1; bpm1=(freq1/(2*pi))*60*2;
+
+<span class="comment">%Simula&ccedil;&atilde;o do modelo n&atilde;o linear:</span>
+sim(<span class="string">'metronomo'</span>);
+plot(tout, theta(:,1),<span class="string">'r'</span>);
+axis([0 10 min(theta(:,1)) max(theta(:,1))]);
+ylabel(<span class="string">'\theta/rad'</span>);xlabel(<span class="string">'t/s'</span>);grid <span class="string">on</span>;
+
+<span class="comment">%Retiram-se dois valores para obter o per&iacute;odo das oscila&ccedil;&otilde;es</span>
+[x_z2,y_z2]=ginput(2); somas2 = x_z2(end) - x_z2(1); med2=somas2/1;
+freq2=2*pi/med2; bpm2=(freq2/(2*pi))*60*2;
+
+title([<span class="string">'Evolu&ccedil;&atilde;o de \theta ao longo do tempo para '</span>,num2str(l),<span class="string">'  \theta_{0}='</span>,num2str(x01)])
+legend([<span class="string">'Linear: '</span>,num2str(freq1),<span class="string">'rad/s ('</span>, num2str(bpm1) ,<span class="string">' BPM)'</span>],[<span class="string">'N&atilde;o linear: '</span>, num2str(freq2) ,<span class="string">'rad/s ('</span>, num2str(bpm2) ,<span class="string">' BPM)'</span> ]);
+hold <span class="string">off</span>;
+
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="Final_16.png" alt=""> <img vspace="5" hspace="5" src="Final_17.png" alt=""> <img vspace="5" hspace="5" src="Final_18.png" alt=""> <img vspace="5" hspace="5" src="Final_19.png" alt=""> <img vspace="5" hspace="5" src="Final_20.png" alt=""> <img vspace="5" hspace="5" src="Final_21.png" alt=""> <pre>Confirmou-se o dimensionamento realizado por simula&ccedil;&atilde;o (a primeira linear realizada permite aferir a frequ&ecirc;ncia), tendo as frequ&ecirc;ncias medidas
+sido muito pr&oacute;ximas das pretendidas.</pre><pre>Foi realizada tamb&eacute;m uma compara&ccedil;&atilde;o entre o modelo linearizado e o modelo n&atilde;o linear do sistema para diferentes &acirc;ngulos de deflex&atilde;o
+iniciais, tendo-se retirado as seguintes conclus&otilde;es:</pre><pre>-- Para frequ&ecirc;ncias de oscila&ccedil;&atilde;o mais lentas, a discrep&acirc;ncia entre modelos &eacute; bastante mais relevante
+-- Com o aumento do &acirc;ngulo de deflex&atilde;o, tamb&eacute;m a diferen&ccedil;a entre modelos &eacute; mais vis&iacute;vel</pre><pre>Estas conclus&otilde;es est&atilde;o de acordo com o esperado, tendo em conta que para um mesmo per&iacute;odo de tempo a n&atilde;o linearidade &eacute; mais vis&iacute;vel em oscila&ccedil;&otilde;es
+mais espa&ccedil;adas temporalmente, e que para um &acirc;ngulo de deflex&atilde;o maior, que pressup&otilde;e maior "dist&acirc;ncia" percorrida entre extremos, tamb&eacute;m a n&atilde;o
+linearidade tem mais efeito</pre><h2>Ex9<a name="12"></a></h2><pre class="codeinput">close <span class="string">all</span>;
+clear <span class="string">all</span>;
+
+<span class="comment">%Dados do problema</span>
+L =0.2; M = 0.1; m = 0.5; k = 1; beta = 0.001; g=10;
+
+l_200 = 0.080217; <span class="comment">%posicao da massa para 20BPM</span>
+l_20 = 0.176298; <span class="comment">%posicao da massa para 200BPM</span>
+
+x0 = [pi/16 0];
+
+<span class="comment">%20 BPM's</span>
+l = l_20;
+J = 1/3*M*L^2 + m*l^2;
+A = [0 1;(M*g*L/2+m*g*l-k)/J -beta/J];
+B = [0; 1/J];
+C = [1 0];  <span class="comment">%pretende-se apenas a sa&iacute;da theta</span>
+D = [0];
+U = [0 0];
+
+<span class="comment">%Representa&ccedil;&atilde;o dos gr&aacute;ficos</span>
+H=ss(A,B,C,D); <span class="comment">%definicao do sistema pelo espaco de estados</span>
+figure;
+bode(H);
+title(<span class="string">'Diagramas de Bode para L = L(20BPM)'</span>);
+grid;
+
+<span class="comment">%200 BPM's</span>
+l = l_200;
+J = 1/3*M*L^2 + m*l^2;
+A = [0 1;(M*g*L/2+m*g*l-k)/J -beta/J];
+B = [0; 1/J];
+C = [1 0]; <span class="comment">%pretende-se apenas a sa&iacute;da theta</span>
+D = [0];
+
+<span class="comment">%Representa&ccedil;&atilde;o dos gr&aacute;ficos</span>
+
+H=ss(A,B,C,D);<span class="comment">%definicao do sistema pelo espaco de estados</span>
+figure;
+hold <span class="string">on</span>;
+bode(H);
+title(<span class="string">'Diagramas de Bode para L = L(200BPM)'</span>);
+grid;
+
+
+<span class="comment">%simula&ccedil;&atilde;o temporal para w(bin&aacute;rio) = 5.24rad/s</span>
+<span class="comment">% aproximadamente 100BPM</span>
+t = (linspace(0,100,10000))';
+w = 5.24; <span class="comment">%radianos por segundo</span>
+l = l_20;
+J = 1/3*M*L^2 + m*l^2;
+
+A = [0 1;(M*g*L/2+m*g*l-k)/J -beta/J];
+B = [0; 1/J];
+C = [1 0 ; 0 1]; <span class="comment">%pretende-se apenas a sa&iacute;da theta</span>
+D = [0; 0];
+
+<span class="comment">%Representa&ccedil;&atilde;o dos gr&aacute;ficos</span>
+U = [t sin(w*t)];
+sim(<span class="string">'metronomo_modelo_estado'</span>,t);
+figure; hold <span class="string">on</span>;
+plot(t,U(:,2),<span class="string">'b'</span>); axis([0 20 -20 20]);
+plot(t, Y.signals.values(:,1),<span class="string">'g'</span>);
+
+<span class="comment">%Retiram-se dois valores para obter o per&iacute;odo das oscila&ccedil;&otilde;es</span>
+[x_z,y_z]=ginput(2); somas = x_z(end)-x_z(1); med=somas/2; <span class="comment">%2 periodos</span>
+freq1=2*pi/med; bpm1=(freq1/(2*pi))*60*2;
+
+U(:,1)=U(:,1)*J;
+sim(<span class="string">'metronomo'</span>,t);
+plot(t, theta(:,1),<span class="string">'r'</span>);
+
+<span class="comment">%Retiram-se dois valores para obter o per&iacute;odo das oscila&ccedil;&otilde;es</span>
+[x_z,y_z]=ginput(2); somas = x_z(end)-x_z(1); med=somas/2; <span class="comment">%2 periodos</span>
+freq2=2*pi/med; bpm2=(freq2/(2*pi))*60*2;
+
+ylabel(<span class="string">'\theta/rad'</span>);xlabel(<span class="string">'t/s'</span>); grid <span class="string">on</span>;
+legend(<span class="string">'Bin&aacute;rio externo'</span>, <span class="string">'Modelo linear'</span>, <span class="string">'Modelo n&atilde;o linear'</span>);
+title([<span class="string">'Evolu&ccedil;&atilde;o de \theta ao longo do tempo para w(bin&aacute;rio)='</span>,num2str(w),<span class="string">' rad/s\newlineLinear: \omega(\theta)='</span>,num2str(freq1),<span class="string">'rad/s ('</span>,num2str(bpm1),<span class="string">' BPM) N&atilde;o linear: \omega(\theta)='</span>,num2str(freq2),<span class="string">'rad/s ('</span>,num2str(bpm2),<span class="string">' BPM)'</span>])
+hold <span class="string">off</span>;
+
+
+<span class="comment">% simula&ccedil;&atilde;o temporal para w(bin&aacute;rio) = 0.524rad/s</span>
+<span class="comment">% aproximadamente 10BPM</span>
+
+<span class="comment">% aproximadamente 100BPM</span>
+t = (linspace(0,100,10000))';
+w = 0.524;<span class="comment">%radianos</span>
+l = l_20;
+J = 1/3*M*L^2 + m*l^2;
+
+A = [0 1;(M*g*L/2+m*g*l-k)/J -beta/J];
+B = [0; 1/J];
+C = [1 0 ; 0 1]; <span class="comment">%pretende-se apenas a sa&iacute;da theta</span>
+D = [0; 0];
+
+<span class="comment">%Representa&ccedil;&atilde;o dos gr&aacute;ficos</span>
+U = [t sin(w*t)];
+sim(<span class="string">'metronomo_modelo_estado'</span>,t);
+figure; hold <span class="string">on</span>;
+plot(t,U(:,2),<span class="string">'b'</span>);
+axis([0 100 -100 100]);
+plot(t, Y.signals.values(:,1),<span class="string">'g'</span>)
+
+<span class="comment">%Retiram-se dois valores para obter o per&iacute;odo das oscila&ccedil;&otilde;es</span>
+[x_z,y_z]=ginput(2); somas = x_z(end)-x_z(1); med=somas/2; <span class="comment">%2 periodos</span>
+freq1=2*pi/med; bpm1=(freq1/(2*pi))*60*2;
+
+U(:,1)=U(:,1)*J;
+sim(<span class="string">'metronomo'</span>,t);
+plot(t, theta(:,1),<span class="string">'r'</span>);
+
+<span class="comment">%Retiram-se dois valores para obter o per&iacute;odo das oscila&ccedil;&otilde;es</span>
+[x_z,y_z]=ginput(2); somas = x_z(end)-x_z(1); med=somas/2; <span class="comment">%2 periodos</span>
+freq2=2*pi/med; bpm2=(freq2/(2*pi))*60*2;
+ylabel(<span class="string">'\theta/rad'</span>); xlabel(<span class="string">'t/s'</span>);grid <span class="string">on</span>;
+legend(<span class="string">'Bin&aacute;rio externo'</span>, <span class="string">'Modelo linear'</span>, <span class="string">'Modelo n&atilde;o linear'</span>);
+title([<span class="string">'Evolu&ccedil;&atilde;o de \theta ao longo do tempo para w(bin&aacute;rio)='</span>,num2str(w),<span class="string">' rad/s\newlineLinear: \omega(\theta)='</span>,num2str(freq1),<span class="string">'rad/s ('</span>,num2str(bpm1),<span class="string">' BPM) N&atilde;o linear: \omega(\theta)='</span>,num2str(freq2),<span class="string">'rad/s ('</span>,num2str(bpm2),<span class="string">' BPM)'</span>])
+hold <span class="string">off</span>;
+</pre><img vspace="5" hspace="5" src="Final_22.png" alt=""> <img vspace="5" hspace="5" src="Final_23.png" alt=""> <img vspace="5" hspace="5" src="Final_24.png" alt=""> <img vspace="5" hspace="5" src="Final_25.png" alt=""> <pre>Em rela&ccedil;&atilde;o &agrave;s simula&ccedil;&otilde;es realizadas para a frequ&ecirc;ncia de 5,24 rad/s (100BPM):</pre><pre>-- No modelo linear, o ganho em amplitude face &agrave; entrada foi G=8 --&gt; G=18.07 dB
+-- No modelo n&atilde;o linear este ganho foi G=3.5 --&gt; G=10.881 dB
+-- O ganho de amplitude em dB do diagrama de Bode &eacute; 6dB</pre><pre>A discrep&acirc;ncia nestes valores &eacute; muito elevada</pre><pre>-- No modelo linear, a fase nas oscila&ccedil;&otilde;es menores parecem estar em oposi&ccedil;&atilde;o de fase face &agrave; entrada
+-- No modelo n&atilde;o linear, parece que entrada e sa&iacute;da est&atilde;o em fase
+-- Do diagrama de Bode, ter&iacute;amos que a fase seria 180 graus (oposi&ccedil;&atilde;o de fase)</pre><pre>Os resultados n&atilde;o foram conclusivos</pre><pre>Em rela&ccedil;&atilde;o &agrave;s simula&ccedil;&otilde;es realizadas para a frequ&ecirc;ncia de 0,524 rad/s (10BPM):</pre><pre>-- No modelo linear, o ganho em amplitude face &agrave; entrada foi G=75 --&gt; G=37,5 dB
+-- No modelo n&atilde;o linear este ganho &eacute; praticamente unit&aacute;rio, ou seja 0dB
+-- O ganho de amplitude em dB do diagrama de Bode &eacute; 37,2dB</pre><pre>O modelo linear est&aacute; em concord&acirc;ncia com o diagrama de Bode, como esperado</pre><pre>-- No modelo linear, as oscila&ccedil;&otilde;es est&atilde;o em fase face &agrave; entrada
+-- No modelo n&atilde;o linear, o mesmo ocorre
+-- Do diagrama de Bode, ter&iacute;amos que a fase seria 0 graus (entrada e sa&iacute;da em fase)</pre><pre>Os resultados est&atilde;o de acordo com o esperado</pre><pre>N&atilde;o faz sentido operar um metr&oacute;nomo neste regime, pois n&atilde;o pretendemos aplicar um bin&aacute;rio externo sinusoidal, apenas compensar o decaimento das
+oscila&ccedil;&otilde;es pontualmente, por exemplo nas passagens pela vertical, como se ver&aacute; no exerc&iacute;cio seguinte
+Para al&eacute;m disto, as sa&iacute;das obtidas com este bin&aacute;rio n&atilde;o correspondem ao funcionamento oscilat&oacute;rio pretendido no uso de um metr&oacute;nomo</pre><h2>Ex10<a name="15"></a></h2><pre class="codeinput">close <span class="string">all</span>; clear <span class="string">all</span>;
+
+<span class="comment">%Para efeitos de compara&ccedil;&atilde;o, utilizam-se os valores do exerc&iacute;cio 8</span>
+x01=pi/16; L = .2; M = .1; beta = .001; k=1; m=0.5; g = 10;
+x0 = [x01 0];
+t=linspace(1,100,1000);
+l1=0.080217; l2=0.176298;
+
+<span class="comment">%Para 200BPM:</span>
+l=l1; w=10.47;
+J = 1/3*M*L^2 + m*l^2; U = [0 0];
+A = [0 1;(M*g*L/2+m*g*l-k)/J -beta/J];
+B = [0; 1/J]; C = [1 0; 0 1]; D = [0; 0];
+
+<span class="comment">%Sem mecanismo de ajuste</span>
+sim(<span class="string">'metronomo'</span>,t);
+figure;
+plot(tout, theta(:,1),<span class="string">'r'</span>);
+axis([0 50 min(theta(:,1)) max(theta(:,1))])
+ylabel(<span class="string">'\theta/rad'</span>); xlabel(<span class="string">'t/s'</span>);grid <span class="string">on</span>;
+[x_z,y_z]=ginput(2);
+somas = x_z(end)-x_z(1);
+n = length(x_z) - 1;
+med=somas/10; <span class="comment">%2 periodos</span>
+freq=2*pi/med;
+bpm=(freq/(2*pi))*60*2;
+title([<span class="string">'Com compensa&ccedil;&atilde;o:Evolu&ccedil;&atilde;o de \theta ao longo do tempo para '</span>,num2str(l),<span class="string">'\newline\theta_{0}='</span>,num2str(x01),<span class="string">'    Frequ&ecirc;nca calculada'</span>,num2str(freq),<span class="string">' rad/s ; '</span>,num2str(bpm),<span class="string">'BPM'</span>])
+
+<span class="comment">%Com mecanismo de ajuste</span>
+sim(<span class="string">'metronomo10'</span>,t);
+figure;
+plot(tout, theta(:,1),<span class="string">'b'</span>);
+axis([0 50 min(theta(:,1)) max(theta(:,1))])
+ylabel(<span class="string">'\theta/rad'</span>);xlabel(<span class="string">'t/s'</span>);grid <span class="string">on</span>;
+[x_z,y_z]=ginput(2);
+somas = x_z(end)-x_z(1);
+n = length(x_z) - 1;
+med=somas/10; <span class="comment">%2 periodos</span>
+freq=2*pi/med;
+bpm=(freq/(2*pi))*60*2;
+title([<span class="string">'Com compensa&ccedil;&atilde;o:Evolu&ccedil;&atilde;o de \theta ao longo do tempo para '</span>,num2str(l),<span class="string">'\newline\theta_{0}='</span>,num2str(x01),<span class="string">'    Frequ&ecirc;nca calculada'</span>,num2str(freq),<span class="string">' rad/s ; '</span>,num2str(bpm),<span class="string">'BPM'</span>])
+
+
+<span class="comment">%Para 20BPM:</span>
+l=l2; w=1.047;
+J = 1/3*M*L^2 + m*l^2; U = [0 0];
+x0 = [x01 0];
+A = [0 1;(M*g*L/2+m*g*l-k)/J -beta/J];
+B = [0; 1/J]; C = [1 0; 0 1]; D = [0; 0];
+
+<span class="comment">%Sem mecanismo de ajuste</span>
+sim(<span class="string">'metronomo'</span>,t);
+figure;
+plot(tout, theta(:,1),<span class="string">'r'</span>);
+axis([0 100 min(theta(:,1)) max(theta(:,1))]);
+ylabel(<span class="string">'\theta/rad'</span>);xlabel(<span class="string">'t/s'</span>);grid <span class="string">on</span>;
+[x_z,y_z]=ginput(2);
+somas = x_z(end)-x_z(1);
+n = length(x_z) - 1;
+med=somas/10; <span class="comment">%2 periodos</span>
+freq=2*pi/med;
+bpm=(freq/(2*pi))*60*2;
+title([<span class="string">'Com compensa&ccedil;&atilde;o:Evolu&ccedil;&atilde;o de \theta ao longo do tempo para '</span>,num2str(l),<span class="string">'\newline\theta_{0}='</span>,num2str(x01),<span class="string">'    Frequ&ecirc;nca calculada'</span>,num2str(freq),<span class="string">' rad/s ; '</span>,num2str(bpm),<span class="string">'BPM'</span>])
+
+<span class="comment">%Com mecanismo de ajuste</span>
+sim(<span class="string">'metronomo10'</span>,t);
+figure;
+plot(tout, theta(:,1),<span class="string">'b'</span>);
+axis([0 100 min(theta(:,1)) max(theta(:,1))]);
+ylabel(<span class="string">'\theta/rad'</span>);xlabel(<span class="string">'t/s'</span>);grid <span class="string">on</span>;
+[x_z,y_z]=ginput(2);
+somas = x_z(end)-x_z(1);
+n = length(x_z) - 1;
+med=somas/10; <span class="comment">%2 periodos</span>
+freq=2*pi/med;
+bpm=(freq/(2*pi))*60*2;
+title([<span class="string">'Com compensa&ccedil;&atilde;o:Evolu&ccedil;&atilde;o de \theta ao longo do tempo para '</span>,num2str(l),<span class="string">'\newline\theta_{0}='</span>,num2str(x01),<span class="string">'    Frequ&ecirc;nca calculada'</span>,num2str(freq),<span class="string">' rad/s ; '</span>,num2str(bpm),<span class="string">'BPM'</span>])
+</pre><img vspace="5" hspace="5" src="Final_26.png" alt=""> <img vspace="5" hspace="5" src="Final_27.png" alt=""> <img vspace="5" hspace="5" src="Final_28.png" alt=""> <img vspace="5" hspace="5" src="Final_29.png" alt=""> <pre>Atrav&eacute;s de pequenos impulsos nas passagens pela vertical ( &acirc;ngulo de deflex&atilde;o = 0) no metr&oacute;nomo consegue contrariar-se o decaimento do
+&acirc;ngulo; a amplitude que melhor se adequou em geral &eacute; dada em rela&ccedil;&atilde;o a J, sendo metade deste valor. Desta forma, para frequ&ecirc;ncias em torno dos 20 BPM e
+200 BPM obteve-se uma compensa&ccedil;&atilde;o razo&aacute;vel</pre><pre>Verificou-se que a frequ&ecirc;ncia de oscila&ccedil;&atilde;o pretendida n&atilde;o foi afectada significativamente por este mecanismo</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2013a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+% Cadeira de Modelação e Simulação
+%
+% 3º Trabalho de laboratório
+% Dinâmica de um metrónomo básico
+%
+% Turno: 4ª feira, das 9h às 11h
+%
+% Elementos do grupo:
+%     Gonçalo Vítor  Nº73229
+%     Catarina Cruz  Nº73319
+%     Diogo Brás     Nº68212
+
+warning off
+
+%% Ex4
+close all
+clear all
+
+L = .4;
+M = .1;
+l = .3;
+m = .4;
+k = 5;
+beta = .1;
+g = 10;
+J = 1/3*M*L^2 + m*l^2;
+
+U = [0 0];
+x0 = [pi/16 0];
+
+sim('metronomo')
+plot(tout, theta)
+grid on;
+title('Evolução de \theta ao longo do tempo')
+ylabel('\theta/rad')
+xlabel('t/s')
+figure
+plot(tout, omega)
+grid on;
+title('Evolução de \omega ao longo do tempo')
+ylabel('\omega/rad s^{-1}')
+xlabel('t/s')
+figure
+plot(theta, omega)
+title('Espaço de estados')
+ylabel('\omega/rad s^{-1}')
+xlabel('\theta/rad')
+
+%% Ex5
+close all
+clear all
+
+L = .4;
+M = .1;
+l = .3;
+m = .4;
+k = 5;
+beta = .1;
+g = 10;
+J = 1/3*M*L^2 + m*l^2;
+
+U = [0 0];
+x0 = [pi/16 0];
+
+A = [0 1;(M*g*L/2+m*g*l-k)/J -beta/J];
+B = [0; 1/J];
+C = [1 0; 0 1];
+D = [0; 0];
+sim('metronomo_modelo_estado')
+plot(tout, Y.signals.values(:,1))
+grid on
+title('Evolução de \theta ao longo do tempo')
+ylabel('\theta/rad')
+xlabel('t/s')
+
+figure
+plot(tout, Y.signals.values(:,2))
+title('Evolução de \omega ao longo do tempo')
+ylabel('\omega/rad s^{-1}')
+xlabel('t/s')
+grid on
+% Para efeitos de simulação a matriz C deve ser escolhida como a matriz
+% identidade, pois permite uma visualização mais directa das variáveis de
+% estado através das saídas do sistema.
+
+
+
+%% Ex6
+
+close all;clear all;
+
+%Dados do problema
+L = .4; M = .1; l = .3; m = .4; k = 5; beta = .1; g = 10;
+J = 1/3*M*L^2 + m*l^2;  U = [0 0];
+x0 = [pi/16 0];
+
+b = [0 1];
+
+for i = 1:1:length(b)
+    beta = b(i);
+    A = [0 1;(M*g*L/2+m*g*l-k)/J -beta/J];
+    B = [0; 1/J];
+    C = [1 0; 0 1];
+    D = [0; 0];
+    sim('metronomo_modelo_estado')
+    figure;
+ 
+    plot(tout, Y.signals.values(:,1));
+    grid on;
+    title('Evolução de \theta ao longo do tempo');
+    ylabel('\theta/rad');
+    xlabel('t/s');
+    legend(['\beta = ', num2str(beta)]);
+    figure;
+    plot(tout, Y.signals.values(:,2));
+    grid on;
+    title('Evolução de \omega ao longo do tempo')
+    ylabel('\omega/rad s^{-1}')
+    xlabel('t/s')
+    legend(['\beta = ', num2str(beta)]);
+    figure
+    plot(Y.signals.values(:,1), Y.signals.values(:,2))
+    title('Espaço de estados')
+    ylabel('\omega/rad s^{-1}')
+    xlabel('\theta/rad')
+    legend(['\beta = ', num2str(beta)]);
+end
+
+%%
+close all ;
+clear all;
+
+% Dados do problema
+L = .4; M = .1; l = .3; m = .4; k = 5; g = 10;
+J = 1/3*M*L^2 + m*l^2; U = [0 0];
+
+b = [0 .1 1];
+x01i = [pi/2 pi 3*pi/2];
+x02i = [0 1 10];
+
+for i = 1:1:length(b)
+    figure
+    hold on
+    beta = b(i);
+for c1 = 1:1:length(x01i) 
+        for c2 = 1 : 1 : length(x02i)
+            x0 = [x01i(c1) x02i(c2)];
+            A = [0 1;(M*g*L/2+m*g*l-k)/J -beta/J];
+            B = [0; 1/J];
+            C = [1 0; 0 1];
+            D = [0; 0];
+            sim('metronomo_modelo_estado')
+            plot(Y.signals.values(:,1), Y.signals.values(:,2))
+        end
+end
+    ylabel('\omega/rad s^{-1}')
+    
+    title(['Espaço de estados para \beta = ',num2str(beta)]);
+    
+    minimo_1 = min(Y.signals.values(:,1)); % theta
+    maximo_1 = max(Y.signals.values(:,1));
+    minimo_2 = min(Y.signals.values(:,2)); % omega
+    maximo_2 = max(Y.signals.values(:,2));
+    
+%Obtenção do campo de vectores:    
+    x = linspace(minimo_1,maximo_1,21);
+    y = linspace(minimo_2,maximo_2,21);
+    [x, y] = meshgrid(x,y);
+    
+Px = [];
+Py = [];
+    for i1=1:size(x,1)
+        for j=1:size(x,2)
+        p = A * [x(i1,j); y(i1,j)];
+        Px(i1,j) = p(1);
+        Py(i1,j) = p(2);
+        end
+    end
+    
+    valores_proprios = eig(A);
+    
+    lambda1 = valores_proprios(1);
+    lambda2 = valores_proprios(2);
+    
+    xlabel(['\theta/rad   \lambda_1=', num2str(lambda1),'  \lambda_2=',num2str(lambda2)])
+    quiver(x, y, Px, Py);
+ 
+    hold off
+end
+
+%%
+% 
+% Valores próprios reais implicam vectores próprios de componentes reais, representáveis no plano como "rectas"
+% 
+% Como o modo temporal de theta é dado por exponenciais de expoente real bem como a sua derivada, teremos dois modos representados por cada um dos
+% valores próprios e vectores próprios associados, que irão "atraír" o movimento no plano de estados.
+%
+% Por este motivo, independentemente das condições iniciais, nos gráficos correspondentes a beta = 1, vemos as curvas tender para o mesmo segmento 
+% de recta  
+%
+% 
+% Com os valores próprios puramente imaginários as exponenciais que representam a variação temporal, serão invariantes em módulo, razão pela
+% qual, para beta = 0, obtemos diferentes circunferências com módulo dependente da condição inicial
+%
+%
+% Para beta = 0.1, temos uma conjugação de ambos os movimentos, observando-se a variação correspondente à parte imaginária, bem como um
+% decaimento de módulo associado à parte real
+%
+
+
+%% Ex7
+
+    %%
+    %          
+    % Cálculo exterior dos vectores próprios de A: [V1,D1] = eig(A);
+    % Usamos então estes valores como condições iniciais (primeiro) e (segundo) em que só irá 
+    % ser visível um modo e ainda um valor intermédio (terceiro) para notar a diferença
+    % [V1,D1] = eig(A)
+    %     V1  =     0.2216   -0.0505
+    %              -0.9751    0.9987
+    % 
+    
+close all;clear all;
+
+%Dados do problema
+L = .4; M = .1; l = .3; m = .4; k = 5; g = 10;
+J = 1/3*M*L^2 + m*l^2; U = [0 0];
+b = [1]; 
+         
+beta = b(1);
+
+primeiro = [0.2216 -0.9751];
+segundo = [-0.0505 0.9987];
+terceiro = (primeiro + segundo);
+
+x = linspace(-5,0,21);
+y = linspace(-19.7932,15,21);
+[x, y] = meshgrid(x,y);
+         
+x01i = [primeiro(1) segundo(1) terceiro(1)];
+x02i = [primeiro(2) segundo(2) terceiro(2)];
+
+    figure
+    hold on
+    
+    Px = [];
+    Py = [];
+vec = ['b' 'g' 'r' 'b']; %vector com as cores que irão ser usadas para representar
+                         % cada curva
+
+    
+    eig_x=[-0.15:0.01:0.3];%vector de -0.15 com passos de 0.01 em 0.01 até 0.3
+    eig_y=eig_x*(-0.9751/0.2216);%vector próprio
+    eig_y2=eig_x*(-0.9987/0.0505);%vector próprio
+    plot(eig_x,eig_y,'kREPLACE_WITH_DASH_DASH'); %linhas a tracejado representam a direcção do vector próprio
+    plot(eig_x,eig_y2,'kREPLACE_WITH_DASH_DASH'); %linhas a tracejado representam a direcção do vector próprio
+
+    for c2 = 1 : 1 : length(x02i)
+        x0 = [x01i(c2) x02i(c2)];
+        A = [0 1;(M*g*L/2+m*g*l-k)/J -beta/J];  B = [0; 1/J];
+        C = [1 0; 0 1];     D = [0; 0];
+        sim('metronomo_modelo_estado')
+        plot(Y.signals.values(1,1), Y.signals.values(1,2),vec(c2),'Marker','o'); %marcação do ponto inicial de cada curva
+        plot(Y.signals.values(:,1), Y.signals.values(:,2),vec(c2),'LineWidth',2); %
+        xlabel('\theta/rad');
+    end
+    for i1=1:size(x,1)
+        for j=1:size(x,2) 
+            p = A * [x(i1,j); y(i1,j)];
+            Px(i1,j) = p(1);
+            Py(i1,j) = p(2);
+            
+        end
+    end
+
+    ylabel('\omega/rad s^{-1}');
+    title('Espaço de estados');
+    axis([-0.15 0.3 -2 2]);
+    hold off
+
+    %%
+    % 
+    %  
+    % Neste gráfico, a curva a verde e a curva azul (ambos segmentos de recta)
+    % representam as condições iniciais igualadas ao primeiro e ao segundo
+    % vector próprio da matriz A, respectivamente, e a curva a vermelho (não
+    % linear) representa uma combinação dos dois modos.
+    % Assim, quaisquer condições iniciais que estejam sobre as rectas definidas
+    % pelos vectores próprios (valores múltiplos de cada um dos vectores
+    % próprios)conduzem a respostas que apenas apresentam um dos modos 
+    % (resposta no espaço de fase limitada a essas mesmas rectas). Por outro
+    % lado, condições iniciais que não estejam sobre as rectas definidas pelos
+    % vectores próprios, conduzem a respostas que são combinações lineares dos
+    % dois modos existentes (respostas não lineares no espaço de fase).
+    %
+    % 
+    
+    %% Ex8
+
+close all; clear all;
+
+%Dados do problema
+L = .2; M = .1; beta = .001; g = 10; k=1; m=0.5; 
+l1=0.080217; l2=0.176298;
+
+%Iteração por vários ângulos de deflexão iniciais
+for x01=[pi/16 pi/6 pi/3]
+x0 = [x01 0];
+    
+%Para 200 BPM
+l=l1;
+J = 1/3*M*L^2 + m*l^2; U = [0 0];
+A = [0 1;(M*g*L/2+m*g*l-k)/J -beta/J];
+B = [0; 1/J]; C = [1 0; 0 1]; D = [0; 0];
+
+
+%Simulação do modelo linear:
+sim('metronomo_modelo_estado');
+figure; hold on;
+plot(tout, Y.signals.values(:,1),'b'); 
+axis([0 2 min(Y.signals.values(:,1)) max(Y.signals.values(:,1))]);
+ylabel('\theta/rad'); xlabel('t/s'); grid on;
+
+%Retiram-se dois valores para obter o período das oscilações
+[x_z1,y_z1]=ginput(2); somas1 = x_z1(end)-x_z1(1);med1=somas1/2; %2 periodos
+freq1=2*pi/med1; bpm1=(freq1/(2*pi))*60*2;
+
+%Simulação do modelo não linear:
+sim('metronomo');
+plot(tout, theta(:,1),'r');
+axis([0 2 min(theta(:,1)) max(theta(:,1))]);
+ylabel('\theta/rad');xlabel('t/s');grid on;
+
+%Retiram-se dois valores para obter o período das oscilações
+[x_z2,y_z2]=ginput(2); somas2 = x_z2(end)-x_z2(1);med2=somas2/2;
+freq2=2*pi/med2;bpm2=(freq2/(2*pi))*60*2;
+
+title(['Evolução de \theta ao longo do tempo para ',num2str(l),'  \theta_{0}=',num2str(x01)])
+legend(['Linear: ',num2str(freq1),'rad/s (', num2str(bpm1) ,' BPM)'],['Não linear: ', num2str(freq2) ,'rad/s (', num2str(bpm2) ,' BPM)' ]);
+hold off;
+
+
+%Para 20 BPM
+l=l2;
+J = 1/3*M*L^2 + m*l^2; U = [0 0];
+A = [0 1;(M*g*L/2+m*g*l-k)/J -beta/J];
+B = [0; 1/J]; C = [1 0; 0 1]; D = [0; 0];
+
+
+%Simulação do modelo linear:
+sim('metronomo_modelo_estado');
+figure; hold on;
+plot(tout, Y.signals.values(:,1),'b');
+axis([0 10 min(Y.signals.values(:,1)) max(Y.signals.values(:,1))]);
+ylabel('\theta/rad');xlabel('t/s');grid on;
+
+%Retiram-se dois valores para obter o período das oscilações
+[x_z1,y_z1]=ginput(2);somas1 = x_z1(end) - x_z1(1); med1=somas1/1; 
+freq1=2*pi/med1; bpm1=(freq1/(2*pi))*60*2;
+
+%Simulação do modelo não linear:
+sim('metronomo');
+plot(tout, theta(:,1),'r');
+axis([0 10 min(theta(:,1)) max(theta(:,1))]);
+ylabel('\theta/rad');xlabel('t/s');grid on;
+
+%Retiram-se dois valores para obter o período das oscilações
+[x_z2,y_z2]=ginput(2); somas2 = x_z2(end) - x_z2(1); med2=somas2/1;
+freq2=2*pi/med2; bpm2=(freq2/(2*pi))*60*2;
+
+title(['Evolução de \theta ao longo do tempo para ',num2str(l),'  \theta_{0}=',num2str(x01)])
+legend(['Linear: ',num2str(freq1),'rad/s (', num2str(bpm1) ,' BPM)'],['Não linear: ', num2str(freq2) ,'rad/s (', num2str(bpm2) ,' BPM)' ]);
+hold off;
+
+end
+
+%%
+% 
+%  Confirmou-se o dimensionamento realizado por simulação (a primeira linear realizada permite aferir a frequência), tendo as frequências medidas
+%  sido muito próximas das pretendidas.
+% 
+%  Foi realizada também uma comparação entre o modelo linearizado e o modelo não linear do sistema para diferentes ângulos de deflexão
+%  iniciais, tendo-se retirado as seguintes conclusões:
+%
+%  REPLACE_WITH_DASH_DASH Para frequências de oscilação mais lentas, a discrepância entre modelos é bastante mais relevante
+%  REPLACE_WITH_DASH_DASH Com o aumento do ângulo de deflexão, também a diferença entre modelos é mais visível
+%
+%  Estas conclusões estão de acordo com o esperado, tendo em conta que para um mesmo período de tempo a não linearidade é mais visível em oscilações 
+%  mais espaçadas temporalmente, e que para um ângulo de deflexão maior, que pressupõe maior "distância" percorrida entre extremos, também a não 
+%  linearidade tem mais efeito
+%
+
+%% Ex9
+
+close all;
+clear all;
+
+%Dados do problema
+L =0.2; M = 0.1; m = 0.5; k = 1; beta = 0.001; g=10;
+
+l_200 = 0.080217; %posicao da massa para 20BPM   
+l_20 = 0.176298; %posicao da massa para 200BPM   
+
+x0 = [pi/16 0];
+
+%20 BPM's
+l = l_20;
+J = 1/3*M*L^2 + m*l^2;
+A = [0 1;(M*g*L/2+m*g*l-k)/J -beta/J];
+B = [0; 1/J];
+C = [1 0];  %pretende-se apenas a saída theta
+D = [0];
+U = [0 0];
+
+%Representação dos gráficos
+H=ss(A,B,C,D); %definicao do sistema pelo espaco de estados
+figure;
+bode(H);
+title('Diagramas de Bode para L = L(20BPM)');
+grid;
+
+%200 BPM's
+l = l_200;
+J = 1/3*M*L^2 + m*l^2;
+A = [0 1;(M*g*L/2+m*g*l-k)/J -beta/J];
+B = [0; 1/J];
+C = [1 0]; %pretende-se apenas a saída theta
+D = [0];
+
+%Representação dos gráficos
+
+H=ss(A,B,C,D);%definicao do sistema pelo espaco de estados
+figure;
+hold on;
+bode(H);
+title('Diagramas de Bode para L = L(200BPM)');
+grid;
+
+
+%simulação temporal para w(binário) = 5.24rad/s
+% aproximadamente 100BPM
+t = (linspace(0,100,10000))';
+w = 5.24; %radianos por segundo
+l = l_20;
+J = 1/3*M*L^2 + m*l^2;
+
+A = [0 1;(M*g*L/2+m*g*l-k)/J -beta/J];
+B = [0; 1/J];
+C = [1 0 ; 0 1]; %pretende-se apenas a saída theta
+D = [0; 0];
+
+%Representação dos gráficos
+U = [t sin(w*t)];
+sim('metronomo_modelo_estado',t);
+figure; hold on;
+plot(t,U(:,2),'b'); axis([0 20 -20 20]); 
+plot(t, Y.signals.values(:,1),'g');
+
+%Retiram-se dois valores para obter o período das oscilações
+[x_z,y_z]=ginput(2); somas = x_z(end)-x_z(1); med=somas/2; %2 periodos
+freq1=2*pi/med; bpm1=(freq1/(2*pi))*60*2;
+
+U(:,1)=U(:,1)*J;
+sim('metronomo',t);
+plot(t, theta(:,1),'r');
+
+%Retiram-se dois valores para obter o período das oscilações
+[x_z,y_z]=ginput(2); somas = x_z(end)-x_z(1); med=somas/2; %2 periodos
+freq2=2*pi/med; bpm2=(freq2/(2*pi))*60*2;
+
+ylabel('\theta/rad');xlabel('t/s'); grid on;
+legend('Binário externo', 'Modelo linear', 'Modelo não linear');
+title(['Evolução de \theta ao longo do tempo para w(binário)=',num2str(w),' rad/s\newlineLinear: \omega(\theta)=',num2str(freq1),'rad/s (',num2str(bpm1),' BPM) Não linear: \omega(\theta)=',num2str(freq2),'rad/s (',num2str(bpm2),' BPM)'])
+hold off;
+
+
+% simulação temporal para w(binário) = 0.524rad/s
+% aproximadamente 10BPM
+
+% aproximadamente 100BPM
+t = (linspace(0,100,10000))'; 
+w = 0.524;%radianos
+l = l_20;
+J = 1/3*M*L^2 + m*l^2;
+
+A = [0 1;(M*g*L/2+m*g*l-k)/J -beta/J];
+B = [0; 1/J];
+C = [1 0 ; 0 1]; %pretende-se apenas a saída theta
+D = [0; 0];
+
+%Representação dos gráficos
+U = [t sin(w*t)];
+sim('metronomo_modelo_estado',t);
+figure; hold on;
+plot(t,U(:,2),'b');
+axis([0 100 -100 100]);
+plot(t, Y.signals.values(:,1),'g')
+
+%Retiram-se dois valores para obter o período das oscilações
+[x_z,y_z]=ginput(2); somas = x_z(end)-x_z(1); med=somas/2; %2 periodos
+freq1=2*pi/med; bpm1=(freq1/(2*pi))*60*2;
+
+U(:,1)=U(:,1)*J;
+sim('metronomo',t);
+plot(t, theta(:,1),'r');
+
+%Retiram-se dois valores para obter o período das oscilações
+[x_z,y_z]=ginput(2); somas = x_z(end)-x_z(1); med=somas/2; %2 periodos
+freq2=2*pi/med; bpm2=(freq2/(2*pi))*60*2;
+ylabel('\theta/rad'); xlabel('t/s');grid on;
+legend('Binário externo', 'Modelo linear', 'Modelo não linear');
+title(['Evolução de \theta ao longo do tempo para w(binário)=',num2str(w),' rad/s\newlineLinear: \omega(\theta)=',num2str(freq1),'rad/s (',num2str(bpm1),' BPM) Não linear: \omega(\theta)=',num2str(freq2),'rad/s (',num2str(bpm2),' BPM)'])
+hold off;
+
+%%
+% 
+%  Em relação às simulações realizadas para a frequência de 5,24 rad/s (100BPM):
+%
+%  REPLACE_WITH_DASH_DASH No modelo linear, o ganho em amplitude face à entrada foi G=8 REPLACE_WITH_DASH_DASH> G=18.07 dB
+%  REPLACE_WITH_DASH_DASH No modelo não linear este ganho foi G=3.5 REPLACE_WITH_DASH_DASH> G=10.881 dB
+%  REPLACE_WITH_DASH_DASH O ganho de amplitude em dB do diagrama de Bode é 6dB
+%
+%  A discrepância nestes valores é muito elevada
+%
+%  REPLACE_WITH_DASH_DASH No modelo linear, a fase nas oscilações menores parecem estar em oposição de fase face à entrada
+%  REPLACE_WITH_DASH_DASH No modelo não linear, parece que entrada e saída estão em fase
+%  REPLACE_WITH_DASH_DASH Do diagrama de Bode, teríamos que a fase seria 180 graus (oposição de fase)
+%
+%  Os resultados não foram conclusivos
+%
+%  Em relação às simulações realizadas para a frequência de 0,524 rad/s (10BPM):
+%
+%  REPLACE_WITH_DASH_DASH No modelo linear, o ganho em amplitude face à entrada foi G=75 REPLACE_WITH_DASH_DASH> G=37,5 dB
+%  REPLACE_WITH_DASH_DASH No modelo não linear este ganho é praticamente unitário, ou seja 0dB
+%  REPLACE_WITH_DASH_DASH O ganho de amplitude em dB do diagrama de Bode é 37,2dB
+%
+%  O modelo linear está em concordância com o diagrama de Bode, como esperado
+%
+%  REPLACE_WITH_DASH_DASH No modelo linear, as oscilações estão em fase face à entrada
+%  REPLACE_WITH_DASH_DASH No modelo não linear, o mesmo ocorre
+%  REPLACE_WITH_DASH_DASH Do diagrama de Bode, teríamos que a fase seria 0 graus (entrada e saída em fase)
+%
+%  Os resultados estão de acordo com o esperado
+%
+
+%%
+% 
+%  Não faz sentido operar um metrónomo neste regime, pois não pretendemos aplicar um binário externo sinusoidal, apenas compensar o decaimento das
+%  oscilações pontualmente, por exemplo nas passagens pela vertical, como se verá no exercício seguinte
+%  Para além disto, as saídas obtidas com este binário não correspondem ao funcionamento oscilatório pretendido no uso de um metrónomo 
+%
+
+%% Ex10
+
+close all; clear all;
+
+%Para efeitos de comparação, utilizam-se os valores do exercício 8
+x01=pi/16; L = .2; M = .1; beta = .001; k=1; m=0.5; g = 10;
+x0 = [x01 0];
+t=linspace(1,100,1000);
+l1=0.080217; l2=0.176298;
+
+%Para 200BPM:
+l=l1; w=10.47;
+J = 1/3*M*L^2 + m*l^2; U = [0 0];
+A = [0 1;(M*g*L/2+m*g*l-k)/J -beta/J];
+B = [0; 1/J]; C = [1 0; 0 1]; D = [0; 0];
+
+%Sem mecanismo de ajuste
+sim('metronomo',t);
+figure;
+plot(tout, theta(:,1),'r');
+axis([0 50 min(theta(:,1)) max(theta(:,1))])
+ylabel('\theta/rad'); xlabel('t/s');grid on;
+[x_z,y_z]=ginput(2);
+somas = x_z(end)-x_z(1);
+n = length(x_z) - 1;
+med=somas/10; %2 periodos
+freq=2*pi/med;
+bpm=(freq/(2*pi))*60*2;
+title(['Com compensação:Evolução de \theta ao longo do tempo para ',num2str(l),'\newline\theta_{0}=',num2str(x01),'    Frequênca calculada',num2str(freq),' rad/s ; ',num2str(bpm),'BPM'])
+
+%Com mecanismo de ajuste
+sim('metronomo10',t);
+figure;
+plot(tout, theta(:,1),'b');
+axis([0 50 min(theta(:,1)) max(theta(:,1))])
+ylabel('\theta/rad');xlabel('t/s');grid on;
+[x_z,y_z]=ginput(2);
+somas = x_z(end)-x_z(1);
+n = length(x_z) - 1;
+med=somas/10; %2 periodos
+freq=2*pi/med;
+bpm=(freq/(2*pi))*60*2;
+title(['Com compensação:Evolução de \theta ao longo do tempo para ',num2str(l),'\newline\theta_{0}=',num2str(x01),'    Frequênca calculada',num2str(freq),' rad/s ; ',num2str(bpm),'BPM'])
+
+
+%Para 20BPM:
+l=l2; w=1.047;
+J = 1/3*M*L^2 + m*l^2; U = [0 0];
+x0 = [x01 0];
+A = [0 1;(M*g*L/2+m*g*l-k)/J -beta/J];
+B = [0; 1/J]; C = [1 0; 0 1]; D = [0; 0];
+
+%Sem mecanismo de ajuste
+sim('metronomo',t);
+figure;
+plot(tout, theta(:,1),'r');
+axis([0 100 min(theta(:,1)) max(theta(:,1))]);
+ylabel('\theta/rad');xlabel('t/s');grid on;
+[x_z,y_z]=ginput(2);
+somas = x_z(end)-x_z(1);
+n = length(x_z) - 1;
+med=somas/10; %2 periodos
+freq=2*pi/med;
+bpm=(freq/(2*pi))*60*2;
+title(['Com compensação:Evolução de \theta ao longo do tempo para ',num2str(l),'\newline\theta_{0}=',num2str(x01),'    Frequênca calculada',num2str(freq),' rad/s ; ',num2str(bpm),'BPM'])
+
+%Com mecanismo de ajuste
+sim('metronomo10',t);
+figure;
+plot(tout, theta(:,1),'b');
+axis([0 100 min(theta(:,1)) max(theta(:,1))]);
+ylabel('\theta/rad');xlabel('t/s');grid on;
+[x_z,y_z]=ginput(2);
+somas = x_z(end)-x_z(1);
+n = length(x_z) - 1;
+med=somas/10; %2 periodos
+freq=2*pi/med;
+bpm=(freq/(2*pi))*60*2;
+title(['Com compensação:Evolução de \theta ao longo do tempo para ',num2str(l),'\newline\theta_{0}=',num2str(x01),'    Frequênca calculada',num2str(freq),' rad/s ; ',num2str(bpm),'BPM'])
+
+%%
+% 
+%  Através de pequenos impulsos nas passagens pela vertical ( ângulo de deflexão = 0) no metrónomo consegue contrariar-se o decaimento do
+%  ângulo; a amplitude que melhor se adequou em geral é dada em relação a J, sendo metade deste valor. Desta forma, para frequências em torno dos 20 BPM e
+%  200 BPM obteve-se uma compensação razoável
+% 
+%  Verificou-se que a frequência de oscilação pretendida não foi afectada significativamente por este mecanismo
+%
+##### SOURCE END #####
+--></body></html>

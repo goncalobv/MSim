@@ -1,0 +1,909 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Ex2b</title><meta name="generator" content="MATLAB 8.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-06-03"><meta name="DC.source" content="Ex2b.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Ex2b</a></li><li><a href="#4">2c</a></li><li><a href="#6">2d</a></li><li><a href="#8">Ex 2e</a></li><li><a href="#10">Ex 3a</a></li></ul></div><pre class="codeinput"><span class="comment">% Cadeira de Modela&ccedil;&atilde;o e Simula&ccedil;&atilde;o</span>
+<span class="comment">%</span>
+<span class="comment">% 4&ordm; Trabalho de laborat&oacute;rio</span>
+<span class="comment">% Seria&ccedil;&atilde;o de p&aacute;ginas web</span>
+<span class="comment">%</span>
+<span class="comment">% Turno: 4&ordf; feira, das 9h &agrave;s 11h</span>
+<span class="comment">%</span>
+<span class="comment">% Elementos do grupo:</span>
+<span class="comment">%     Gon&ccedil;alo V&iacute;tor  N&ordm;73229</span>
+<span class="comment">%     Catarina Cruz  N&ordm;73319</span>
+<span class="comment">%     Diogo Br&aacute;s     N&ordm;68212</span>
+
+warning <span class="string">off</span>
+</pre><h2>Ex2b<a name="2"></a></h2><pre class="codeinput">close <span class="string">all</span>
+clear <span class="string">all</span>
+
+
+<span class="comment">%Constru&ccedil;&atilde;o da matriz P</span>
+P = zeros(13);
+P = changeLine(P, 1, [2,3,6]);
+P = changeLine(P, 2, [3,9]);
+P = changeLine(P, 3, [1,2,6,7]);
+P = changeLine(P, 4, [11]);
+P = changeLine(P, 5, [4, 11]);
+P = changeLine(P, 6, [12]);
+P = changeLine(P, 7, [5,6,10]);
+P = changeLine(P, 8, [6,7,12]);
+P = changeLine(P, 9, [9]);
+P = changeLine(P, 10, [7,12]);
+P = changeLine(P, 11, [5,13]);
+P = changeLine(P, 12, [6,13]);
+P = changeLine(P, 13, [7]);
+
+
+<span class="comment">% A soma de todas as linhas de P &eacute; 1, dado que os valores de cada linha i correspondem &agrave;s</span>
+<span class="comment">% probabilidades de transi&ccedil;&atilde;o entre esse estado i e os outros estados j e existe obrigatoriamente uma</span>
+<span class="comment">% transi&ccedil;&atilde;o entre estados.</span>
+psum=sum(P,2);
+
+perm = [1 2 3 8 4 5 6 7 10 11 12 13 9];
+<span class="comment">% Matriz P em forma can&oacute;nica</span>
+Pcanonical = P(perm,perm);
+
+[V, D] = eig(P'); <span class="comment">% D matriz diagonal que cont&eacute;m os valores, V matriz cujas colunas s&atilde;o os vectores pr&oacute;prios</span>
+
+s1 = sprintf(<span class="string">'Matriz de estados na forma can&oacute;nica:'</span>);
+disp(s1);
+<span class="keyword">for</span> linha=Pcanonical(:,:);
+    str=sprintf(<span class="string">'%.4f\t'</span>,linha);
+    disp(str);
+<span class="keyword">end</span>
+
+s2 = sprintf(<span class="string">'Verifica&ccedil;&atilde;o da soma das entradas de cada linha - soma de probabilidades'</span>);
+disp(s2);
+disp(psum');
+
+<span class="keyword">for</span> i=1:13
+
+    s3=sprintf(<span class="string">'Valor pr&oacute;prio %d: %e '</span>,i,D(i,i));
+    s4=sprintf(<span class="string">'Vector pr&oacute;prio %d:'</span>,i);
+    disp(s3);
+    disp(s4);
+    str=sprintf(<span class="string">'%.4f\t\t'</span>,V(:,i)');
+    disp(str);
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">Matriz de estados na forma can&oacute;nica:
+0.0000	0.0000	0.2500	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	
+0.3333	0.0000	0.2500	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	
+0.3333	0.5000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	
+0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	
+0.0000	0.0000	0.0000	0.0000	0.0000	0.5000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	
+0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.3333	0.0000	0.5000	0.0000	0.0000	0.0000	
+0.3333	0.0000	0.2500	0.3333	0.0000	0.0000	0.0000	0.3333	0.0000	0.0000	0.5000	0.0000	0.0000	
+0.0000	0.0000	0.2500	0.3333	0.0000	0.0000	0.0000	0.0000	0.5000	0.0000	0.0000	1.0000	0.0000	
+0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.3333	0.0000	0.0000	0.0000	0.0000	0.0000	
+0.0000	0.0000	0.0000	0.0000	1.0000	0.5000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	
+0.0000	0.0000	0.0000	0.3333	0.0000	0.0000	1.0000	0.0000	0.5000	0.0000	0.0000	0.0000	0.0000	
+0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.5000	0.5000	0.0000	0.0000	
+0.0000	0.5000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	0.0000	1.0000	
+Verifica&ccedil;&atilde;o da soma das entradas de cada linha - soma de probabilidades
+     1     1     1     1     1     1     1     1     1     1     1     1     1
+
+Valor pr&oacute;prio 1: 1.000000e+00 
+Vector pr&oacute;prio 1:
+0.0000		0.0000		0.0000		0.0000		0.0000		0.0000		0.0000		0.0000		1.0000		0.0000		0.0000		0.0000		0.0000		
+Valor pr&oacute;prio 2: 1.000000e+00 
+Vector pr&oacute;prio 2:
+0.0000		0.0000		0.0000		-0.1547		-0.3094		-0.3867		-0.4640		0.0000		-0.1762		-0.1547		-0.3094		-0.4640		-0.3867		
+Valor pr&oacute;prio 3: 7.400037e-01 
+Vector pr&oacute;prio 3:
+-0.0000		-0.0000		-0.0000		-0.2322		-0.3436		0.4230		0.0560		0.0000		0.0000		0.0252		-0.5459		0.5886		0.0289		
+Valor pr&oacute;prio 4: 5.349917e-01 
+Vector pr&oacute;prio 4:
+0.2335		0.3789		0.4996		0.0854		0.0914		-0.1620		-0.2209		0.0000		-0.4074		-0.1377		0.2451		-0.4315		-0.1743		
+Valor pr&oacute;prio 5: 4.450658e-02 
+Vector pr&oacute;prio 5:
+0.0000		-0.0000		0.0000		-0.1019		0.0826		-0.0162		0.6047		0.0000		0.0000		0.0263		-0.2495		-0.3598		0.0138		
+Valor pr&oacute;prio 6: 4.450658e-02 
+Vector pr&oacute;prio 6:
+0.0000		-0.0000		0.0000		-0.1019		0.0826		-0.0162		0.6047		0.0000		0.0000		0.0263		-0.2495		-0.3598		0.0138		
+Valor pr&oacute;prio 7: -9.261774e-01 
+Vector pr&oacute;prio 7:
+0.0000		-0.0000		0.0000		-0.0846		0.1567		0.4963		-0.4454		0.0000		0.0000		0.1603		0.0067		-0.6224		0.3324		
+Valor pr&oacute;prio 8: -4.514197e-01 
+Vector pr&oacute;prio 8:
+0.0000		-0.0000		-0.0000		-0.3188		0.5035		-0.1249		-0.3554		0.0000		-0.0000		0.1339		-0.2176		0.2686		0.1108		
+Valor pr&oacute;prio 9: -4.514197e-01 
+Vector pr&oacute;prio 9:
+0.0000		-0.0000		-0.0000		-0.3188		0.5035		-0.1249		-0.3554		0.0000		-0.0000		0.1339		-0.2176		0.2686		0.1108		
+Valor pr&oacute;prio 10: -2.674959e-01 
+Vector pr&oacute;prio 10:
+-0.5914		0.0258		0.6888		0.0018		-0.0047		-0.0538		-0.0231		0.0000		-0.0045		0.0597		0.0199		0.0853		-0.2037		
+Valor pr&oacute;prio 11: -2.674959e-01 
+Vector pr&oacute;prio 11:
+-0.5914		0.0258		0.6888		0.0018		-0.0047		-0.0538		-0.0231		0.0000		-0.0045		0.0597		0.0199		0.0853		-0.2037		
+Valor pr&oacute;prio 12: 2.274813e-16 
+Vector pr&oacute;prio 12:
+0.0000		-0.0000		-0.0000		0.0000		-0.0000		0.4082		0.0000		0.0000		0.0000		-0.8165		0.0000		-0.0000		0.4082		
+Valor pr&oacute;prio 13: 0.000000e+00 
+Vector pr&oacute;prio 13:
+-0.0000		0.0000		0.0000		-0.0000		0.0000		-0.4082		-0.0000		0.0000		-0.0000		0.8165		-0.0000		0.0000		-0.4082		
+</pre><pre>Os vectores pr&oacute;prios associados aos valores pr&oacute;prios unit&aacute;rios representam becos sem sa&iacute;da na cadeia de markov, ou seja, ser&atilde;o pontos
+de equil&iacute;brio. O vector pr&oacute;prio associado ao primeiro valor pr&oacute;prio unit&aacute;rio tem apenas uma entrada n&atilde;o nula (correspondente ao estado 10).
+Isto deve-se ao facto de esta p&aacute;gina n&atilde;o ter liga&ccedil;&otilde;es para fora, o que implica que chegando a este estado, o sistema fica preso. O segundo
+vector pr&oacute;prio associado a um valor pr&oacute;prio unit&aacute;rio tem mais do que um valor n&atilde;o nulo e corresponder&aacute; a um ciclo fechado no qual o sistema
+ficaria preso, circulando entre os estados correspondentes &agrave;s entradas n&atilde;o nulas.</pre><h2>2c<a name="4"></a></h2><pre class="codeinput">close <span class="string">all</span>
+clear <span class="string">all</span>
+
+
+<span class="comment">%Constru&ccedil;&atilde;o da matriz P</span>
+P = zeros(13);
+P = changeLine(P, 1, [2,3,6]);
+P = changeLine(P, 2, [3,9]);
+P = changeLine(P, 3, [1,2,6,7]);
+P = changeLine(P, 4, [11]);
+P = changeLine(P, 5, [4, 11]);
+P = changeLine(P, 6, [12]);
+P = changeLine(P, 7, [5,6,10]);
+P = changeLine(P, 8, [6,7,12]);
+P = changeLine(P, 9, [9]);
+P = changeLine(P, 10, [7,12]);
+P = changeLine(P, 11, [5,13]);
+P = changeLine(P, 12, [6,13]);
+P = changeLine(P, 13, [7]);
+
+
+<span class="comment">% A soma de todas as linhas de P &eacute; 1, dado que os valores de cada linha i correspondem &agrave;s</span>
+<span class="comment">% probabilidades de transi&ccedil;&atilde;o entre esse estado i e os outros estados j e existe obrigatoriamente uma</span>
+<span class="comment">% transi&ccedil;&atilde;o entre estados.</span>
+soma=sum(P,2);
+
+s1 = sprintf(<span class="string">'Verifica&ccedil;&atilde;o da soma das probabilidades em P:'</span>);
+disp(s1);
+str=sprintf(<span class="string">'%1d\t'</span>,soma);
+disp(str);
+
+perm = [1 2 3 8 4 5 6 7 10 11 12 13 9];
+<span class="comment">% Matriz P em forma can&oacute;nica</span>
+Pcanonical = P(perm,perm);
+
+prob0 = 1/13*ones(13,1);
+<span class="comment">% k final - instante de tempo final da sim.</span>
+
+kfinal = 20;
+<span class="comment">% para um instante k</span>
+<span class="comment">% k = 10;</span>
+<span class="comment">% prob = prob0*P^k;</span>
+
+prob_index = meshgrid([1:13],[0:kfinal])';
+time = meshgrid([0:kfinal],[1:13]);
+prob_val = [];
+<span class="keyword">for</span> k=0:kfinal
+    prob_val(:,k+1) = (prob0'*P^k)';
+<span class="keyword">end</span>
+figure;
+plot3(prob_index, time, prob_val)
+xlabel(<span class="string">'&Iacute;ndice dos n&oacute;s'</span>)
+ylabel(<span class="string">'Tempo'</span>)
+zlabel(<span class="string">'Probabilidades'</span>)
+title(<span class="string">'Evolu&ccedil;&atilde;o das probabilidades ao longo do tempo'</span>)
+
+figure;
+plot(prob_index,prob_val(:,20));
+axis([0 14 0 0.8]);
+
+<span class="comment">% verificar que para cada t a soma de prob_val &eacute; 1</span>
+uns =  sum(prob_val); <span class="comment">% &eacute; um vector de uns!</span>
+
+s1 = sprintf(<span class="string">'Verifica&ccedil;&atilde;o da soma das probabilidades para cada instante k:'</span>);
+disp(s1);
+str=sprintf(<span class="string">'%g\t'</span>,uns);
+disp(str);
+</pre><pre class="codeoutput">Verifica&ccedil;&atilde;o da soma das probabilidades em P:
+1	1	1	1	1	1	1	1	1	1	1	1	1	
+Verifica&ccedil;&atilde;o da soma das probabilidades para cada instante k:
+1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	
+</pre><img vspace="5" hspace="5" src="Ex2b_01.png" alt=""> <img vspace="5" hspace="5" src="Ex2b_02.png" alt=""> <p>Para k elevado (que representa t), a distribui&ccedil;&atilde;o de probabilidades tende para um valor constante. ??</p><h2>2d<a name="6"></a></h2><pre class="codeinput">close <span class="string">all</span>
+clear <span class="string">all</span>
+
+Q = zeros(13);
+alfa = .95;
+
+Q = changeLine(Q, 1, [2,3,6]);
+Q = changeLine(Q, 2, [3,9]);
+Q = changeLine(Q, 3, [1,2,6,7]);
+Q = changeLine(Q, 4, [11]);
+Q = changeLine(Q, 5, [4,11]);
+Q = changeLine(Q, 6, [12]);
+Q = changeLine(Q, 7, [5,6,10]);
+Q = changeLine(Q, 8, [6,7,12]);
+Q = changeLine(Q, 9, [9]);
+Q = changeLine(Q, 10, [7,12]);
+Q = changeLine(Q, 11, [5,13]);
+Q = changeLine(Q, 12, [6,13]);
+Q = changeLine(Q, 13, [7]);
+
+prob_estados(Q,alfa);
+
+<span class="comment">% verificar que para cada t a soma de prob_val &eacute; 1</span>
+<span class="comment">%   uns=sum(prob_val);</span>
+<span class="comment">% &eacute; um vector de uns!</span>
+
+<span class="comment">%s1 = sprintf('Verifica&ccedil;&atilde;o da soma das probabilidades:');</span>
+<span class="comment">%disp(s1);</span>
+<span class="comment">%disp(uns);</span>
+</pre><img vspace="5" hspace="5" src="Ex2b_03.png" alt=""> <p>?? % comentar diferen&ccedil;as face ao anterior o ranking obtido faz sentido?</p><h2>Ex 2e<a name="8"></a></h2><pre class="codeinput"><span class="comment">%close all</span>
+<span class="comment">%clear all</span>
+
+Q = zeros(13);
+alfa = .95;
+
+Q = changeLine(Q, 1, [2,3,6]);
+Q = changeLine(Q, 2, [3,9]);
+Q = changeLine(Q, 3, [1,2,6,7]);
+Q = changeLine(Q, 4, [11]);
+Q = changeLine(Q, 5, [4,11]);
+Q = changeLine(Q, 6, [12]);
+Q = changeLine(Q, 7, [5,6,10]);
+Q = changeLine(Q, 8, [6,7,12]);
+Q = changeLine(Q, 9, [9]);
+Q = changeLine(Q, 10, [7,12]);
+Q = changeLine(Q, 11, [5,13]);
+Q = changeLine(Q, 12, [6,13]);
+Q = changeLine(Q, 13, [7]);
+
+<span class="comment">%linhas a serem mudadas:</span>
+Q_inicial = Q;
+
+str = sprintf(<span class="string">'Figura1 remo&ccedil;ao da aresta de 1 para 3'</span>);
+Q = changeLine(Q, 1, [2,6]);
+[V, D] = eig(Q);
+prob_estados(Q,alfa);
+disp(str);
+
+Q = Q_inicial;
+str = sprintf(<span class="string">'Figura2 remo&ccedil;ao da aresta de 1 para 6'</span>);
+Q = changeLine(Q, 1, [2,3]);
+[V, D] = eig(Q);
+prob_estados(Q,alfa);
+disp(str);
+
+Q = Q_inicial;
+str = sprintf(<span class="string">'Figura3 remo&ccedil;ao da aresta de 1 para 2'</span>);
+Q = changeLine(Q, 1, [3,6]);
+[V, D] = eig(Q);
+prob_estados(Q,alfa);
+disp(str);
+
+Q = Q_inicial;
+str = sprintf(<span class="string">'Figura4 remo&ccedil;ao da aresta de 3 para 2'</span>);
+Q = changeLine(Q, 3, [1,6,7]);
+[V, D] = eig(Q);
+prob_estados(Q,alfa);
+disp(str);
+
+Q = Q_inicial;
+str = sprintf(<span class="string">'Figura5 remo&ccedil;ao da aresta de 3 para 6'</span>);
+Q = changeLine(Q, 3, [1,2,7]);
+[V, D] = eig(Q);
+prob_estados(Q,alfa);
+disp(str);
+
+Q = Q_inicial;
+str = sprintf(<span class="string">'Figura6 remo&ccedil;ao da aresta de 3 para 7'</span>);
+Q = changeLine(Q, 3, [1,2,6]);
+[V, D] = eig(Q);
+prob_estados(Q,alfa);
+disp(str);
+
+Q = Q_inicial;
+str = sprintf(<span class="string">'Figura7 remo&ccedil;ao da aresta de 7 para 6'</span>);
+Q = changeLine(Q, 7, [5,10]);
+[V, D] = eig(Q);
+prob_estados(Q,alfa);
+disp(str);
+
+Q = Q_inicial;
+str = sprintf(<span class="string">'Figura8 remo&ccedil;ao da aresta de 8 para 12'</span>);
+Q = changeLine(Q, 8, [6,7]);
+[V, D] = eig(Q);
+prob_estados(Q,alfa);
+disp(str);
+
+Q = Q_inicial;
+str = sprintf(<span class="string">'Figura9 remo&ccedil;ao da aresta de 8 para 7'</span>);
+Q = changeLine(Q, 8, [6,12]);
+[V, D] = eig(Q);
+prob_estados(Q,alfa);
+disp(str);
+
+Q = Q_inicial;
+str = sprintf(<span class="string">'Figura10 remo&ccedil;ao da aresta de 8 para 6'</span>);
+Q = changeLine(Q, 8, [7,12]);
+[V, D] = eig(Q);
+prob_estados(Q,alfa);
+disp(str);
+
+Q = Q_inicial;
+str = sprintf(<span class="string">'Figura11 remo&ccedil;ao da aresta de 10 para 7'</span>);
+Q = changeLine(Q, 10, [12]);
+[V, D] = eig(Q);
+prob_estados(Q,alfa);
+disp(str);
+
+Q = Q_inicial;
+str = sprintf(<span class="string">'Figura12 remo&ccedil;ao da aresta de 10 para 12'</span>);
+Q = changeLine(Q, 10, [7]);
+[V, D] = eig(Q);
+prob_estados(Q,alfa);
+disp(str);
+
+Q = Q_inicial;
+str = sprintf(<span class="string">'Figura13 remo&ccedil;ao da aresta de 11 para 5'</span>);
+Q = changeLine(Q, 11, [13]);
+[V, D] = eig(Q);
+prob_estados(Q,alfa);
+disp(str);
+
+Q = Q_inicial;
+str = sprintf(<span class="string">'Figura14 remo&ccedil;ao da aresta de 12 para 6'</span>);
+Q = changeLine(Q, 12, [13]);
+[V, D] = eig(Q);
+prob_estados(Q,alfa);
+disp(str);
+
+Q = Q_inicial;
+
+str = sprintf(<span class="string">'Figura15 sem remo&ccedil;&otilde;es de arestas'</span>);
+prob_estados(Q_inicial,alfa);
+disp(str);
+</pre><pre class="codeoutput">Figura1 remo&ccedil;ao da aresta de 1 para 3
+Figura2 remo&ccedil;ao da aresta de 1 para 6
+Figura3 remo&ccedil;ao da aresta de 1 para 2
+Figura4 remo&ccedil;ao da aresta de 3 para 2
+Figura5 remo&ccedil;ao da aresta de 3 para 6
+Figura6 remo&ccedil;ao da aresta de 3 para 7
+Figura7 remo&ccedil;ao da aresta de 7 para 6
+Figura8 remo&ccedil;ao da aresta de 8 para 12
+Figura9 remo&ccedil;ao da aresta de 8 para 7
+Figura10 remo&ccedil;ao da aresta de 8 para 6
+Figura11 remo&ccedil;ao da aresta de 10 para 7
+Figura12 remo&ccedil;ao da aresta de 10 para 12
+Figura13 remo&ccedil;ao da aresta de 11 para 5
+Figura14 remo&ccedil;ao da aresta de 12 para 6
+Figura15 sem remo&ccedil;&otilde;es de arestas
+</pre><img vspace="5" hspace="5" src="Ex2b_04.png" alt=""> <img vspace="5" hspace="5" src="Ex2b_05.png" alt=""> <img vspace="5" hspace="5" src="Ex2b_06.png" alt=""> <img vspace="5" hspace="5" src="Ex2b_07.png" alt=""> <img vspace="5" hspace="5" src="Ex2b_08.png" alt=""> <img vspace="5" hspace="5" src="Ex2b_09.png" alt=""> <img vspace="5" hspace="5" src="Ex2b_10.png" alt=""> <img vspace="5" hspace="5" src="Ex2b_11.png" alt=""> <img vspace="5" hspace="5" src="Ex2b_12.png" alt=""> <img vspace="5" hspace="5" src="Ex2b_13.png" alt=""> <img vspace="5" hspace="5" src="Ex2b_14.png" alt=""> <img vspace="5" hspace="5" src="Ex2b_15.png" alt=""> <img vspace="5" hspace="5" src="Ex2b_16.png" alt=""> <img vspace="5" hspace="5" src="Ex2b_17.png" alt=""> <img vspace="5" hspace="5" src="Ex2b_18.png" alt=""> <pre>A Figura 14 representa a remo&ccedil;&atilde;o da aresta que faz o estado 12 transitar para o estado 6. Aquando desta ocorrencia, criam-se dois
+ciclos - (7-&gt;6-&gt;12-&gt;13-&gt;7-&gt;...) e (7-&gt;10-&gt;12-&gt;13-&gt;7-&gt;...) - com passagem obrigat&oacute;ria pelos estados 7, 12 e 13 , e que s&atilde;o definidos
+pela transi&ccedil;&atilde;o de sa&iacute;da do n&oacute; 7. Isto explica portanto a exist&ecirc;ncia dos m&aacute;ximos de probabilidade nos respectivos estados.</pre><h2>Ex 3a<a name="10"></a></h2><pre class="codeinput">close <span class="string">all</span>
+clear <span class="string">all</span>
+
+N = 13;
+
+prob0 = 1/N*ones(N,1);
+
+nruns = 1000; <span class="comment">% define o n&uacute;mero de runs</span>
+
+burnin = 200; <span class="comment">% n de passos em que n&atilde;o s&atilde;o contabilizados os estados</span>
+
+passos = 2000;<span class="comment">% n de passos em cada run</span>
+
+Q = zeros(N);
+alfa = .95;
+
+Q = changeLine(Q, 1, [2,3,6]);
+Q = changeLine(Q, 2, [3,9]);
+Q = changeLine(Q, 3, [1,2,6,7]);
+Q = changeLine(Q, 4, [11]);
+Q = changeLine(Q, 5, [4,11]);
+Q = changeLine(Q, 6, [12]);
+Q = changeLine(Q, 7, [5,6,10]);
+Q = changeLine(Q, 8, [6,7,12]);
+Q = changeLine(Q, 9, [9]);
+Q = changeLine(Q, 10, [7,12]);
+Q = changeLine(Q, 11, [5,13]);
+Q = changeLine(Q, 12, [6,13]);
+Q = changeLine(Q, 13, [7]);
+
+E = ones(N);
+P = alfa*Q+(1-alfa)/N*E;
+
+histograma = zeros(N,1);
+hist_matrix=zeros(nruns,13);
+
+
+<span class="keyword">for</span> i=1:nruns
+    hh=waitbar(i/nruns);
+    prob = prob0;
+    rindex = find(cumsum(prob) &gt; rand,1,<span class="string">'first'</span>); <span class="comment">% estado inicial</span>
+<span class="comment">%     histograma(rindex) = histograma(rindex)+1;</span>
+    <span class="keyword">for</span> j=1:passos
+        from = rindex;
+        rindex = find(cumsum(P(rindex,:)) &gt; rand,1,<span class="string">'first'</span>); <span class="comment">% estado seguinte</span>
+        <span class="keyword">if</span>(j &gt; burnin)
+            histograma(rindex) = histograma(rindex)+1;
+        <span class="keyword">end</span>
+        to = rindex;
+        <span class="keyword">if</span>(P(from, to) == 0)
+            error(<span class="string">'There is a problem!'</span>);
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+
+<span class="keyword">end</span>
+close(hh);
+
+
+freq_rel = histograma/(nruns*(passos-burnin));
+disp(<span class="string">'Vector de probabilidades dos estados ap&oacute;s runs de Monte Carlo'</span>);
+str=sprintf(<span class="string">'%.6f'</span>,freq_rel);
+disp(str);
+figure;
+plot(1:13,freq_rel,<span class="string">'r'</span>);
+axis([0 14 0 0.8]);
+
+<span class="comment">%passos-burnin - n+ de vezes por run que se pode contabilizar um estado</span>
+</pre><pre class="codeoutput">Vector de probabilidades dos estados ap&oacute;s runs de Monte Carlo
+0.0060390.0080200.0096080.0487330.0946130.1243380.1434100.0038930.1516320.0491990.0951990.1465840.118732
+</pre><img vspace="5" hspace="5" src="Ex2b_19.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2013a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+% Cadeira de Modelação e Simulação
+%
+% 4º Trabalho de laboratório
+% Seriação de páginas web
+%
+% Turno: 4ª feira, das 9h às 11h
+%
+% Elementos do grupo:
+%     Gonçalo Vítor  Nº73229
+%     Catarina Cruz  Nº73319
+%     Diogo Brás     Nº68212
+
+warning off
+
+%% Ex2b
+close all
+clear all
+
+
+%Construção da matriz P
+P = zeros(13);
+P = changeLine(P, 1, [2,3,6]);
+P = changeLine(P, 2, [3,9]);
+P = changeLine(P, 3, [1,2,6,7]);
+P = changeLine(P, 4, [11]);
+P = changeLine(P, 5, [4, 11]);
+P = changeLine(P, 6, [12]);
+P = changeLine(P, 7, [5,6,10]);
+P = changeLine(P, 8, [6,7,12]);
+P = changeLine(P, 9, [9]);
+P = changeLine(P, 10, [7,12]);
+P = changeLine(P, 11, [5,13]);
+P = changeLine(P, 12, [6,13]);
+P = changeLine(P, 13, [7]);
+
+
+% A soma de todas as linhas de P é 1, dado que os valores de cada linha i correspondem às
+% probabilidades de transição entre esse estado i e os outros estados j e existe obrigatoriamente uma
+% transição entre estados.
+psum=sum(P,2);
+
+perm = [1 2 3 8 4 5 6 7 10 11 12 13 9];
+% Matriz P em forma canónica
+Pcanonical = P(perm,perm);
+
+[V, D] = eig(P'); % D matriz diagonal que contém os valores, V matriz cujas colunas são os vectores próprios
+
+s1 = sprintf('Matriz de estados na forma canónica:');
+disp(s1);
+for linha=Pcanonical(:,:);
+    str=sprintf('%.4f\t',linha);    
+    disp(str);
+end
+
+s2 = sprintf('Verificação da soma das entradas de cada linha - soma de probabilidades');
+disp(s2);
+disp(psum');
+
+for i=1:13
+    
+    s3=sprintf('Valor próprio %d: %e ',i,D(i,i));
+    s4=sprintf('Vector próprio %d:',i);
+    disp(s3);
+    disp(s4);
+    str=sprintf('%.4f\t\t',V(:,i)');   
+    disp(str);
+end
+ 
+%%
+% 
+%  Os vectores próprios associados aos valores próprios unitários representam becos sem saída na cadeia de markov, ou seja, serão pontos
+%  de equilíbrio. O vector próprio associado ao primeiro valor próprio unitário tem apenas uma entrada não nula (correspondente ao estado 10).
+%  Isto deve-se ao facto de esta página não ter ligações para fora, o que implica que chegando a este estado, o sistema fica preso. O segundo
+%  vector próprio associado a um valor próprio unitário tem mais do que um valor não nulo e corresponderá a um ciclo fechado no qual o sistema
+%  ficaria preso, circulando entre os estados correspondentes às entradas não nulas.
+%
+
+
+%% 2c
+
+close all
+clear all
+
+
+%Construção da matriz P
+P = zeros(13);
+P = changeLine(P, 1, [2,3,6]);
+P = changeLine(P, 2, [3,9]);
+P = changeLine(P, 3, [1,2,6,7]);
+P = changeLine(P, 4, [11]);
+P = changeLine(P, 5, [4, 11]);
+P = changeLine(P, 6, [12]);
+P = changeLine(P, 7, [5,6,10]);
+P = changeLine(P, 8, [6,7,12]);
+P = changeLine(P, 9, [9]);
+P = changeLine(P, 10, [7,12]);
+P = changeLine(P, 11, [5,13]);
+P = changeLine(P, 12, [6,13]);
+P = changeLine(P, 13, [7]);
+
+
+% A soma de todas as linhas de P é 1, dado que os valores de cada linha i correspondem às
+% probabilidades de transição entre esse estado i e os outros estados j e existe obrigatoriamente uma
+% transição entre estados.
+soma=sum(P,2);
+
+s1 = sprintf('Verificação da soma das probabilidades em P:');
+disp(s1);
+str=sprintf('%1d\t',soma);
+disp(str);
+
+perm = [1 2 3 8 4 5 6 7 10 11 12 13 9];
+% Matriz P em forma canónica
+Pcanonical = P(perm,perm);
+
+prob0 = 1/13*ones(13,1);
+% k final - instante de tempo final da sim.
+
+kfinal = 20;
+% para um instante k
+% k = 10;
+% prob = prob0*P^k;
+
+prob_index = meshgrid([1:13],[0:kfinal])';
+time = meshgrid([0:kfinal],[1:13]);
+prob_val = [];
+for k=0:kfinal
+    prob_val(:,k+1) = (prob0'*P^k)';
+end
+figure;
+plot3(prob_index, time, prob_val)
+xlabel('Índice dos nós')
+ylabel('Tempo')
+zlabel('Probabilidades')
+title('Evolução das probabilidades ao longo do tempo')
+
+figure;
+plot(prob_index,prob_val(:,20));
+axis([0 14 0 0.8]);
+
+% verificar que para cada t a soma de prob_val é 1
+uns =  sum(prob_val); % é um vector de uns!
+
+s1 = sprintf('Verificação da soma das probabilidades para cada instante k:');
+disp(s1);
+str=sprintf('%g\t',uns);
+disp(str);
+
+%%
+% 
+% Para k elevado (que representa t), a distribuição de probabilidades tende para um valor constante.
+% ??
+% 
+%
+
+
+%% 2d
+
+close all
+clear all
+
+Q = zeros(13);
+alfa = .95;
+
+Q = changeLine(Q, 1, [2,3,6]);
+Q = changeLine(Q, 2, [3,9]);
+Q = changeLine(Q, 3, [1,2,6,7]);
+Q = changeLine(Q, 4, [11]);
+Q = changeLine(Q, 5, [4,11]);
+Q = changeLine(Q, 6, [12]);
+Q = changeLine(Q, 7, [5,6,10]);
+Q = changeLine(Q, 8, [6,7,12]);
+Q = changeLine(Q, 9, [9]);
+Q = changeLine(Q, 10, [7,12]);
+Q = changeLine(Q, 11, [5,13]);
+Q = changeLine(Q, 12, [6,13]);
+Q = changeLine(Q, 13, [7]);
+
+prob_estados(Q,alfa);
+
+% verificar que para cada t a soma de prob_val é 1
+%   uns=sum(prob_val); 
+% é um vector de uns!
+
+%s1 = sprintf('Verificação da soma das probabilidades:');
+%disp(s1);
+%disp(uns);
+
+%%
+% 
+% ??
+% % comentar diferenças face ao anterior
+% o ranking obtido faz sentido?
+%
+
+
+%% Ex 2e
+
+%close all
+%clear all
+
+Q = zeros(13);
+alfa = .95;
+
+Q = changeLine(Q, 1, [2,3,6]);
+Q = changeLine(Q, 2, [3,9]);
+Q = changeLine(Q, 3, [1,2,6,7]);
+Q = changeLine(Q, 4, [11]);
+Q = changeLine(Q, 5, [4,11]);
+Q = changeLine(Q, 6, [12]);
+Q = changeLine(Q, 7, [5,6,10]);
+Q = changeLine(Q, 8, [6,7,12]);
+Q = changeLine(Q, 9, [9]);
+Q = changeLine(Q, 10, [7,12]);
+Q = changeLine(Q, 11, [5,13]);
+Q = changeLine(Q, 12, [6,13]);
+Q = changeLine(Q, 13, [7]);
+
+%linhas a serem mudadas:
+Q_inicial = Q;
+
+str = sprintf('Figura1 remoçao da aresta de 1 para 3');
+Q = changeLine(Q, 1, [2,6]);
+[V, D] = eig(Q);
+prob_estados(Q,alfa);
+disp(str);
+
+Q = Q_inicial;
+str = sprintf('Figura2 remoçao da aresta de 1 para 6');
+Q = changeLine(Q, 1, [2,3]);
+[V, D] = eig(Q);
+prob_estados(Q,alfa);
+disp(str);
+
+Q = Q_inicial;
+str = sprintf('Figura3 remoçao da aresta de 1 para 2');
+Q = changeLine(Q, 1, [3,6]);
+[V, D] = eig(Q);
+prob_estados(Q,alfa);
+disp(str);
+
+Q = Q_inicial;
+str = sprintf('Figura4 remoçao da aresta de 3 para 2');
+Q = changeLine(Q, 3, [1,6,7]);
+[V, D] = eig(Q);
+prob_estados(Q,alfa);
+disp(str);
+
+Q = Q_inicial;
+str = sprintf('Figura5 remoçao da aresta de 3 para 6');
+Q = changeLine(Q, 3, [1,2,7]);
+[V, D] = eig(Q);
+prob_estados(Q,alfa);
+disp(str);
+
+Q = Q_inicial;
+str = sprintf('Figura6 remoçao da aresta de 3 para 7');
+Q = changeLine(Q, 3, [1,2,6]);
+[V, D] = eig(Q);
+prob_estados(Q,alfa);
+disp(str);
+
+Q = Q_inicial;
+str = sprintf('Figura7 remoçao da aresta de 7 para 6');
+Q = changeLine(Q, 7, [5,10]);
+[V, D] = eig(Q);
+prob_estados(Q,alfa);
+disp(str);
+
+Q = Q_inicial;
+str = sprintf('Figura8 remoçao da aresta de 8 para 12');
+Q = changeLine(Q, 8, [6,7]);
+[V, D] = eig(Q);
+prob_estados(Q,alfa);
+disp(str);
+
+Q = Q_inicial;
+str = sprintf('Figura9 remoçao da aresta de 8 para 7');
+Q = changeLine(Q, 8, [6,12]);
+[V, D] = eig(Q);
+prob_estados(Q,alfa);
+disp(str);
+
+Q = Q_inicial;
+str = sprintf('Figura10 remoçao da aresta de 8 para 6');
+Q = changeLine(Q, 8, [7,12]);
+[V, D] = eig(Q);
+prob_estados(Q,alfa);
+disp(str);
+
+Q = Q_inicial;
+str = sprintf('Figura11 remoçao da aresta de 10 para 7');
+Q = changeLine(Q, 10, [12]);
+[V, D] = eig(Q);
+prob_estados(Q,alfa);
+disp(str);
+
+Q = Q_inicial;
+str = sprintf('Figura12 remoçao da aresta de 10 para 12');
+Q = changeLine(Q, 10, [7]);
+[V, D] = eig(Q);
+prob_estados(Q,alfa);
+disp(str);
+
+Q = Q_inicial;
+str = sprintf('Figura13 remoçao da aresta de 11 para 5');
+Q = changeLine(Q, 11, [13]);
+[V, D] = eig(Q);
+prob_estados(Q,alfa);
+disp(str);
+
+Q = Q_inicial;
+str = sprintf('Figura14 remoçao da aresta de 12 para 6');
+Q = changeLine(Q, 12, [13]);
+[V, D] = eig(Q);
+prob_estados(Q,alfa);
+disp(str);
+
+Q = Q_inicial;
+
+str = sprintf('Figura15 sem remoções de arestas');
+prob_estados(Q_inicial,alfa);
+disp(str);
+
+
+%%
+% 
+%  A Figura 14 representa a remoção da aresta que faz o estado 12 transitar para o estado 6. Aquando desta ocorrencia, criam-se dois 
+%  ciclos - (7->6->12->13->7->...) e (7->10->12->13->7->...) - com passagem obrigatória pelos estados 7, 12 e 13 , e que são definidos
+%  pela transição de saída do nó 7. Isto explica portanto a existência dos máximos de probabilidade nos respectivos estados.
+% 
+%
+
+
+%% Ex 3a
+close all
+clear all
+
+N = 13;
+
+prob0 = 1/N*ones(N,1);
+
+nruns = 1000; % define o número de runs
+
+burnin = 200; % n de passos em que não são contabilizados os estados
+
+passos = 2000;% n de passos em cada run
+
+Q = zeros(N);
+alfa = .95;
+
+Q = changeLine(Q, 1, [2,3,6]);
+Q = changeLine(Q, 2, [3,9]);
+Q = changeLine(Q, 3, [1,2,6,7]);
+Q = changeLine(Q, 4, [11]);
+Q = changeLine(Q, 5, [4,11]);
+Q = changeLine(Q, 6, [12]);
+Q = changeLine(Q, 7, [5,6,10]);
+Q = changeLine(Q, 8, [6,7,12]);
+Q = changeLine(Q, 9, [9]);
+Q = changeLine(Q, 10, [7,12]);
+Q = changeLine(Q, 11, [5,13]);
+Q = changeLine(Q, 12, [6,13]);
+Q = changeLine(Q, 13, [7]);
+
+E = ones(N);
+P = alfa*Q+(1-alfa)/N*E;
+
+histograma = zeros(N,1);
+hist_matrix=zeros(nruns,13);
+
+
+for i=1:nruns
+    hh=waitbar(i/nruns);
+    prob = prob0;
+    rindex = find(cumsum(prob) > rand,1,'first'); % estado inicial
+%     histograma(rindex) = histograma(rindex)+1;
+    for j=1:passos
+        from = rindex;
+        rindex = find(cumsum(P(rindex,:)) > rand,1,'first'); % estado seguinte
+        if(j > burnin)
+            histograma(rindex) = histograma(rindex)+1;
+        end
+        to = rindex;
+        if(P(from, to) == 0)
+            error('There is a problem!');
+        end
+    end
+
+end
+close(hh);
+
+
+freq_rel = histograma/(nruns*(passos-burnin));
+disp('Vector de probabilidades dos estados após runs de Monte Carlo');
+str=sprintf('%.6f',freq_rel);
+disp(str);
+figure;
+plot(1:13,freq_rel,'r');
+axis([0 14 0 0.8]);
+
+%passos-burnin - n+ de vezes por run que se pode contabilizar um estado
+##### SOURCE END #####
+--></body></html>

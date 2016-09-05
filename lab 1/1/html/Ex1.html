@@ -1,0 +1,184 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Ex1</title><meta name="generator" content="MATLAB 7.12"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-03-30"><meta name="DC.source" content="Ex1.m"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Ex. 1 - Simula&ccedil;&atilde;o do movimento livre de uma viatura</a></li></ul></div><pre class="codeinput"><span class="comment">% Cadeira de Modela&ccedil;&atilde;o e Simula&ccedil;&atilde;o</span>
+<span class="comment">%</span>
+<span class="comment">% 1&ordm; Trabalho de laborat&oacute;rio</span>
+<span class="comment">% Simula&ccedil;&atilde;o b&aacute;sica em Matlab/Simulink</span>
+<span class="comment">%</span>
+<span class="comment">% Turno: 4&ordf; feira, das 9h &agrave;s 11h</span>
+<span class="comment">%</span>
+<span class="comment">% Elementos do grupo:</span>
+<span class="comment">%     Gon&ccedil;alo V&iacute;tor  N&ordm;73229</span>
+<span class="comment">%     Catarina Cruz  N&ordm;73319</span>
+<span class="comment">%     Diogo Br&aacute;s     N&ordm;68212</span>
+</pre><h2>Ex. 1 - Simula&ccedil;&atilde;o do movimento livre de uma viatura<a name="2"></a></h2><pre class="codeinput">close <span class="string">all</span>
+clear <span class="string">all</span>
+v0 = [-1 +1];
+y0 = 1;
+stop_time = 10.0;
+m = 50;
+beta = [10 25 50];
+
+
+vlegend = cell(1, size(beta, 2)*size(v0,2));
+plegend = cell(1, size(beta, 2)*size(v0,2));
+vdata = cell(1, size(beta, 2)*2);
+pdata = cell(1, size(beta, 2)*2);
+<span class="keyword">for</span> i = 1:size(beta, 2),
+    sim(<span class="string">'carro'</span>);
+
+    vdata{2*i-1} = t;
+    vdata{2*i} = v;
+    pdata{2*i-1} = t;
+    pdata{2*i} = y;
+    <span class="keyword">for</span> z=1:size(v0, 2),
+        vlegend{size(v0,2)*(i-1)+z} = sprintf(<span class="string">'\\beta = %d Nms ^{-1}, v_{0} = %d ms ^{-1}'</span>, beta(i), v0(z));
+        plegend{size(v0,2)*(i-1)+z} = sprintf(<span class="string">'\\beta = %d Nms ^{-1}, v_{0} = %d ms ^{-1}, y_{0} = %d m'</span>, beta(i), v0(z), y0);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+figure(1);
+plot(vdata{1:size(vdata,2)})
+title(sprintf(<span class="string">'Evolu&ccedil;&atilde;o da velocidade do carro ao longo do tempo, m = %d kg'</span>, m))
+xlabel(<span class="string">'tempo t/s'</span>)
+ylabel(<span class="string">'velocidade v/ms ^{-1}'</span>)
+ylim([-1 +4])
+legend(vlegend, <span class="string">'location'</span>, <span class="string">'NorthEast'</span>);
+
+
+figure(2);
+plot(pdata{1:size(pdata,2)})
+title(sprintf(<span class="string">'Evolu&ccedil;&atilde;o da posi&ccedil;&atilde;o do carro ao longo do tempo, m = %d kg'</span>, m))
+xlabel(<span class="string">'tempo t/s'</span>)
+ylabel(<span class="string">'posi&ccedil;&atilde;o y/m'</span>)
+ylim([-6 +20])
+legend(plegend, <span class="string">'location'</span>, <span class="string">'NorthEast'</span>);
+
+<span class="comment">% Os resultados obtidos tanto para a posi&ccedil;&atilde;o, como para a velocidade</span>
+<span class="comment">% obtidos por simula&ccedil;&atilde;o est&atilde;o de acordo com os previstos teoricamente.</span>
+</pre><img vspace="5" hspace="5" src="Ex1_01.png" alt=""> <img vspace="5" hspace="5" src="Ex1_02.png" alt=""> <p class="footer"><br>
+      Published with MATLAB&reg; 7.12<br></p></div><!--
+##### SOURCE BEGIN #####
+% Cadeira de Modelação e Simulação
+%
+% 1º Trabalho de laboratório
+% Simulação básica em Matlab/Simulink
+%
+% Turno: 4ª feira, das 9h às 11h
+%
+% Elementos do grupo:
+%     Gonçalo Vítor  Nº73229
+%     Catarina Cruz  Nº73319
+%     Diogo Brás     Nº68212
+
+%% Ex. 1 - Simulação do movimento livre de uma viatura
+%
+close all
+clear all
+v0 = [-1 +1];
+y0 = 1;
+stop_time = 10.0;
+m = 50;
+beta = [10 25 50];
+
+
+vlegend = cell(1, size(beta, 2)*size(v0,2));
+plegend = cell(1, size(beta, 2)*size(v0,2));
+vdata = cell(1, size(beta, 2)*2);
+pdata = cell(1, size(beta, 2)*2);
+for i = 1:size(beta, 2),
+    sim('carro');
+
+    vdata{2*i-1} = t;
+    vdata{2*i} = v;
+    pdata{2*i-1} = t;
+    pdata{2*i} = y;
+    for z=1:size(v0, 2),
+        vlegend{size(v0,2)*(i-1)+z} = sprintf('\\beta = %d Nms ^{-1}, v_{0} = %d ms ^{-1}', beta(i), v0(z));
+        plegend{size(v0,2)*(i-1)+z} = sprintf('\\beta = %d Nms ^{-1}, v_{0} = %d ms ^{-1}, y_{0} = %d m', beta(i), v0(z), y0);
+    end
+end
+
+figure(1);
+plot(vdata{1:size(vdata,2)})
+title(sprintf('Evolução da velocidade do carro ao longo do tempo, m = %d kg', m))
+xlabel('tempo t/s')
+ylabel('velocidade v/ms ^{-1}')
+ylim([-1 +4])
+legend(vlegend, 'location', 'NorthEast');
+
+
+figure(2);
+plot(pdata{1:size(pdata,2)})
+title(sprintf('Evolução da posição do carro ao longo do tempo, m = %d kg', m))
+xlabel('tempo t/s')
+ylabel('posição y/m')
+ylim([-6 +20])
+legend(plegend, 'location', 'NorthEast');
+
+% Os resultados obtidos tanto para a posição, como para a velocidade
+% obtidos por simulação estão de acordo com os previstos teoricamente.
+##### SOURCE END #####
+--></body></html>

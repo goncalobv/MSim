@@ -1,0 +1,131 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Ex. 3.2 - Sistema ca&oacute;tico</title><meta name="generator" content="MATLAB 7.12"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-03-30"><meta name="DC.source" content="Ex3.m"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><h1>Ex. 3.2 - Sistema ca&oacute;tico</h1><p>NOTA: a simula&ccedil;&atilde;o &eacute; corrida a partir das equa&ccedil;&otilde;es diferenciais das vari&aacute;veis de estado</p><pre class="codeinput">clear <span class="string">all</span>
+close <span class="string">all</span>
+m = 50;
+m1 = m;
+m2 = m;
+l = 1;
+l1 = l;
+l2 = l;
+g = 10;
+p10 = 0;
+p20 = 0;
+teta10 = 25*pi/180;
+teta20 = 25*pi/180;
+load_system(<span class="string">'sis_caotico.mdl'</span>);
+<span class="comment">% a simula&ccedil;&atilde;o deve ser posta a correr com t_disc(3) para abranger</span>
+<span class="comment">% todos os tempos</span>
+set_param(gcs, <span class="string">'StopTime'</span>, <span class="string">'10'</span>);
+sim(<span class="string">'sis_caotico'</span>);
+subplot(2,1,1)
+plot(teta1*180/pi, teta2*180/pi)
+xlabel(<span class="string">'\theta_{1}'</span>)
+ylabel(<span class="string">'\theta_{2}'</span>)
+title(<span class="string">'Descri&ccedil;&atilde;o de (\theta_{1}, \theta_{2}) ao longo do movimento'</span>)
+subplot(2,1,2)
+plot(x1,y1,x2,y2)
+xlabel(<span class="string">'coordenada x'</span>)
+ylabel(<span class="string">'coordenada y'</span>)
+title(<span class="string">'(x,y) posi&ccedil;&atilde;o de m_{1} e m_{2}'</span>)
+legend(<span class="string">'m_{1}'</span>,<span class="string">'m_{2}'</span>)
+</pre><img vspace="5" hspace="5" src="Ex3_01.png" alt=""> <p class="footer"><br>
+      Published with MATLAB&reg; 7.12<br></p></div><!--
+##### SOURCE BEGIN #####
+%% Ex. 3.2 - Sistema caótico
+% 
+% NOTA: a simulação é corrida a partir das equações diferenciais das
+% variáveis de estado
+clear all
+close all
+m = 50;
+m1 = m;
+m2 = m;
+l = 1;
+l1 = l;
+l2 = l;
+g = 10;
+p10 = 0;
+p20 = 0;
+teta10 = 25*pi/180;
+teta20 = 25*pi/180;
+load_system('sis_caotico.mdl');
+% a simulação deve ser posta a correr com t_disc(3) para abranger
+% todos os tempos
+set_param(gcs, 'StopTime', '10');
+sim('sis_caotico');
+subplot(2,1,1)
+plot(teta1*180/pi, teta2*180/pi)
+xlabel('\theta_{1}')
+ylabel('\theta_{2}')
+title('Descrição de (\theta_{1}, \theta_{2}) ao longo do movimento')
+subplot(2,1,2)
+plot(x1,y1,x2,y2)
+xlabel('coordenada x')
+ylabel('coordenada y')
+title('(x,y) posição de m_{1} e m_{2}')
+legend('m_{1}','m_{2}')
+##### SOURCE END #####
+--></body></html>

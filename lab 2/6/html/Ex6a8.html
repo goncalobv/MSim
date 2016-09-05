@@ -1,0 +1,244 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Ex6a8</title><meta name="generator" content="MATLAB 7.12"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-04-27"><meta name="DC.source" content="Ex6a8.m"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">An&aacute;lise da fun&ccedil;&atilde;o f para entrada linear e sinusoidal</a></li><li><a href="#2">Ex7</a></li><li><a href="#3">Ex8</a></li></ul></div><h2>An&aacute;lise da fun&ccedil;&atilde;o f para entrada linear e sinusoidal<a name="1"></a></h2><pre class="codeinput">clear <span class="string">all</span>
+close <span class="string">all</span>
+yl = 0.4;
+k1 = 1/yl;
+k2 = sqrt(2*k1);
+<span class="comment">% f(10)</span>
+index = 1;
+Y=[];
+Z=[];
+X=[-2:.01:2];
+<span class="keyword">for</span> i=1:size(X,2)
+    Y(i) = f(X(i));
+    Z(i) = f(sin(X(i)));
+<span class="keyword">end</span>
+plot(X, Y, X, X)
+title(<span class="string">'Sinal linear &agrave; entrada'</span>);
+legend(<span class="string">'subsys'</span>,<span class="string">'y=x'</span>);
+figure
+plot(X, Z, X, sin(X))
+title(<span class="string">'Sinal sinusoidal &agrave; entrada'</span>);
+legend(<span class="string">'subsys'</span>, <span class="string">'y=sin(x)'</span>);
+</pre><img vspace="5" hspace="5" src="Ex6a8_01.png" alt=""> <img vspace="5" hspace="5" src="Ex6a8_02.png" alt=""> <h2>Ex7<a name="2"></a></h2><p>&eacute; suposto utilizar k2 para o ganho ou um valor elevado? Falta comparar com o sistema b&aacute;sico em malha fechada, tanto a evolu&ccedil;ao do estado como do sinal de controlo (saida do subsistema) Quantificar tbm o tempo de resposta com sis basico e comparar</p><pre class="codeinput">clear <span class="string">all</span>
+close <span class="string">all</span>
+pos0 = 10; <span class="comment">% posi&ccedil;&atilde;o inicial da cabe&ccedil;a do disco</span>
+ref = [0 0]; <span class="comment">% valor da refer&ecirc;ncia para a posi&ccedil;&atilde;o final da cabe&ccedil;a do disco</span>
+yl = 0.4;
+k1 = 1/yl;
+k2 = sqrt(2*k1);
+xmin = -10;
+xmax = 10;
+ymin = -10;
+ymax = 10;
+<span class="comment">% ambos os XY Graph viewers foram definidos entre xmin xmax e ymin ymax; A</span>
+<span class="comment">% posi&ccedil;&atilde;o inicial foi definida como pos0 = 10, o que nos</span>
+<span class="comment">% permite observar a diferen&ccedil;a entre a utiliza&ccedil;&atilde;o do subsistema</span>
+<span class="comment">% simplesmente linear e o subsistema com o tro&ccedil;o n&atilde;o linear</span>
+
+<span class="comment">% para comparar a degrada&ccedil;&atilde;o da resposta no tempo, definiu-se o tempo de</span>
+<span class="comment">% simula&ccedil;&atilde;o para 20 s. Compara-se o tempo que demora a atingir uma</span>
+<span class="comment">% velocidade final inferior a uma dada toler&acirc;ncia, neste caso 1E-3</span>
+
+vel_tolerance = 1E-3;
+
+sim(<span class="string">'no_chattering'</span>);
+response = responsetime(tout', vel', vel_tolerance)
+t_non_lin = response(2) <span class="comment">% tempo de resposta com subsistema melhorado (n&atilde;o linear)</span>
+
+
+sim(<span class="string">'no_chattering_linearsubsys'</span>);
+response = responsetime(tout', vel',vel_tolerance)
+t_lin = response(2) <span class="comment">% tempo de resposta com subsistema linear</span>
+<span class="comment">% Um tempo de resposta maior corresponde a uma solu&ccedil;&atilde;o pior, dado que se</span>
+<span class="comment">% pretende minimizar o tempo de deslocamento da cabea&ccedil;a do disco</span>
+</pre><pre class="codeoutput">
+response =
+
+   38.0000    9.8401   -0.0008
+
+
+t_non_lin =
+
+    9.8401
+
+
+response =
+
+   43.0000   11.5834   -0.1502
+
+
+t_lin =
+
+   11.5834
+
+</pre><img vspace="5" hspace="5" src="Ex6a8_03.png" alt=""> <img vspace="5" hspace="5" src="Ex6a8_04.png" alt=""> <img vspace="5" hspace="5" src="Ex6a8_05.png" alt=""> <h2>Ex8<a name="3"></a></h2><pre class="codeinput">clear <span class="string">all</span>
+close <span class="string">all</span>
+pos0 = 10; <span class="comment">% posi&ccedil;&atilde;o inicial da cabe&ccedil;a do disco</span>
+yl = 0.4;
+k1 = 1/yl;
+k2 = sqrt(2*k1);
+xmin = -10;
+xmax = 10;
+ymin = -10;
+ymax = 10;
+vel_tolerance = 1E-3;
+
+<span class="comment">% ref = [0 0;10 0;10 5]; % sinal constante por tro&ccedil;os</span>
+ref = [0 0; 10 5; 20 0]; <span class="comment">% sinal linear por tro&ccedil;os</span>
+sim(<span class="string">'no_chattering'</span>);
+sim(<span class="string">'no_chattering_linearsubsys'</span>);
+<span class="comment">% Observando o espa&ccedil;o de fase para os dois sinais de entrada nota-se que a</span>
+<span class="comment">% resposta do sistema linear tende a afastar-se mais dos objetivos</span>
+<span class="comment">% antes de haver a troca do sinal da velocidade (correspondente a uma fase</span>
+<span class="comment">% de corre&ccedil;ao da posi&ccedil;&atilde;o).</span>
+</pre><img vspace="5" hspace="5" src="Ex6a8_06.png" alt=""> <img vspace="5" hspace="5" src="Ex6a8_07.png" alt=""> <img vspace="5" hspace="5" src="Ex6a8_08.png" alt=""> <p class="footer"><br>
+      Published with MATLAB&reg; 7.12<br></p></div><!--
+##### SOURCE BEGIN #####
+%% Análise da função f para entrada linear e sinusoidal
+clear all
+close all
+yl = 0.4;
+k1 = 1/yl;
+k2 = sqrt(2*k1);
+% f(10)
+index = 1;
+Y=[];
+Z=[];
+X=[-2:.01:2];
+for i=1:size(X,2)
+    Y(i) = f(X(i));
+    Z(i) = f(sin(X(i)));
+end
+plot(X, Y, X, X)
+title('Sinal linear à entrada');
+legend('subsys','y=x');
+figure
+plot(X, Z, X, sin(X))
+title('Sinal sinusoidal à entrada');
+legend('subsys', 'y=sin(x)');
+%% Ex7
+% é suposto utilizar k2 para o ganho ou um valor elevado?
+% Falta comparar com o sistema básico em malha fechada, tanto a evoluçao do
+% estado como do sinal de controlo (saida do subsistema)
+% Quantificar tbm o tempo de resposta com sis basico e comparar
+%
+clear all
+close all
+pos0 = 10; % posição inicial da cabeça do disco
+ref = [0 0]; % valor da referência para a posição final da cabeça do disco
+yl = 0.4;
+k1 = 1/yl;
+k2 = sqrt(2*k1);
+xmin = -10;
+xmax = 10;
+ymin = -10;
+ymax = 10;
+% ambos os XY Graph viewers foram definidos entre xmin xmax e ymin ymax; A
+% posição inicial foi definida como pos0 = 10, o que nos
+% permite observar a diferença entre a utilização do subsistema
+% simplesmente linear e o subsistema com o troço não linear
+
+% para comparar a degradação da resposta no tempo, definiu-se o tempo de
+% simulação para 20 s. Compara-se o tempo que demora a atingir uma
+% velocidade final inferior a uma dada tolerância, neste caso 1E-3
+
+vel_tolerance = 1E-3;
+
+sim('no_chattering');
+response = responsetime(tout', vel', vel_tolerance)
+t_non_lin = response(2) % tempo de resposta com subsistema melhorado (não linear)
+
+
+sim('no_chattering_linearsubsys');
+response = responsetime(tout', vel',vel_tolerance)
+t_lin = response(2) % tempo de resposta com subsistema linear
+% Um tempo de resposta maior corresponde a uma solução pior, dado que se
+% pretende minimizar o tempo de deslocamento da cabeaça do disco
+
+%% Ex8
+clear all
+close all
+pos0 = 10; % posição inicial da cabeça do disco
+yl = 0.4;
+k1 = 1/yl;
+k2 = sqrt(2*k1);
+xmin = -10;
+xmax = 10;
+ymin = -10;
+ymax = 10;
+vel_tolerance = 1E-3;
+
+% ref = [0 0;10 0;10 5]; % sinal constante por troços
+ref = [0 0; 10 5; 20 0]; % sinal linear por troços
+sim('no_chattering');
+sim('no_chattering_linearsubsys');
+% Observando o espaço de fase para os dois sinais de entrada nota-se que a
+% resposta do sistema linear tende a afastar-se mais dos objetivos
+% antes de haver a troca do sinal da velocidade (correspondente a uma fase
+% de correçao da posição).
+##### SOURCE END #####
+--></body></html>
